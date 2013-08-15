@@ -1,0 +1,86 @@
+/* 
+    Document   : StandartStyles
+    Created on : 18/05/2013, 15:37:22
+    Author     : root
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+body {
+    font-family:arial,helvetica,sans-serif;
+    font-size:12px;
+    background-color: #DDDCE8;
+}
+
+p {
+    text-align: justify;
+}
+
+
+#wrapper {
+    width:1024px;
+    margin:0px auto;
+    /*border:1px solid #bbb;*/
+    /*padding:10px;*/
+}
+
+
+
+#header {
+    /*border:1px solid #bbb;*/
+    height:126px;
+    /*padding:10px;*/
+}
+#content {
+    margin-top:10px;
+    padding-bottom:10px;
+}
+#content div {
+    padding:10px;
+    /*border:1px solid #bbb;*/
+    float:left;
+}
+#content-left {
+    border:1px solid #bbb;
+    width:250px;
+}
+#content-main {
+    margin-left:10px;
+    border:1px solid #bbb;
+    width:717px;
+}
+#footer {
+    float:left;
+    margin-top:10px;
+    margin-bottom:10px;
+    /*padding:10px;*/
+    border:1px solid #bbb;
+    width:1020px;
+}
+#bottom {
+    clear:both;
+    text-align:right;
+}
+#navigation {
+    margin-top: 10px;
+   /* background-image: url(../images/point.png);*/
+    height: 50px;
+}
+
+.menu {
+    width: 100px;
+    background-color: white;
+    margin-right: 10px;
+    height: 30px;
+    float: left;
+    text-align: center;
+    padding-top: 20px;
+    text-decoration: none;
+}
+
+
+.menu:hover {
+    /*text-decoration: underline;*/
+    background-color: red;
+}
+
