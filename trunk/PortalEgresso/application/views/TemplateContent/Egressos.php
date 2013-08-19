@@ -10,5 +10,5 @@
     <br>
     {buscar_button}
     {table}
-    <?php echo form_close()?>
+  {form_close}
 </div>
