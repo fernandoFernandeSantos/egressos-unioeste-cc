@@ -1,7 +1,8 @@
-
+<?php echo doctype();?>
 <html>
     <head>
-        {head}
+        {css}
+        {meta}
         <title>{title}</title>
     </head>
     <body>
