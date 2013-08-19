@@ -40,12 +40,13 @@ p {
     /*border:1px solid #bbb;*/
     float:left;
 }
-#content-left {
+#content-right {
+    margin-left:10px;
     border:1px solid #bbb;
     width:250px;
 }
 #content-main {
-    margin-left:10px;
+    /*margin-left:10px;*/
     border:1px solid #bbb;
     width:717px;
 }

@@ -22,7 +22,7 @@ class Egressos extends CI_Controller {
     public function index() {
 
         $table = NULL;
-        echo $_POST['nome'];
+//        echo $_POST['nome'];
         
 //   print_r($this->input->post());
 ////        exit;
@@ -65,15 +65,9 @@ class Egressos extends CI_Controller {
                 $table = $this->table->generate($table);
             }
         }
-////        
-////        
-////        echo 'cagada';
-////        exit;
-////        $table = null;
 
-
-//        $this->gerarPagina($table);
-        $this->gerarPagina(null);
+        $this->gerarPagina($table);
+//        $this->gerarPagina();
     }
 
     private function filter_array($array) {
