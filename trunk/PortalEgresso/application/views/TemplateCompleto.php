@@ -12,14 +12,14 @@
             <div id="navigation">{navigation}</div>
             <div id="content">
 
-                <div id="content-left">
-                    {left_menu}
-                </div>
 
                 <div id="content-main">
                     {content}
                 </div>
 
+                <div id="content-right">
+                    {left_menu}
+                </div>
 
 
             </div>
