@@ -21,109 +21,57 @@ class Egressos extends CI_Controller {
 
     public function index() {
 
-        $table = NULL;
-//        echo $_POST['nome'];
-        
-//   print_r($this->input->post());
-////        exit;
-        if ($this->input->post('buscar_button')) {
-////            $post = $this->filter_array(elements(array('nome', 'ano_ingresso', 'ano_formacao'),
-////                            $this->input->post(), NULL));
-////            var_dump($this->input->post('nome'));
-//
-//
-            $where = $this->filter_where_name($this->input->post('nome'));
-//
-            if ($this->input->post('ano_ingresso') !== "") {
-                if ($where !== '') {
-                    $where .= ' and ';
-                }
-                $where .= " ano_entrada = " . $this->input->post('ano_ingresso');
-            }
-////            var_dump($this->input->post('ano_conclusao'));
-            if ($this->input->post('ano_formacao') !== "") {
-                if ($where !== '') {
-                    $where .= ' and ';
-                }
-                $where .= " ano_conclusao = " . $this->input->post('ano_formacao');
-            }
-//
-////            echo $where;
-//
-            $select[] = 'nome';
-            $select[] = 'nome_meio';
-            $select[] = 'nome_final';
-            $select[] = 'ano_entrada';
-            $select[] = 'ano_conclusao';
-            $select[] = 'email_comercial';
-//            if($where != ""){
-            $table = $this->egresso->buscar($select, $where, 'nome');
-//            }
-            if ($table->num_rows() != 0) {
-                $tmpl = array('table_open' => '<table border="1" cellpadding="2" cellspacing="1" class="mytable" align="center">');
-                $this->table->set_template($tmpl);
-                $table = $this->table->generate($table);
-            }
+        $this->gerarPagina();
+    }
+
+    public function tratar() {
+        $array = array();
+        if($this->input->post('nome') == ''){
+            $array[] = '-';
+        }else{
+            $array[] = $this->input->post('nome');
         }
+        if($this->input->post('ano_ingresso') == ''){
+            $array[] = '-';
+        }else{
+            $array[] = $this->input->post('ano_ingresso');
+        }
+        
+        $array[]  = '/' . $this->input->post('ano_formacao');
+
+        $param = '/'.implode('/', $array);
+        
+        redirect(site_url('Egressos/buscar' . $param));
+    }
+
+    public function buscar($nome = '-', $ano_ingresso = '-', $ano_conclusao = '') {
+
+        $coluns[] = 'nome';
+        $coluns[] = 'ano_entrada';
+        $coluns[] = 'ano_conclusao';
+
+        $array = array();
+        if ($nome !== '-') {
+            $array[] = "UPPER(nome) LIKE '%" . strtoupper($nome) . "%'";
+        }
+        if ($ano_ingresso !== '-') {
+            $array[] = "ano_entrada = " . $ano_ingresso;
+        }
+        if ($ano_conclusao !== '') {
+            $array[] = "ano_conclusao = " . $ano_conclusao;
+        }
+
+        $where = implode(' AND ', $array);
+
+        $table = $this->egresso->buscar($coluns, $where, 'nome');
 
         $this->gerarPagina($table);
-//        $this->gerarPagina();
-    }
-
-    private function filter_array($array) {
-        $result = array();
-        foreach ($array as $i) {
-            if ($i != '') {
-                $result[] = $i;
-            }
-        }
-        return $result;
-    }
-
-    private function filter_where_name($nome) {
-        if ($nome !== "") {
-            $nome_array = explode(' ', $nome); //nome
-
-            if (count($nome_array) === 1 && $nome_array[0] !== '') {
-                $where = "(nome = '" . ucfirst(strtolower($nome_array[0])) . "' or ";
-                if (strtolower($nome_array[0]) === 'da' || strtolower($nome_array[0]) === 'de' || strtolower($nome_array[0]) === 'do' || strtolower($nome_array[0]) === 'dos') {
-                    $where .= " nome_meio = '" . strtolower($nome_array[0]) . "' or ";
-                } else {
-                    $where .= " nome_meio = '" . ucfirst(strtolower($nome_array[0])) . "' or ";
-                }
-                $where .= " nome_final = '" . ucfirst(strtolower($nome_array[0])) . "') ";
-            } elseif (count($nome_array) === 2) {
-                $where = " nome = '" . ucfirst($nome_array[0]) . "' and ";
-                if (strtolower($nome_array[1]) !== 'da' || strtolower($nome_array[1]) !== 'de' || strtolower($nome_array[1]) !== 'do' || strtolower($nome_array[1]) === 'dos') {
-                    $where .= " nome_meio = '" . ucfirst(strtolower($nome_array[1])) . "' or ";
-                } else {
-                    $where .= " nome_meio = '" . strtolower($nome_array[1]) . "' or ";
-                }
-                $where .= " nome_final = '" . ucfirst(strtolower($nome_array[1])) . "' ";
-            } elseif (count($nome_array) > 2) {
-
-                $nome_meio_array = '';
-                for ($i = 1; $i < count($nome_array) - 1; $i++) {
-                    if (strtolower($nome_array[$i]) !== 'da' || strtolower($nome_array[$i]) !== 'de' || strtolower($nome_array[$i]) !== 'do' || strtolower($nome_array[$i]) === 'dos') {
-                        $nome_meio_array .= ' ' . ucfirst(strtolower($nome_array[$i]));
-                    } else {
-                        $nome_meio_array .= ' ' . strtolower($nome_array[$i]);
-                    }
-                }
-
-                $where = " nome = '" . ucfirst(strtolower($nome_array[0])) . "' and ";
-                $where .= " nome_meio = '" . $nome_meio_array . "' or ";
-                $where .= " nome_final = '" . ucfirst(strtolower($nome_array[count($nome_array) - 1])) . "' ";
-            }
-            return $where;
-        } else {
-            return '';
-        }
     }
 
     private function gerarPagina($table = NULL) {
 
-        $this->template->addContentVar('form_open', form_open('Egressos'));
+        $this->template->setTitle('Busca de Egressos');
+        $this->template->addContentVar('form_open', form_open('Egressos/tratar'));
         $this->template->addContentVar('form_close', form_close());
         $this->template->addContentVar('input_nome', form_input('nome'));
 
@@ -164,8 +112,6 @@ class Egressos extends CI_Controller {
 
             $this->template->addContentVar('table', $table);
         }
-
-//        $this->template->addContentVar('form_close', form_close());
 
         $this->template->parse('egressos');
     }

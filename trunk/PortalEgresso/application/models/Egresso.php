@@ -70,7 +70,7 @@ class Egresso extends CI_Model {
     public function buscar($colunas, $where = NULL, $order_by = '') {
         $query = 'SELECT ' . implode(', ', $colunas) . ' FROM ' . $this->get_full_table();
 
-        if ($where !== 'NULL') {
+        if ($where !== NULL) {
             if (is_array($where)) {
                 foreach (array_keys($where) as $key) {
                     if (is_string($where[$key])) {

@@ -22,6 +22,7 @@ class Template {
     private $MenuVars;
     private $MenuFile;
     private $MenuLoggedFile;
+    private $title;
 
     public function __construct() {
         $this->CI = & get_instance();
@@ -31,6 +32,7 @@ class Template {
         $this->ContentFolder = 'TemplateContent';
         $this->MenuFile = 'TemplateLeftMenu';
         $this->MenuLoggedFile = 'TemplateLeftMenuLogged';
+        $this->title = 'Egressos Unioeste';
     }
 
     public function getMenuFile() {
@@ -73,21 +75,37 @@ class Template {
         return $this->ContentFolder;
     }
 
+    public function getTitle() {
+        return $this->title;
+    }
+
+    public function setTitle($title) {
+        $this->title = $title;
+    }
+
+    
     public function parse($file) {
         $this->addGlobalVars('css', link_tag("css/StandartStyles.css"));
         $this->addGlobalVars('meta', '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta charset="utf-8" />');
-        $this->addGlobalVars('title', 'Egresso][/[´ps Unioeste - Ciência da Computação');
+        $this->addGlobalVars('title', $this->getTitle());
         $this->addGlobalVars('header', img('images/Title.png'));
-        $this->addGlobalVars('navigation', '<div class="menu">' . anchor('', 'Home', '') . '</div>' .
-                '<div class="menu">' . anchor('turma', 'Turma', '') . '</div>' .
-                '<div class="menu">' . anchor('egressos', 'Egressos', '') . '</div>' .
-                '<div class="menu">' . anchor('curso', 'Curso', '') . '</div>');
+        $this->addGlobalVars('navigation', $this->parseNavigation());
         $this->addGlobalVars('left_menu', $this->parseMenu());
         $this->addGlobalVars('content', $this->parseContent($file));
         $this->addGlobalVars('rodape', current_url('css/StandartStyles.css'));
 //        var_dump($this->GlobalVars);
         $this->CI->parser->parse('TemplateCompleto', $this->GlobalVars);
+    }
+    
+    public function parseNavigation(){
+        if($this->CI->session->userdata('logged') === TRUE){
+            
+        }else{
+            return '<div class="menu">' . anchor('', 'Home', '') . '</div>' .
+                '<div class="menu">' . anchor('turma', 'Turma', '') . '</div>' .
+                '<div class="menu">' . anchor('egressos', 'Egressos', '') . '</div>';
+        }
     }
 
     public function parseMenu() {
