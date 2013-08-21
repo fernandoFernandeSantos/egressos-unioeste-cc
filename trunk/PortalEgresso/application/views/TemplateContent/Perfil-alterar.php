@@ -8,7 +8,7 @@
     </center>
     
                 Nome : {nome}           <br>
-                Sexo : {sexo]           <br>
+                Sexo : {sexo}           <br>
                  Rua :  {rua}           <br>
               Cidade : {cidade}         <br>
               Estado : {estado}         <br>

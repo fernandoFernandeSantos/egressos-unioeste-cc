@@ -5,12 +5,12 @@
  * and open the template in the editor.
  */
 
-    class Turma extends CI_Controller{
+    class Turmas extends CI_Controller{
         
         public function __construct() {
             parent::__construct();
             $this->load->library('Template');
-            $this->load->model('Turma');
+            $this->load->model('Turmas');
             $this->load->helper('array');
         }
         
