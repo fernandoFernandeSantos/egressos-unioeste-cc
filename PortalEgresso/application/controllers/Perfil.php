@@ -10,7 +10,7 @@
  *
  * @author Deivide
  */
-class PerfilAlterar extends CI_Controller{
+class Perfil extends CI_Controller{
     
     public function __construct() {
         parent::__construct();

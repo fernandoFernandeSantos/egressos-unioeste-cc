@@ -5,7 +5,7 @@
  * and open the template in the editor.
  */
 
-    class Turmas extends CI_Controller{
+    class Turma extends CI_Controller{
         
         public function __construct() {
             parent::__construct();
@@ -29,7 +29,8 @@
             $this->template->addContentVar('foto','');
             $this->template->addContentVar('professor','');
             $this->template->addContentVar('table','');
-            $this->template->addContentVar('break', br(1));
+//            $this->template->addContentVar('break', br(1));
+            $this->template->addContentVar('break', '');
             $this->template->parse('turma');
             
         }

@@ -15,7 +15,7 @@ class Usuario extends CI_Model {
     private $table;
     private $schema;
 
-    public function __construct($_schema = 'ptegresso', $_table = 'perfil') {
+    public function __construct($_schema = 'ptegresso', $_table = 'usuario') {
         parent::__construct();
         $this->schema = $_schema;
         $this->table = $_table;
