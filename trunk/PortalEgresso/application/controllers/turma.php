@@ -10,7 +10,7 @@
         public function __construct() {
             parent::__construct();
             $this->load->library('Template');
-            //$this->load->model('Turma');
+            $this->load->model('Turma');
             $this->load->helper('array');
         }
         
