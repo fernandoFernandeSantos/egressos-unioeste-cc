@@ -30,8 +30,8 @@ class Template {
         $this->GlobalVars = array();
         $this->MenuVars = array();
         $this->ContentFolder = 'TemplateContent';
-        $this->MenuFile = 'TemplateLeftMenu';
-        $this->MenuLoggedFile = 'TemplateLeftMenuLogged';
+        $this->MenuFile = 'TemplateRightMenu';
+        $this->MenuLoggedFile = 'TemplateRightMenuLogged';
         $this->title = 'Egressos Unioeste';
     }
 
@@ -110,15 +110,23 @@ class Template {
 
     public function parseMenu() {
         if ($this->CI->session->userdata('logged') === TRUE) {
+            $this->addMenuVars('form_open', form_open('Usuario'));
+            $this->addMenuVars('button_editar', form_submit('editar','Editar'));
+            $this->addMenuVars('form_close', form_close());
             $this->addMenuVars('nome', $this->CI->session->userdata('nome'));
             $this->addMenuVars('usuario', $this->CI->session->userdata('usuario'));
             $this->addMenuVars('email', $this->CI->session->userdata('email'));
             $value = $this->CI->parser->parse($this->getMenuLoggedFile(), $this->MenuVars, TRUE);
-//            $this->addGlobalVars('left_menu', $value);
             return $this->CI->parser->parse($this->getMenuLoggedFile(), $this->MenuVars);
         } else {
-
-            return $this->CI->parser->parse($this->getMenuFile(), array(), TRUE);
+            $this->addMenuVars('form_open', form_open('Usuario'));
+            $this->addMenuVars('input_nome', form_input('user'));
+            $this->addMenuVars('input_senha', form_password('senha'));
+            $this->addMenuVars('button_login', form_submit('login','Logar'));
+            $this->addMenuVars('button_registro', form_submit('registrar','Registrar'));
+            $this->addMenuVars('form_close', form_close());
+            
+            return $this->CI->parser->parse($this->getMenuFile(), $this->MenuVars, TRUE);
         }
     }
 

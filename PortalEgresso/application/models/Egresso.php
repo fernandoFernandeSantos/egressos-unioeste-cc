@@ -96,9 +96,7 @@ class Egresso extends CI_Model {
         return $this->db->query($query);
     }
 
-    public
-
-    function alterar($values, $where) {
+    public function alterar($values, $where) {
         if (is_array($where)) {
             foreach (array_keys($where) as $key) {
                 $conditions[$key] = $key . ' = ' . $where[$key];

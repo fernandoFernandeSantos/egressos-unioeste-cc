@@ -1,4 +1,4 @@
-<?php echo form_open('perfil/alterar') ?>
+{form_open}
 <table width="100%">
     <tr>
         <td align="right" >Nome:</td>
@@ -14,10 +14,6 @@
     </tr>
 </table>
 <center>
-    <?php
-    echo form_submit('button_editar', 'Editar')
-    ?>
-
+    {button_editar}
 </center>
-<?php
-echo form_close()?>
+{form_close}
