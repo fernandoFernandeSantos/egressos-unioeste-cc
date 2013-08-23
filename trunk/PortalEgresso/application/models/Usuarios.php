@@ -63,10 +63,10 @@ class Usuarios extends CI_Model {
     }
 
     public function criar($user, $password, $id_egresso, $email) {
-        $data['usuario'] = $user;
+        $data['login'] = $user;
         $data['senha'] = md5($password);
         $data['id_egresso'] = $id_egresso;
-//        $data['email'] = $email;
+        $data['email'] = $email;
         $query = $this->db->insert_string($this->get_full_table(), $data);
         $this->db->query($query);
     }
