@@ -18,10 +18,12 @@ class Teste extends CI_Controller
         parent::__construct();
         
         $this->load->library('template');
+        $this->load->helper('text');
     }
 
     public function index()
     {
+        echo ascii_to_entities($this->input->post('shit')) . '<br>';
         echo $this->input->post('shit');
         $this->template->addContentVar('teste',form_open('teste'));
         $this->template->parse('teste');
