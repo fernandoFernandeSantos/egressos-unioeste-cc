@@ -17,6 +17,7 @@ class Egressos extends CI_Controller {
         $this->load->library('template');
         $this->load->model('egresso');
         $this->load->helper('array');
+        $this->load->helper('text');
     }
 
     public function index() {
@@ -28,10 +29,11 @@ class Egressos extends CI_Controller {
 
     public function tratar() {
         $array = array();
+//        echo urlencode($this->input->post('nome'));
         if($this->input->post('nome') == ''){
             $array[] = '-';
         }else{
-            $array[] = $this->input->post('nome');
+            $array[] = urlencode($this->input->post('nome'));
         }
         if($this->input->post('ano_ingresso') == ''){
             $array[] = '-';
@@ -41,8 +43,11 @@ class Egressos extends CI_Controller {
         
         $array[]  = '/' . $this->input->post('ano_formacao');
 
-        $param = '/'.implode('/', $array);
+//        print_r($array);
         
+        $param = '/'.implode('/', $array);
+//        echo $param;
+//        $this->gerarPagina();
         redirect(site_url('Egressos/buscar' . $param));
     }
 
@@ -51,10 +56,9 @@ class Egressos extends CI_Controller {
         $coluns[] = 'nome';
         $coluns[] = 'ano_entrada';
         $coluns[] = 'ano_conclusao';
-
         $array = array();
         if ($nome !== '-') {
-            $array[] = "UPPER(nome) LIKE '%" . strtoupper($nome) . "%'";
+            $array[] = "UPPER(nome) LIKE '%" . mb_strtoupper(urldecode($nome),'UTF-8') . "%'";
         }
         if ($ano_ingresso !== '-') {
             $array[] = "ano_entrada = " . $ano_ingresso;
