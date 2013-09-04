@@ -93,7 +93,7 @@ class Template {
         $this->addGlobalVars('navigation', $this->parseNavigation());
         $this->addGlobalVars('left_menu', $this->parseMenu());
         $this->addGlobalVars('content', $this->parseContent($file));
-        $this->addGlobalVars('rodape', current_url('css/StandartStyles.css'));
+        $this->addGlobalVars('rodape', current_url());
 //        var_dump($this->GlobalVars);
         $this->CI->parser->parse('TemplateCompleto', $this->GlobalVars);
     }
@@ -109,6 +109,7 @@ class Template {
     }
 
     public function parseMenu() {
+        $this->addMenuVars('hidden_current_url', current_url());
         if ($this->CI->session->userdata('logged') === TRUE) {
             $this->addMenuVars('form_open', form_open('Usuario'));
             $this->addMenuVars('button_editar', form_submit('editar','Editar'));
