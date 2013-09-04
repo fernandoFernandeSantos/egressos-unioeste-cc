@@ -12,5 +12,6 @@
 <center>
     {button_login}
     {button_registro}
+    {hidden_current_url}
 </center>
 {form_close}

@@ -24,7 +24,7 @@ class Usuario extends CI_Controller {
         if ($this->input->post('registrar')) {
             redirect(site_url('Usuario/Registrar'));
         } elseif ($this->input->post('logar')) {
-            
+            $this->logar();
         } else {
             show_404();
         }
@@ -52,16 +52,38 @@ class Usuario extends CI_Controller {
             $email = $this->input->post('email');
             $cpf = $this->input->post('cpf');
             
-//            var_dump($cpf);
             $result = $this->e->buscar(array('id_egresso'), "cpf = '" . $cpf . "'");
 
-//            var_dump($result);
             $id_egresso = $result->row()->id_egresso;
-//            var_dump($id_egresso);
             
             $this->u->criar($user, $password, $id_egresso, $email);
         }
         $this->gerarPagina();
+    }
+    
+    private function logar(){
+        
+        $usuario = $this->input->post('user');
+        $senha = $this->input->post('senha');
+        
+        $id_user = $this->u->existe($usuario);
+        if($id_user !== FALSE){
+            $check = $this->u->password_check($id_user,$senha);
+            if($check === TRUE){
+                $this->session->set_userdata('logged',TRUE);
+                $result = $this->u->buscar(array('email','id_egresso'),array('id_usuario' => $id_user));
+                
+                $row = $result->row();
+                
+                $user_nome = $this->e->buscar(array('nome'),array('id_egresso' => $row->id_egresso));
+                
+                $this->session->set_userdata('nome',$user_nome);
+                $this->session->set_userdata('email',$row->email);
+                $this->session->set_userdata('usuario',$usuario);
+            }
+        }
+        
+        
     }
 
 }

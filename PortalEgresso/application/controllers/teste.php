@@ -23,9 +23,9 @@ class Teste extends CI_Controller
 
     public function index()
     {
-        echo ascii_to_entities($this->input->post('shit')) . '<br>';
-        echo $this->input->post('shit');
-        $this->template->addContentVar('teste',form_open('teste'));
+        echo $this->input->post('texto');
+        echo $this->input->post('escondido');
+//        $this->template->addContentVar('teste',form_open('teste'));
         $this->template->parse('teste');
         
     }
