@@ -94,13 +94,15 @@ class Template {
         $this->addGlobalVars('left_menu', $this->parseMenu());
         $this->addGlobalVars('content', $this->parseContent($file));
         $this->addGlobalVars('rodape', current_url());
-//        var_dump($this->GlobalVars);
+        
         $this->CI->parser->parse('TemplateCompleto', $this->GlobalVars);
     }
     
     public function parseNavigation(){
         if($this->CI->session->userdata('logged') === TRUE){
-            
+            return '<div class="menu">' . anchor('', 'Home', '') . '</div>' .
+                '<div class="menu">' . anchor('turma', 'Turma', '') . '</div>' .
+                '<div class="menu">' . anchor('egressos', 'Egressos', '') . '</div>';
         }else{
             return '<div class="menu">' . anchor('', 'Home', '') . '</div>' .
                 '<div class="menu">' . anchor('turma', 'Turma', '') . '</div>' .
@@ -109,7 +111,7 @@ class Template {
     }
 
     public function parseMenu() {
-        $this->addMenuVars('hidden_current_url', form_hidden(current_url()));
+        $this->addMenuVars('hidden_current_url', form_hidden('hidden_current_url',  current_url()));
         if ($this->CI->session->userdata('logged') === TRUE) {
             $this->addMenuVars('form_open', form_open('Usuario'));
             $this->addMenuVars('button_editar', form_submit('editar','Editar'));
@@ -117,8 +119,7 @@ class Template {
             $this->addMenuVars('nome', $this->CI->session->userdata('nome'));
             $this->addMenuVars('usuario', $this->CI->session->userdata('usuario'));
             $this->addMenuVars('email', $this->CI->session->userdata('email'));
-            $value = $this->CI->parser->parse($this->getMenuLoggedFile(), $this->MenuVars, TRUE);
-            return $this->CI->parser->parse($this->getMenuLoggedFile(), $this->MenuVars);
+            return $this->CI->parser->parse($this->getMenuLoggedFile(), $this->MenuVars,TRUE);
         } else {
             $this->addMenuVars('form_open', form_open('Usuario'));
             $this->addMenuVars('input_nome', form_input('user'));

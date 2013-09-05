@@ -13,11 +13,11 @@
             <div id="content">
 
 
-                <div id="content-main">
+                <div id="content-main" style="float: left">
                     {content}
                 </div>
 
-                <div id="content-right">
+                <div id="content-right" style="float: right">
                     {left_menu}
                 </div>
 
