@@ -42,16 +42,16 @@ class Usuarios extends CI_Model {
     }
 
     public function existe($user) {
-        $result = $this->buscar(array('id_perfil'), array('usuario' => $user));
+        $result = $this->buscar(array('id_usuario'), array('login' => $user));
         if ($result->num_rows() > 0) {
-            return $result->row()->id_perfil;
+            return $result->row()->id_usuario;
         } else {
             return FALSE;
         }
     }
 
     public function password_check($id_perfil, $password) {
-        $query = 'SELECT senha FROM ' . $this->get_full_table() . ' WHERE id_perfil = ' . $id_perfil;
+        $query = 'SELECT senha FROM ' . $this->get_full_table() . ' WHERE id_usuario = ' . $id_perfil;
         $result = $this->db->query($query);
         $db_password = $result->row()->senha;
 
@@ -105,6 +105,8 @@ class Usuarios extends CI_Model {
                     }
                 }
                 $where = implode(' AND ', $aux);
+                $where = ' WHERE ' . $where;
+                
             } else {
                 if ($where != "") {
                     $where = ' WHERE ' . $where;
@@ -113,11 +115,11 @@ class Usuarios extends CI_Model {
         }
 
         if ($order_by !== '') {
-            $order_by = 'ORDER BY ' . $order_by;
+            $order_by = ' ORDER BY ' . $order_by;
         }
 
         $query .= $where . ' ' . $order_by;
-
+        
         return $this->db->query($query);
     }
 

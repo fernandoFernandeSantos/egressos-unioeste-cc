@@ -80,6 +80,7 @@ class Egresso extends CI_Model {
                     }
                 }
                 $where = implode(' AND ', $aux);
+                $where = ' WHERE ' . $where;
             } else {
                 if ($where != "") {
                     $where = ' WHERE ' . $where;
@@ -105,8 +106,7 @@ class Egresso extends CI_Model {
         } else {
             $where = ' WHERE ' . $where;
         }
-        $query = $this->db->update_string($this->get_full_table(), $values,
-                $where);
+        $query = $this->db->update_string($this->get_full_table(), $values, $where);
         $this->db->query($query);
     }
 

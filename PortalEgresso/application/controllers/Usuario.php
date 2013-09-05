@@ -15,15 +15,14 @@ class Usuario extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->library('template');
-        $this->load->model('Usuarios','u');
-        $this->load->model('Egresso','e');
+        $this->load->model('Usuarios', 'u');
+        $this->load->model('Egresso', 'e');
     }
 
     public function index() {
-
         if ($this->input->post('registrar')) {
             redirect(site_url('Usuario/Registrar'));
-        } elseif ($this->input->post('logar')) {
+        } elseif ($this->input->post('login')) {
             $this->logar();
         } else {
             show_404();
@@ -51,39 +50,43 @@ class Usuario extends CI_Controller {
             $password = $this->input->post('senha');
             $email = $this->input->post('email');
             $cpf = $this->input->post('cpf');
-            
+
             $result = $this->e->buscar(array('id_egresso'), "cpf = '" . $cpf . "'");
 
             $id_egresso = $result->row()->id_egresso;
-            
+
             $this->u->criar($user, $password, $id_egresso, $email);
         }
         $this->gerarPagina();
     }
-    
-    private function logar(){
-        
+
+    private function logar() {
+
         $usuario = $this->input->post('user');
         $senha = $this->input->post('senha');
-        
+
         $id_user = $this->u->existe($usuario);
-        if($id_user !== FALSE){
-            $check = $this->u->password_check($id_user,$senha);
-            if($check === TRUE){
-                $this->session->set_userdata('logged',TRUE);
-                $result = $this->u->buscar(array('email','id_egresso'),array('id_usuario' => $id_user));
-                
+        if ($id_user !== FALSE) {
+            $check = $this->u->password_check($id_user, $senha);
+            if ($check === TRUE) {
+                $result = $this->u->buscar(array('email', 'id_egresso'), array('id_usuario' => $id_user));
+
                 $row = $result->row();
-                
-                $user_nome = $this->e->buscar(array('nome'),array('id_egresso' => $row->id_egresso));
-                
-                $this->session->set_userdata('nome',$user_nome);
-                $this->session->set_userdata('email',$row->email);
-                $this->session->set_userdata('usuario',$usuario);
+
+                $user_nome = $this->e->buscar(array('nome'), array('id_egresso' => $row->id_egresso));
+
+                $this->session->set_userdata('logged',TRUE);
+                $this->session->set_userdata('nome', $user_nome->row()->nome);
+                $this->session->set_userdata('email', $row->email);
+                $this->session->set_userdata('usuario', $usuario);
+
+                redirect($this->input->post('hidden_current_url'));
+            } else {
+                echo 'falho';
             }
+        } else {
+            echo 'non existe';
         }
-        
-        
     }
 
 }

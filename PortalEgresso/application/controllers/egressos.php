@@ -24,7 +24,6 @@ class Egressos extends CI_Controller {
 
         $this->gerarPagina();
         
-        
     }
 
     public function tratar() {
