@@ -119,6 +119,10 @@ class Template {
             $this->addMenuVars('nome', $this->CI->session->userdata('nome'));
             $this->addMenuVars('usuario', $this->CI->session->userdata('usuario'));
             $this->addMenuVars('email', $this->CI->session->userdata('email'));
+            
+            $this->addMenuVars('form_sair_open', form_open('Usuario/Sair'));
+            $this->addMenuVars('button_sair', form_submit('sair', 'Sair'));
+            
             return $this->CI->parser->parse($this->getMenuLoggedFile(), $this->MenuVars,TRUE);
         } else {
             $this->addMenuVars('form_open', form_open('Usuario'));

@@ -88,6 +88,14 @@ class Usuario extends CI_Controller {
             echo 'non existe';
         }
     }
+    
+    public function sair(){
+        $this->session->unset_userdata('logged');
+        $this->session->unset_userdata('nome');
+        $this->session->unset_userdata('email');
+        $this->session->unset_userdata('usuario');
+        redirect($this->input->post('hidden_current_url'));
+    }
 
 }
 
