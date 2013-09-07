@@ -15,8 +15,8 @@ class Usuario extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->library('template');
-        $this->load->model('Usuarios', 'u');
-        $this->load->model('Egresso', 'e');
+        $this->load->model('M_usuario', 'u');
+        $this->load->model('M_egresso', 'e');
     }
 
     public function index() {

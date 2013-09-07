@@ -94,7 +94,7 @@ class Template {
         $this->addGlobalVars('left_menu', $this->parseMenu());
         $this->addGlobalVars('content', $this->parseContent($file));
         $this->addGlobalVars('rodape', current_url());
-        
+        $this->addGlobalVars('js',  '<script language="javascript" src="'.  base_url('js/validation.js') .'"></script>' );
         $this->CI->parser->parse('TemplateCompleto', $this->GlobalVars);
     }
     
@@ -124,11 +124,16 @@ class Template {
             $this->addMenuVars('button_sair', form_submit('sair', 'Sair'));
             
             return $this->CI->parser->parse($this->getMenuLoggedFile(), $this->MenuVars,TRUE);
-        } else {
+        } else {//nao ta logado
             $this->addMenuVars('form_open', form_open('Usuario'));
-            $this->addMenuVars('input_nome', form_input('user'));
-            $this->addMenuVars('input_senha', form_password('senha'));
+            
+            $this->addMenuVars('input_nome', form_input(array('name'=>'user','id'=>'user')));
+            
+            $this->addMenuVars('input_senha', form_password(array('name' => 'senha','id' => 'senha')));
+            
+            //ver com o anibal la as coisa do form chamar func
             $this->addMenuVars('button_login', form_submit('login','Logar'));
+//            $this->addMenuVars('button_login', form_submit(array('name' => 'login','id' => 'logar','onclick' => 'loginValidation()','value' => 'Logar')));
             $this->addMenuVars('button_registro', form_submit('registrar','Registrar'));
             $this->addMenuVars('form_close', form_close());
             

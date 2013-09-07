@@ -4,6 +4,7 @@
         {css}
         {meta}
         <title>{title}</title>
+        {js}
     </head>
     <body>
 

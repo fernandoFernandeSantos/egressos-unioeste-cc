@@ -10,7 +10,7 @@
  *
  * @author marcelo-note
  */
-class Perfil extends CI_Model {
+class M_perfil extends CI_Model {
 
     private $table;
     private $schema;
