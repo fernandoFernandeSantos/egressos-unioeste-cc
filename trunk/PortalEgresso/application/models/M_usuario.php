@@ -10,7 +10,7 @@
  *
  * @author marcelo-note
  */
-class Usuarios extends CI_Model {
+class M_usuario extends CI_Model {
 
     private $table;
     private $schema;

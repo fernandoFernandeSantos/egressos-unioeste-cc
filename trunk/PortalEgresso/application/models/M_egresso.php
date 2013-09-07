@@ -10,7 +10,7 @@
  *
  * @author marcelo-note
  */
-class Egresso extends CI_Model {
+class M_egresso extends CI_Model {
 
     private $table;
     private $schema;

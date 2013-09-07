@@ -6,18 +6,20 @@
  */
 
 /**
- * Description of Turmas
+ * Description of home
  *
- * @author Deivide
+ * @author marcelo-note
  */
-class Turmas extends CI_Model{
+class Home extends CI_Controller {
     
     public function __construct() {
         parent::__construct();
-    
-        
+        $this->load->library('Template');
     }
     
+    public function index(){
+        $this->template->parse('home');
+    }
 }
 
 ?>
