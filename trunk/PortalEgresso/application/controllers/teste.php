@@ -10,24 +10,49 @@
  *
  * @author marcelo-note
  */
-class Teste extends CI_Controller
-{
+class Teste extends CI_Controller {
 
-    public function __construct()
-    {
-        parent::__construct();
-        
-        $this->load->library('template');
-        $this->load->helper('text');
+    public function __construct() {
+	parent::__construct();
+
+	$this->load->library('template');
+	$this->load->helper('text');
     }
 
-    public function index()
-    {
-        echo $this->input->post('texto');
-        echo $this->input->post('escondido');
-//        $this->template->addContentVar('teste',form_open('teste'));
-        $this->template->parse('teste');
-        
+    public function index() {
+
+	$this->gerarPagina();
+    }
+
+    public function upload_teste() {
+	$config['upload_path'] = './images/egresso';
+	$config['allowed_types'] = 'gif|jpg|png';
+	$config['file_name'] = 'haha';
+	
+	$this->load->library('upload',$config);
+	
+	if(! $this->upload->do_upload()){
+	    $this->gerarPagina($this->upload->display_errors());
+	}else{
+	    $array = $this->upload->data();
+	    $filename = $array['file_name'];
+	    $this->gerarPagina(img('lalala/'.$filename));
+	    
+	}
+	
+    }
+    
+    public function gerarPagina($data = ''){
+	$this->template->addContentVar('form_open_multipart',
+		form_open_multipart('teste/upload_teste'));
+	$this->template->addContentVar('input_file',
+		form_input(array('type' => 'file', 'name' => 'userfile', 'size' => 20)));
+	$this->template->addContentVar('submit_upload', form_submit('upload', 'upload'));
+	$this->template->addContentVar('form_close', form_close());
+
+	$this->template->addContentVar('erro',$data);
+	
+	$this->template->parse('teste');
     }
 
 }
