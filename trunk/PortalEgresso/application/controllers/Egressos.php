@@ -14,8 +14,8 @@ class Egressos extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->library('template');
-        $this->load->model('M_egresso','egresso');
+        $this->load->library('Template');
+        $this->load->model('m_egresso','egresso');
         $this->load->helper('array');
         $this->load->helper('text');
     }
