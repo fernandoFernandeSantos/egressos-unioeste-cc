@@ -101,12 +101,12 @@ class Template {
     public function parseNavigation(){
         if($this->CI->session->userdata('logged') === TRUE){
             return '<div class="menu">' . anchor('', 'Home', '') . '</div>' .
-                '<div class="menu">' . anchor('turma', 'Turma', '') . '</div>' .
-                '<div class="menu">' . anchor('egressos', 'Egressos', '') . '</div>';
+                '<div class="menu">' . anchor('Turma', 'Turma', '') . '</div>' .
+                '<div class="menu">' . anchor('Egressos', 'Egressos', '') . '</div>';
         }else{
             return '<div class="menu">' . anchor('', 'Home', '') . '</div>' .
-                '<div class="menu">' . anchor('turma', 'Turma', '') . '</div>' .
-                '<div class="menu">' . anchor('egressos', 'Egressos', '') . '</div>';
+                '<div class="menu">' . anchor('Turma', 'Turma', '') . '</div>' .
+                '<div class="menu">' . anchor('Egressos', 'Egressos', '') . '</div>';
         }
     }
 
@@ -142,7 +142,7 @@ class Template {
     }
 
     public function parseContent($file) {
-        return $this->CI->parser->parse($this->getContentFolder() . '/' . $file, $this->ContentVars, TRUE);
+        return $this->CI->parser->parse($this->getContentFolder() . '/' . ucfirst($file), $this->ContentVars, TRUE);
     }
 
 }
