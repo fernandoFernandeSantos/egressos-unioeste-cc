@@ -8,7 +8,6 @@
 
 body {
     font-family:arial,helvetica,sans-serif;
-    font-size:12px;
     background-color: #ffffff;
 }
 
@@ -19,38 +18,31 @@ p {
 
 
 #wrapper {
-    width:1024px;
-    margin:0px auto;
+    padding-left: 11%;
+    padding-right: 11%;
+    width:79%;
 }
 
 #header {
-    /*border:1px solid #bbb;*/
     height:126px;
-    /*padding:10px;*/
 }
 #content {
     margin-top:10px;
     padding-bottom:10px;
 }
-#content div {
-    padding:10px;
-    /*border:1px solid #bbb;*/
-}
+
 #content-right {
-    margin-left:10px;
     border:1px solid #bbb;
-    width:250px;
+    width:31%;
 }
 #content-main {
-    /*margin-left:10px;*/
     border:1px solid #bbb;
-    width:717px;
+    width: 68%;
 }
 #footer {
     float:left;
     margin-top:10px;
     margin-bottom:10px;
-    /*padding:10px;*/
     border:1px solid #bbb;
     width:1020px;
 }
@@ -70,7 +62,6 @@ p {
     height: 30px;
     float: left;
     text-align: center;
-    text-decoration-line: cancel-all;
     padding-top: 20px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;

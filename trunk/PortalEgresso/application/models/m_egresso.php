@@ -94,6 +94,7 @@ class M_egresso extends CI_Model {
 
         $query .= $where . ' ' . $order_by;
 
+//        echo $query;
         return $this->db->query($query);
     }
 

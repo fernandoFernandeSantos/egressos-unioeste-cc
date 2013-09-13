@@ -15,7 +15,7 @@ class Egressos extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->library('Template');
-        $this->load->model('m_egresso','egresso');
+        $this->load->model('m_egresso', 'egresso');
         $this->load->helper('array');
         $this->load->helper('text');
     }
@@ -23,30 +23,25 @@ class Egressos extends CI_Controller {
     public function index() {
 
         $this->gerarPagina();
-        
     }
 
     public function tratar() {
         $array = array();
-//        echo urlencode($this->input->post('nome'));
-        if($this->input->post('nome') == ''){
+
+        if ($this->input->post('nome') == '') {
             $array[] = '-';
-        }else{
+        } else {
             $array[] = urlencode($this->input->post('nome'));
         }
-        if($this->input->post('ano_ingresso') == ''){
+        if ($this->input->post('ano_ingresso') == '') {
             $array[] = '-';
-        }else{
+        } else {
             $array[] = $this->input->post('ano_ingresso');
         }
-        
-        $array[]  = '/' . $this->input->post('ano_formacao');
 
-//        print_r($array);
-        
-        $param = '/'.implode('/', $array);
-//        echo $param;
-//        $this->gerarPagina();
+        $array[] = '/' . $this->input->post('ano_formacao');
+
+        $param = '/' . implode('/', $array);
         redirect(site_url('Egressos/buscar' . $param));
     }
 
@@ -57,7 +52,7 @@ class Egressos extends CI_Controller {
         $coluns[] = 'ano_conclusao';
         $array = array();
         if ($nome !== '-') {
-            $array[] = "UPPER(nome) LIKE '%" . mb_strtoupper(urldecode($nome),'UTF-8') . "%'";
+            $array[] = "UPPER(nome) LIKE '%" . mb_strtoupper(urldecode($nome), 'UTF-8') . "%'";
         }
         if ($ano_ingresso !== '-') {
             $array[] = "ano_entrada = " . $ano_ingresso;
