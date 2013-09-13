@@ -15,7 +15,7 @@ class Teste extends CI_Controller {
     public function __construct() {
 	parent::__construct();
 
-	$this->load->library('template');
+	$this->load->library('Template');
 	$this->load->helper('text');
     }
 
@@ -44,15 +44,15 @@ class Teste extends CI_Controller {
     
     public function gerarPagina($data = ''){
 	$this->template->addContentVar('form_open_multipart',
-		form_open_multipart('teste/upload_teste'));
+		form_open_multipart('Teste/upload_teste'));
 	$this->template->addContentVar('input_file',
 		form_input(array('type' => 'file', 'name' => 'userfile', 'size' => 20)));
 	$this->template->addContentVar('submit_upload', form_submit('upload', 'upload'));
 	$this->template->addContentVar('form_close', form_close());
 
 	$this->template->addContentVar('erro',$data);
-	
-	$this->template->parse('teste');
+//	echo 'asd';
+	$this->template->parse('Teste');
     }
 
 }

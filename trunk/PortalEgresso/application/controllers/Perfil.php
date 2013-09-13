@@ -45,6 +45,10 @@ class Perfil extends CI_Controller{
         
     }
     
+    public function ver($id = 0){
+        
+    }
+    
 }
 
 ?>
