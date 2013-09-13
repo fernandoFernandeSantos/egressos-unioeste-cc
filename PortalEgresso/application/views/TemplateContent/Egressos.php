@@ -6,7 +6,7 @@
     Ano de ingresso:
     {ano_ingresso_dropdown}
     Ano de Formação
-    {ano_formacao_dropdown} <?php echo nbs(10)?>
+    {ano_formacao_dropdown} 
     {buscar_button}
     <br>
     <br>

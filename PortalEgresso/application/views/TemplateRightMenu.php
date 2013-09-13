@@ -1,5 +1,6 @@
 {form_open}
-<table width="100%">
+
+<table width="100%" >
     <tr>
         <td align="right" >Usuário:</td>
         <td>{input_nome}</td>
