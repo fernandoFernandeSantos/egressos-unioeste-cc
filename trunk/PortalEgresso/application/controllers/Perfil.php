@@ -36,28 +36,23 @@ class Perfil extends CI_Controller {
     public function setPerfilImagem() {
 
         if ($this->input->post('link_imagem') !== '') {
-            $values = array('foto' => $this->input->post('upload_imagem'));
+            $values = array('foto' => $this->input->post('link_imagem'));
 
             $where = 'id_egresso = ' . $this->session->userdata('id_egresso');
 
             $this->perfil->alterar($values, $where);
-            echo 'asduhasd';
-//                redirect(site_url('Perfil/editar'));
+            
         } else {
 
-//            echo 'hehehe';
             $config['upload_path'] = './images/egresso/';
             $config['allowed_types'] = 'gif|jpg|png';
             $config['file_name'] = preg_replace('/\s/', '', $this->session->userdata('nome', ' '));
-//            echo preg_replace('/\s/', '', $this->session->userdata('nome', ' '));
-//            var_dump($config);
-//            break;
+            $config['overwrite'] = TRUE;
 
             $this->load->library('upload', $config);
 
-            if (!$this->upload->do_upload()) {
+            if (!$this->upload->do_upload('upload_imagem')) {
                 print_r($this->upload->display_errors());
-//	    $this->gerarPagina($this->upload->display_errors());
             } else {
                 $data = $this->upload->data();
                 $values = array('foto' => $data['file_name']);
@@ -65,12 +60,9 @@ class Perfil extends CI_Controller {
                 $where = 'id_egresso = ' . $this->session->userdata('id_egresso');
 
                 $this->perfil->alterar($values, $where);
-                redirect(site_url('Perfil/editar'));
-//	    $array = $this->upload->data();
-//	    $filename = $array['file_name'];
-//	    $this->gerarPagina(img('lalala/'.$filename));
             }
         }
+        redirect(site_url('Perfil/editar'));
     }
 
     public function editar() {
@@ -91,13 +83,13 @@ class Perfil extends CI_Controller {
                 //foto
                 $this->template->addContentVar('form_multipart', form_open_multipart('Perfil/setPerfilImagem'));
 
-                if (strpos($row_perfil->foto, 'http:') !== FALSE) {
+                if (strpos($row_perfil->foto, 'http') !== FALSE) {
                     $this->template->addContentVar('foto', img($row_perfil->foto));
                 } else {
                     $this->template->addContentVar('foto', img('images/egresso/' . $row_perfil->foto));
                 }
 
-                $this->template->addContentVar('foto', $row_perfil->foto);
+//                $this->template->addContentVar('foto', $row_perfil->foto);
                 $this->template->addContentVar('upload_imagem', form_input(array('name' => 'upload_imagem', 'type' => 'file')));
                 $this->template->addContentVar('link_imagem', form_input('link_imagem'));
                 $this->template->addContentVar('button_alterar_foto', form_submit('button_alterar_foto', 'Alterar Foto'));
