@@ -79,7 +79,7 @@ class M_perfil extends CI_Model {
                         $aux[$key] = $key . " = " . $where[$key];
                     }
                 }
-                $where = implode(' AND ', $aux);
+                $where = ' WHERE '.implode(' AND ', $aux);
             } else {
                 if ($where != "") {
                     $where = ' WHERE ' . $where;
@@ -102,9 +102,9 @@ class M_perfil extends CI_Model {
                 $conditions[$key] = $key . ' = ' . $where[$key];
             }
             $where = implode(' and ', $conditions);
-        } else {
-            $where = ' WHERE ' . $where;
-        }
+        } //else {
+            //$where;
+//        }
         $query = $this->db->update_string($this->get_full_table(), $values,
                 $where);
         $this->db->query($query);

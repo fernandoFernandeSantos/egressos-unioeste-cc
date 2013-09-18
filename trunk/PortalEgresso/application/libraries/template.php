@@ -113,7 +113,7 @@ class Template {
     public function parseMenu() {
         $this->addMenuVars('hidden_current_url', form_hidden('hidden_current_url',  current_url()));
         if ($this->CI->session->userdata('logged') === TRUE) {
-            $this->addMenuVars('form_open', form_open('Usuario'));
+            $this->addMenuVars('form_open', form_open('Perfil/editar'));
             $this->addMenuVars('button_editar', form_submit('editar','Editar'));
             $this->addMenuVars('form_close', form_close());
             $this->addMenuVars('nome', $this->CI->session->userdata('nome'));
