@@ -33,7 +33,7 @@ class Turma extends CI_Controller {
         $tmpl = array('table_open' => '<table border="1" cellpadding="2" cellspacing="1" class="mytable" align="center">');
         $this->table->set_template($tmpl);
         $res = $this->table->generate($result);
-        print_r($turma);
+//        print_r($turma);
         $this->gerarPagina($res, $turma);
     }
 
