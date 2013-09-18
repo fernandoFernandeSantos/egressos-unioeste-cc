@@ -77,7 +77,11 @@ class Usuario extends CI_Controller {
 
                 $this->session->set_userdata('logged',TRUE);
                 $this->session->set_userdata('nome', $user_nome->row()->nome);
+                $this->session->set_userdata('id_usuario', $id_user);
+                $this->session->set_userdata('id_egresso', $row->id_egresso);
+                
                 $this->session->set_userdata('email', $row->email);
+                
                 $this->session->set_userdata('usuario', $usuario);
 
                 redirect($this->input->post('hidden_current_url'));

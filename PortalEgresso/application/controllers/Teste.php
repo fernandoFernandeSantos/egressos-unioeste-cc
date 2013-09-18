@@ -23,7 +23,10 @@ class Teste extends CI_Controller {
 
     public function index() {
 
-	$this->gerarPagina();
+        $string = 'shit shit shit';
+        $abcd = preg_replace('/\s/', '', $string);
+        echo  $abcd;
+        
     }
 
     public function upload_teste() {
@@ -45,7 +48,14 @@ class Teste extends CI_Controller {
     }
     
     public function gerarPagina(){
-        $result = $this->turma->buscar_egressos(14);
+
+
+        echo md5('user1') . '<br>' ;
+        echo md5('user2') . '<br>';
+        echo md5('user3') . '<br>';
+        echo md5('user4') . '<br>';
+//        $result = $this->turma->buscar_egressos(14);
+    
         
         
 //        print_r($result);
@@ -53,14 +63,14 @@ class Teste extends CI_Controller {
 //        foreach($result as $a){
 //            $string .= '<br>' . $a['nome'];
 //        }
-        $tmpl = array('table_open' => '<table border="1" cellpadding="2" cellspacing="1" class="mytable" align="center">');
-                $this->table->set_template($tmpl);
-        $res = $this->table->generate($result);
-        $this->template->addContentVar('teste',  $res);
-        
-    
-        $this->template->parse('teste');
-    }
+//        $tmpl = array('table_open' => '<table border="1" cellpadding="2" cellspacing="1" class="mytable" align="center">');
+//                $this->table->set_template($tmpl);
+//        $res = $this->table->generate($result);
+//        $this->template->addContentVar('teste',  $res);
+//        
+//    
+//        $this->template->parse('teste');
+//    }
 
 
 //    public function gerarPagina($data = ''){
@@ -73,8 +83,8 @@ class Teste extends CI_Controller {
 //
 //	$this->template->addContentVar('erro',$data);
 ////	echo 'asd';
-//	$this->template->parse('Teste');
-//    }
+	$this->template->parse('Teste');
+    }
 
 }
 
