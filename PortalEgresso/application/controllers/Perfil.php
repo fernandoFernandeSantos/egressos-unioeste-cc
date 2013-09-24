@@ -30,7 +30,49 @@ class Perfil extends CI_Controller {
     }
 
     public function ver($id = 0) {
-        
+
+        //echo 'skldjflaksdjfklsadf';
+        $select = array('*');
+        $where = array('id_usuario' => $this->session->userdata('id_usuario'));
+
+        $result_perfil = $this->perfil->buscar($select, $where);
+        $row_perfil = $result_perfil->row();
+        echo ' id_egresso = ' . $result_perfil->row()->id_egresso;
+        $result_egresso = $this->egresso->buscar($select, ' id_egresso = ' . $row_perfil->id_egresso);
+        $row_egresso = $result_egresso->row();
+
+        //foto
+        $this->template->addContentVar('form_multipart', form_open_multipart('Perfil/setPerfilImagem'));
+
+        if (strpos($row_perfil->foto, 'http') !== FALSE) {
+            $this->template->addContentVar('foto', img($row_perfil->foto));
+        } else {
+            $data_img=array('src'=>'images/egresso/'.$row_perfil->foto,'alt'=>"foto", 'height'=>"200", 'width'=>"200");
+            $this->template->addContentVar('foto', img($data_img));
+            
+        }
+
+//                
+        $this->template->addContentVar('nome', $row_egresso->nome);
+        $this->template->addContentVar('sexo', $row_egresso->sexo);
+        $this->template->addContentVar('rua', $row_egresso->rua);
+        $this->template->addContentVar('cidade', $row_egresso->cidade);
+        $this->template->addContentVar('estado', $row_egresso->estado);
+        $this->template->addContentVar('telefone', $row_perfil->telefone);
+        $this->template->addContentVar('cep', $row_egresso->cep);
+        $this->template->addContentVar('descricao', $row_perfil->descricao);
+        $this->template->addContentVar('area_atuacao', $row_perfil->area_atuacao);
+        $this->template->addContentVar('lattes', $row_perfil->link_lattes);
+        $this->template->addContentVar('pagina_pessoal', $row_perfil->pagina_pessoal);
+        $this->template->addContentVar('ano_entrada', $row_egresso->ano_entrada);
+        $this->template->addContentVar('ano_conclusao', $row_egresso->ano_conclusao);
+
+
+
+
+
+
+        $this->template->parse('Perfil-ver');
     }
 
     public function setPerfilImagem() {
@@ -41,7 +83,6 @@ class Perfil extends CI_Controller {
             $where = 'id_egresso = ' . $this->session->userdata('id_egresso');
 
             $this->perfil->alterar($values, $where);
-            
         } else {
 
             $config['upload_path'] = './images/egresso/';

@@ -86,6 +86,7 @@ class Usuario extends CI_Controller {
 
                 redirect($this->input->post('hidden_current_url'));
             } else {
+                
                 echo 'falho';
             }
         } else {
