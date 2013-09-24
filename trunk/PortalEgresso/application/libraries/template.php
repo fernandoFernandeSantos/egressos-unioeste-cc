@@ -102,11 +102,13 @@ class Template {
         if($this->CI->session->userdata('logged') === TRUE){
             return '<div class="menu">' . anchor('', 'Home', '') . '</div>' .
                 '<div class="menu">' . anchor('Turma', 'Turma', '') . '</div>' .
-                '<div class="menu">' . anchor('Egressos', 'Egressos', '') . '</div>';
+                '<div class="menu">' . anchor('Egressos', 'Egressos', '') . '</div>'.
+                '<div class="menu">' . anchor('Perfil', 'Perfil', '') . '</div>';
         }else{
             return '<div class="menu">' . anchor('', 'Home', '') . '</div>' .
                 '<div class="menu">' . anchor('Turma', 'Turma', '') . '</div>' .
-                '<div class="menu">' . anchor('Egressos', 'Egressos', '') . '</div>';
+                '<div class="menu">' . anchor('Egressos', 'Egressos', '') . '</div>'.
+                '<div class="menu">' . anchor('Perfil', 'Perfil', '') . '</div>';
         }
     }
 
