@@ -26,7 +26,10 @@
                     {form_sair_open}
                     {button_sair}
                     {hidden_current_url}
-                    {form_close}
+                    {form_close1}
+                    {form_open_visualizar}
+                    {button_visualizar}
+                    {form_close2}
                 </td>
             </tr>
         </table>

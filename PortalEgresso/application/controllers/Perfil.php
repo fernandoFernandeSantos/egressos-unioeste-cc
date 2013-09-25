@@ -23,13 +23,14 @@ class Perfil extends CI_Controller {
     public function index() {
 
         if ($this->session->userdata('logged')) {
-            redirect(site_url('Perfil/ver/' . $this->session->userdata('id')));
+//            redirect(site_url('Perfil/ver/' . $this->session->userdata('id')));
+            redirect(site_url('Perfil/ver/1'));
         } else {
             redirect(site_url('Perfil/ver/1'));
         }
     }
 
-    public function ver($id = 0) {
+    public function ver($id = 1) {
 
         //echo 'skldjflaksdjfklsadf';
         $select = array('*');
@@ -37,6 +38,7 @@ class Perfil extends CI_Controller {
 
         $result_perfil = $this->perfil->buscar($select, $where);
         $row_perfil = $result_perfil->row();
+        
 //        echo ' id_egresso = ' . $result_perfil->row()->id_egresso;
         $result_egresso = $this->egresso->buscar($select, ' id_egresso = ' . $row_perfil->id_egresso);
         $row_egresso = $result_egresso->row();
