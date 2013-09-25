@@ -124,7 +124,10 @@ class Template {
             
             $this->addMenuVars('form_sair_open', form_open('Usuario/Sair'));
             $this->addMenuVars('button_sair', form_submit('sair', 'Sair'));
-            
+            $this->addMenuVars('form_open_visualizar', form_open('Perfil/ver/'.$this->CI->session->userdata('id_usuario')));
+            $this->addMenuVars('button_visualizar', form_submit('visualizar_perfil','Visualizar Perfil'));
+            $this->addMenuVars('form_close1', form_close());
+            $this->addMenuVars('form_close2', form_close());
             return $this->CI->parser->parse($this->getMenuLoggedFile(), $this->MenuVars,TRUE);
         } else {//nao ta logado
             $this->addMenuVars('form_open', form_open('Usuario'));
