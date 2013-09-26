@@ -131,7 +131,8 @@ class Perfil extends CI_Controller {
                 if (strpos($row_perfil->foto, 'http') !== FALSE) {
                     $this->template->addContentVar('foto', img($row_perfil->foto));
                 } else {
-                    $this->template->addContentVar('foto', img('images/egresso/' . $row_perfil->foto));
+                    $data_img = array('src' => 'images/egresso/' . $row_perfil->foto, 'alt' => "foto", 'height' => "200", 'width' => "200");
+                    $this->template->addContentVar('foto', img($data_img));
                 }
 
 //                $this->template->addContentVar('foto', $row_perfil->foto);

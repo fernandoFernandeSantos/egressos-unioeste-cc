@@ -4,7 +4,9 @@
         
         <p>Perfil<p><br>
             {form_multipart}
+        <div style="text-align: center;">
             {foto}<br>
+        </div>    
             Upload : {upload_imagem}<br>
             Link : {link_imagem}<br>
             {button_alterar_foto}
