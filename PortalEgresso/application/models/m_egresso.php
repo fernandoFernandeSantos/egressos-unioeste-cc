@@ -104,9 +104,9 @@ class M_egresso extends CI_Model {
                 $conditions[$key] = $key . ' = ' . $where[$key];
             }
             $where = implode(' and ', $conditions);
-        } else {
-            $where = ' WHERE ' . $where;
-        }
+        } //else {
+            //$where = ' WHERE ' . $where;
+        //}
         $query = $this->db->update_string($this->get_full_table(), $values, $where);
         $this->db->query($query);
     }

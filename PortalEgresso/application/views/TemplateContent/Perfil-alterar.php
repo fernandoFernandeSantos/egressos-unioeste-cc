@@ -23,9 +23,10 @@
          Ano Entrada : {ano_entrada}    <br>
          Link Lattes : {lattes}         <br>
       Pagina Pessoal : {pagina_pessoal} <br>
-           Descrição : <br>{descricao}      <br>
-    
-    
+      Area de Atuação: {area_atuacao}   <br>
+      E-mail : {email_publico}  <br>
+           Descrição : <br>{descricao}  <br>
+      
     {button_alterar}
     {form_close}
     

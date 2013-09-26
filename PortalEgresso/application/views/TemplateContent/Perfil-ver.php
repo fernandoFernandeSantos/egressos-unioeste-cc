@@ -18,9 +18,11 @@
     CEP : {cep}            <br>
     Ano Entrada : {ano_entrada}    <br>
     Ano Conclusão : {ano_conclusao}  <br>
-    Descrição : {descricao}      <br>
     Link Lattes : {lattes}         <br>
     Pagina Pessoal : {pagina_pessoal} <br>
+    Area de Atuação: {area_atuacao} <br>
+    Email: {email_publico} <br>
+    Descrição : {descricao}      <br>
     </div>
 
 
