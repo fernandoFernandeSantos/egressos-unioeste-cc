@@ -54,7 +54,12 @@ class Turma extends CI_Controller {
             $this->template->addContentVar('break', br(2));
         }
         if ($turma['foto_turma'] !== '') {
-            $this->template->addContentVar('foto', img($turma['foto_turma']));
+//            echo $turma['foto_turma'];
+            $data_img = array(
+                'src' => 'images/turma/' . $turma['foto_turma'],
+                'alt' => "foto", 'height' => "500",
+                'width' => "500");
+            $this->template->addContentVar('foto', img($data_img));
         } else {
             $this->template->addContentVar('foto', $turma['foto_turma']);
         }
