@@ -83,7 +83,9 @@ class Template {
         $this->title = $title;
     }
 
-    
+    public function getCI(){
+        return $this->CI;
+    }
     public function parse($file) {
         $this->addGlobalVars('css', link_tag("css/StandartStyles.css"));
         $this->addGlobalVars('meta', '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
