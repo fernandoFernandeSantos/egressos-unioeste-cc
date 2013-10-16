@@ -104,13 +104,13 @@ class Template {
         if($this->CI->session->userdata('logged') === TRUE){
             return '<div class="menu">' . anchor('', 'Home', '') . '</div>' .
                 '<div class="menu">' . anchor('Turma', 'Turma', '') . '</div>' .
-                '<div class="menu">' . anchor('Egressos', 'Egressos', '') . '</div>'.
-                '<div class="menu">' . anchor('Perfil', 'Perfil', '') . '</div>';
+                '<div class="menu">' . anchor('Egressos', 'Egressos', '') . '</div>';
+                //'<div class="menu">' . anchor('Perfil', 'Perfil', '') . '</div>';
         }else{
             return '<div class="menu">' . anchor('', 'Home', '') . '</div>' .
                 '<div class="menu">' . anchor('Turma', 'Turma', '') . '</div>' .
-                '<div class="menu">' . anchor('Egressos', 'Egressos', '') . '</div>'.
-                '<div class="menu">' . anchor('Perfil', 'Perfil', '') . '</div>';
+                '<div class="menu">' . anchor('Egressos', 'Egressos', '') . '</div>';
+                //'<div class="menu">' . anchor('Perfil', 'Perfil', '') . '</div>';
         }
     }
 
@@ -132,7 +132,9 @@ class Template {
             $this->addMenuVars('form_close2', form_close());
             return $this->CI->parser->parse($this->getMenuLoggedFile(), $this->MenuVars,TRUE);
         } else {//nao ta logado
-            $this->addMenuVars('form_open', form_open('Usuario'));
+            $form_data=array('name'=>'form_validation','onsubmit'=>'return loginValidation(this)');
+            
+            $this->addMenuVars('form_open', form_open('Usuario',$form_data));
             
             $this->addMenuVars('input_nome', form_input(array('name'=>'user','id'=>'user')));
             

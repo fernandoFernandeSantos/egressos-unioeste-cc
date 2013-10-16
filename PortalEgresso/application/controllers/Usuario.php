@@ -17,6 +17,7 @@ class Usuario extends CI_Controller {
         $this->load->library('template');
         $this->load->model('M_usuario', 'u');
         $this->load->model('M_egresso', 'e');
+        $this->load->model('M_perfil','p');
     }
 
     public function index() {
@@ -56,6 +57,11 @@ class Usuario extends CI_Controller {
             $id_egresso = $result->row()->id_egresso;
 
             $this->u->criar($user, $password, $id_egresso, $email);
+            echo "id_egresso = $id_egresso";
+            $usuario=  $this->u->buscar(array('id_usuario'), "id_egresso = $id_egresso");
+            $id_usuario = $usuario->row()->id_usuario;
+            $perfil_data = array('id_egresso'=>$id_egresso,'id_usuario'=>$id_usuario);
+            $this->p->criar($perfil_data);
         }
         $this->gerarPagina();
     }
