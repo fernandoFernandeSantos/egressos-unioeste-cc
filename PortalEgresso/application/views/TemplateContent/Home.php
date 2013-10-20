@@ -8,6 +8,6 @@
         O tempo mínimo para integralização é de 4 anos e o máximo de 7 anos, 
         com uma carga horária total de 3.750 horas, 
         das quais 180 horas são de atividades acadêmicas complementares. 
-        O grau obtido é de Bacharel em Ciêncsia da Computação. <p>
+        O grau obtido é de Bacharel em Ciência da Computação. <p>
     
 </div>

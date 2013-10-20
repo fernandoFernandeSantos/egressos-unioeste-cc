@@ -28,17 +28,21 @@ class Turma extends CI_Controller {
         $turma = $this->turma->buscar_turma($ano);
 
         $result = $this->turma->buscar_egressos($turma['id_turma']);
-		$this->template->addContentVar('ano', $ano);
- $this->template->addContentVar('titulo_ano', '<div class="titulo">  Turma de '.$ano.': Prof. '.$turma['professor_homenageado'].'</div>');
-        $tmpl = array('table_open' => '<table border="1" cellpadding="2" cellspacing="1" class="mytable" align="center">');
-        $this->table->set_template($tmpl);
-        $res = $this->table->generate($result);
+        $this->template->addContentVar('ano', $ano);
+        $this->template->addContentVar('titulo_ano', '<div class="titulo">  Turma de ' . $ano . ': Prof. ' . $turma['professor_homenageado'] . '</div>');
+        if ($result->num_rows() != 0) {
+            $tmpl = array('table_open' => '<table border="1" cellpadding="2" cellspacing="1" class="mytable" align="center">');
+            $this->table->set_template($tmpl);
+            $this->table->set_heading("Nome");
+            $res = $this->table->generate($result->result_array());
+           // $res = $this->table->generate($result);
+        }
 //        print_r($turma);
         $this->gerarPagina($res, $turma);
     }
 
     public function gerarPagina($table = '', $turma = array('ano' => '', 'foto_turma' => '', 'professor_homenageado' => '')) {
-		
+
         for ($i = 1998; $i <= date("Y"); $i++) {
             $options[$i] = $i;
         }
@@ -48,8 +52,8 @@ class Turma extends CI_Controller {
         $this->template->addContentVar('form_close', form_close());
         $this->template->addContentVar('dropdown', form_dropdown('ano_turma', $options));
         $this->template->addContentVar('button', form_submit('buscar_button', 'Buscar'));
-		   $this->template->addContentVar('titulo_ano', '');
-       
+        $this->template->addContentVar('titulo_ano', '');
+
         $this->template->addContentVar('table', $table);
         if ($table !== '') {
             $this->template->addContentVar('break', br(2));
@@ -58,7 +62,7 @@ class Turma extends CI_Controller {
 //            echo $turma['foto_turma'];
             $data_img = array(
                 'src' => 'images/turma/' . $turma['foto_turma'],
-                'alt' => "foto", 
+                'alt' => "foto",
                 'width' => "500");
             $this->template->addContentVar('foto', img($data_img));
         } else {

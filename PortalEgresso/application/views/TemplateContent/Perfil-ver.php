@@ -1,4 +1,4 @@
-<div style="background-color: #3399ff;">
+<div >
 
 
     <h2 style="text-align: center;">Perfil</h2><br>
@@ -8,22 +8,59 @@
     </div>
     <br>
     
-    <div >
-    Nome : {nome}           <br>
-    Sexo : {sexo}           <br>
-    Rua :  {rua}           <br>
-    Cidade : {cidade}         <br>
-    Estado : {estado}         <br>
-    Telefone : {telefone}       <br>
-    CEP : {cep}            <br>
-    Ano Entrada : {ano_entrada}    <br>
-    Ano Conclusão : {ano_conclusao}  <br>
-    Link Lattes : {lattes}         <br>
-    Pagina Pessoal : {pagina_pessoal} <br>
-    Area de Atuação: {area_atuacao} <br>
-    Email: {email_publico} <br>
-    Descrição : {descricao}      <br>
+    <div class="tabela">
+        <table width="100%" border="00">
+            <tr>
+                <td> Nome:</td>
+                <td>{nome}</td>
+            </tr>  
+            <tr>
+                <td> Sexo: </td>
+                <td>{sexo}</td>
+            </tr>
+            <tr>
+                <td>Rua:  </td>
+                <td>{rua}</td>
+            </tr>
+            <tr>
+                <td>Cidade: </td>
+                <td>{cidade}</td>
+            </tr>
+            <tr>
+                <td>Estado: </td>
+                <td>{estado}</td>
+            </tr>
+            <tr>
+                <td>Telefone: </td>
+                <td>{telefone}</td>
+            </tr>
+            <tr>
+                <td>Link Lattes: </td>
+                <td>{lattes}</td>
+            </tr>
+            <tr>
+                <td>Página Pessoal: </td>
+                <td>{pagina_pessoal}</td>
+            </tr>
+            <tr>
+                <td>Area de Atuação: </td>
+                <td>{area_atuacao}</td>
+            </tr>
+            <tr>
+                <td>E-mail: </td>
+                <td>{email_publico}</td>
+            </tr>
+            <tr>
+                <td>Descrição: </td>
+                <td>{descricao}</td>
+            </tr>
+                
+            
+        </table>
+        
     </div>
+    
+    
 
 
 </div>

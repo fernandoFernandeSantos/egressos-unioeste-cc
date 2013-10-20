@@ -35,7 +35,7 @@ class Perfil extends CI_Controller {
         //echo 'skldjflaksdjfklsadf';
         $select = array('*');
         $where = array('id_usuario' => $id);
-	
+
         $result_perfil = $this->perfil->buscar($select, $where);
         $row_perfil = $result_perfil->row();
 
@@ -47,9 +47,19 @@ class Perfil extends CI_Controller {
         $this->template->addContentVar('form_multipart', form_open_multipart('Perfil/setPerfilImagem'));
 
         if (strpos($row_perfil->foto, 'http') !== FALSE) {
-            $this->template->addContentVar('foto', img($row_perfil->foto));
+            $data_img = array('src' => $row_perfil->foto, 'alt' => 'foto', 'height' => '200', 'width' => '200');
+            $this->template->addContentVar('foto', img($data_img));
         } else {
-            $data_img = array('src' => 'images/egresso/' . $row_perfil->foto, 'alt' => "foto", 'height' => "200", 'width' => "200");
+            $image_properties = array(
+                'src' => 'images/picture.jpg',
+                'alt' => 'Me, demonstrating how to eat 4 slices of pizza at one time',
+                'class' => 'post_images',
+                'width' => '200',
+                'height' => '200',
+                'title' => 'That was quite a night',
+                'rel' => 'lightbox',
+            );
+            $data_img = array('src' => 'images/egresso/' . $row_perfil->foto, 'alt' => 'foto', 'height' => '200', 'width' => '200');
             $this->template->addContentVar('foto', img($data_img));
         }
 
@@ -68,7 +78,7 @@ class Perfil extends CI_Controller {
         $this->template->addContentVar('ano_entrada', $row_egresso->ano_entrada);
         $this->template->addContentVar('ano_conclusao', $row_egresso->ano_conclusao);
         $this->template->addContentVar('area_atuacao', $row_perfil->area_atuacao);
-        $this->template->addContentVar('email_publico',$row_perfil->email_publico);
+        $this->template->addContentVar('email_publico', $row_perfil->email_publico);
 
 
 
@@ -129,7 +139,8 @@ class Perfil extends CI_Controller {
                 $this->template->addContentVar('form_multipart', form_open_multipart('Perfil/setPerfilImagem'));
 
                 if (strpos($row_perfil->foto, 'http') !== FALSE) {
-                    $this->template->addContentVar('foto', img($row_perfil->foto));
+                    $data_img = array('src' => $row_perfil->foto, 'alt' => 'foto', 'height' => '200', 'width' => '200');
+                    $this->template->addContentVar('foto', img($data_img));
                 } else {
                     $data_img = array('src' => 'images/egresso/' . $row_perfil->foto, 'alt' => "foto", 'height' => "200", 'width' => "200");
                     $this->template->addContentVar('foto', img($data_img));
@@ -177,22 +188,22 @@ class Perfil extends CI_Controller {
             'cep' => $this->input->post('cep'));
 
         $data_perfil = array(
-            'area_atuacao'=>$this->input->post('area_atuacao'),
-            'descricao'=>  $this->input->post('descricao'),
-            'pagina_pessoal'=>$this->input->post('pagina_pessoal'),
-            'email_publico'=>$this->input->post('email_publico'),
+            'area_atuacao' => $this->input->post('area_atuacao'),
+            'descricao' => $this->input->post('descricao'),
+            'pagina_pessoal' => $this->input->post('pagina_pessoal'),
+            'email_publico' => $this->input->post('email_publico'),
             'telefone' => $this->input->post('telefone'));
-        
+
         $where_perfil = "id_usuario = " . $this->template->getCI()->session->userdata('id_usuario');
         //echo $where;
         //$str = $this->db->update_string('table_name', $data, $where);
         $where_egresso = "id_egresso = " . $this->template->getCI()->session->userdata('id_egresso');
 
-        
-        $this->perfil->alterar($data_perfil,$where_perfil);
-        $this->egresso->alterar($data_egresso,$where_egresso);
-        
-        redirect(site_url('Perfil/ver/'.$this->template->getCI()->session->userdata('id_usuario')));
+
+        $this->perfil->alterar($data_perfil, $where_perfil);
+        $this->egresso->alterar($data_egresso, $where_egresso);
+
+        redirect(site_url('Perfil/ver/' . $this->template->getCI()->session->userdata('id_usuario')));
     }
 
 }

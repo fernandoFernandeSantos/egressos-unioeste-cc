@@ -66,7 +66,7 @@ class Usuario extends CI_Controller {
         $this->gerarPagina();
     }
 
-    private function logar() {
+    public function logar() {
 
         $usuario = $this->input->post('user');
         $senha = $this->input->post('senha');
