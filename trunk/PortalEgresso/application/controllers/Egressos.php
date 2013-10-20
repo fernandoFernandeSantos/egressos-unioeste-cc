@@ -74,7 +74,7 @@ class Egressos extends CI_Controller {
         $this->template->addContentVar('form_open', form_open('Egressos/tratar'));
         $this->template->addContentVar('form_close', form_close());
         $this->template->addContentVar('input_nome', form_input('nome'));
-
+        
         $ano = 1993;
         $options = array('' => '');
         while ($ano < 2010) {
@@ -105,7 +105,8 @@ class Egressos extends CI_Controller {
             if ($table->num_rows() != 0) {
                 $tmpl = array('table_open' => '<table border="1" cellpadding="2" cellspacing="1" class="mytable" align="center">');
                 $this->table->set_template($tmpl);
-                $table = $this->table->generate($table);
+                $this->table->set_heading("Nome","Ano Entrada","Ano Conclusao");
+                $table = $this->table->generate($table->result_array());
             } else {
                 $table = '';
             }
