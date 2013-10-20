@@ -15,7 +15,7 @@ PARA TODAS AS PÁGINAS ***/
 body {
 	font-family: Tahoma, Verdana, Arial;
 	font-size: 11px;
-	background: url(../imagens/fundo.png) repeat;
+	background: url(../images/fundo.png) repeat;
 }
 #wrapper #header {
 	padding: 5px;
