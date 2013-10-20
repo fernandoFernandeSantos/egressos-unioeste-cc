@@ -91,7 +91,7 @@ class Template {
         $this->addGlobalVars('meta', '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta charset="utf-8" />');
         $this->addGlobalVars('title', $this->getTitle());
-        $this->addGlobalVars('header', img('images/Title.png'));
+        $this->addGlobalVars('header', img('images/logo.png').img('images/logocc.png'));
         $this->addGlobalVars('navigation', $this->parseNavigation());
         $this->addGlobalVars('left_menu', $this->parseMenu());
         $this->addGlobalVars('content', $this->parseContent($file));
@@ -101,25 +101,30 @@ class Template {
     }
     
     public function parseNavigation(){
+		$html = '<ul>';
         if($this->CI->session->userdata('logged') === TRUE){
-            return '<div class="menu">' . anchor('', 'Home', '') . '</div>' .
-                '<div class="menu">' . anchor('Turma', 'Turma', '') . '</div>' .
-                '<div class="menu">' . anchor('Egressos', 'Egressos', '') . '</div>';
+            $html .=  '<li>' . anchor('', 'Home', '') . '</li>' .
+                '<li>' . anchor('Turma', 'Turma', '') . '</li>' .
+                '<li>' . anchor('Egressos', 'Egressos', '') . '</li>';
                 //'<div class="menu">' . anchor('Perfil', 'Perfil', '') . '</div>';
         }else{
-            return '<div class="menu">' . anchor('', 'Home', '') . '</div>' .
-                '<div class="menu">' . anchor('Turma', 'Turma', '') . '</div>' .
-                '<div class="menu">' . anchor('Egressos', 'Egressos', '') . '</div>';
+            $html .=  '<li>' . anchor('', 'Home', '') . '</li>' .
+                '<li>' . anchor('Turma', 'Turma', '') . '</li>' .
+                '<li>' . anchor('Egressos', 'Egressos', '') . '</li>';
                 //'<div class="menu">' . anchor('Perfil', 'Perfil', '') . '</div>';
         }
+		
+		return $html.'</ul>';
     }
 
     public function parseMenu() {
         $this->addMenuVars('hidden_current_url', form_hidden('hidden_current_url',  current_url()));
         if ($this->CI->session->userdata('logged') === TRUE) {
+			
             $this->addMenuVars('form_open', form_open('Perfil/editar'));
             $this->addMenuVars('button_editar', form_submit('editar','Editar'));
             $this->addMenuVars('form_close', form_close());
+			
             $this->addMenuVars('nome', $this->CI->session->userdata('nome'));
             $this->addMenuVars('usuario', $this->CI->session->userdata('usuario'));
             $this->addMenuVars('email', $this->CI->session->userdata('email'));

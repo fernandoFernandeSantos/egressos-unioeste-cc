@@ -1,18 +1,27 @@
-<div>
+<div class="titulo">Criar Usuario</div>
 
-    <center>
-
-        <p>Criar Usuario<p><br>
-
-    </center>
-
-    {form_open}
-    Nome do Usuario: {nome}<br>
-    CPF:             {cpf}<br>            
-    E-mail:          {email}<br>
-    Senha:           {senha}<br>
-    <div align="center">
-        {button_criar}
-    </div>
-    {form_close}
+<div class="tabela">{form_open}
+<table width="100%" border="00">
+  <tr>
+    <td> Nome do Usuario:</td>
+    <td>{nome}</td>
+  </tr>  
+  <tr>
+    <td> CPF: </td>
+    <td>{cpf}</td>
+  </tr>
+  <tr>
+    <td>E-mail:  </td>
+    <td>{email}</td>
+  </tr>
+  <tr>
+    <td>Senha: </td>
+    <td>{senha}</td>
+    <tr>
+    <td colspan="2" align="center">{button_criar}</td>
+  </tr>
+</table>
+{form_close}
 </div>
+
+    

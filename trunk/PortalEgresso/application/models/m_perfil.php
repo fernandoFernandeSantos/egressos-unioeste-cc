@@ -39,6 +39,7 @@ class M_perfil extends CI_Model {
 
     private function get_full_table() {
         return $this->schema . '.' . $this->table;
+		//return $this->table;
     }
 
     public function criar($data) {

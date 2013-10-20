@@ -1,37 +1,14 @@
-<div>
-    {form_open}
-    <table width="100%">
-        <tr>
-            <td align="right" >Nome:</td>
-            <td >{nome}</td>
-        </tr>
-        <tr>
-            <td align="right" >Usuário: </td>
-            <td>{usuario}</td>
-        </tr>
-        <tr>
-            <td align="right" >E-mail: </td>
-            <td>{email}</td>
-        </tr>
-    </table>
-
-    <div align="center" >
-        <table>
-            <tr>
-                <td>
-                    {button_editar}
-                    {form_close}
-                </td>
-                <td>
-                    {form_sair_open}
+<div class="logado">
+<div>Olá, <strong>{nome}</strong></div>
+<div>Seu usuário: <strong>{usuario}</strong></div>
+<div>Seu e-mail: <strong>{email}</strong></div>
+<div> {form_open}{button_editar}
+                    {form_close}</div>
+                   <div> {form_sair_open}
                     {button_sair}
                     {hidden_current_url}
-                    {form_close1}
-                    {form_open_visualizar}
+                    {form_close1}</div>
+                   <div> {form_open_visualizar}
                     {button_visualizar}
-                    {form_close2}
-                </td>
-            </tr>
-        </table>
-    </div>
+                    {form_close2}</div>
 </div>

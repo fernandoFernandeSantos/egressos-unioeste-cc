@@ -35,11 +35,11 @@ class Perfil extends CI_Controller {
         //echo 'skldjflaksdjfklsadf';
         $select = array('*');
         $where = array('id_usuario' => $id);
-
+	
         $result_perfil = $this->perfil->buscar($select, $where);
         $row_perfil = $result_perfil->row();
 
-//        echo ' id_egresso = ' . $result_perfil->row()->id_egresso;
+        //echo ' id_egresso = ' . $result_perfil->row()->id_egresso;
         $result_egresso = $this->egresso->buscar($select, ' id_egresso = ' . $row_perfil->id_egresso);
         $row_egresso = $result_egresso->row();
 
