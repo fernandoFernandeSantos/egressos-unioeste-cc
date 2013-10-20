@@ -34,7 +34,7 @@
                 <td>{cidade}</td>
             </tr>
             <tr>
-                <td>Estado: </td>
+                <td>Estado (Ex:PR): </td>
                 <td>{estado}</td>
             </tr>
             <tr>

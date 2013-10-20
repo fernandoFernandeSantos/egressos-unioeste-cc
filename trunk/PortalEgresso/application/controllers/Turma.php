@@ -28,16 +28,14 @@ class Turma extends CI_Controller {
         $turma = $this->turma->buscar_turma($ano);
 
         $result = $this->turma->buscar_egressos($turma['id_turma']);
-        $this->template->addContentVar('ano', $ano);
+//        $this->template->addContentVar('titulo_ano', $ano);
         $this->template->addContentVar('titulo_ano', '<div class="titulo">  Turma de ' . $ano . ': Prof. ' . $turma['professor_homenageado'] . '</div>');
         if ($result->num_rows() != 0) {
             $tmpl = array('table_open' => '<table border="1" cellpadding="2" cellspacing="1" class="mytable" align="center">');
             $this->table->set_template($tmpl);
-            $this->table->set_heading("Nome");
+            $this->table->set_heading("Alunos");
             $res = $this->table->generate($result->result_array());
-           // $res = $this->table->generate($result);
         }
-//        print_r($turma);
         $this->gerarPagina($res, $turma);
     }
 
@@ -52,7 +50,7 @@ class Turma extends CI_Controller {
         $this->template->addContentVar('form_close', form_close());
         $this->template->addContentVar('dropdown', form_dropdown('ano_turma', $options));
         $this->template->addContentVar('button', form_submit('buscar_button', 'Buscar'));
-        $this->template->addContentVar('titulo_ano', '');
+//        $this->template->addContentVar('titulo_ano', '');
 
         $this->template->addContentVar('table', $table);
         if ($table !== '') {
