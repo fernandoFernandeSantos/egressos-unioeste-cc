@@ -95,7 +95,7 @@ class Template {
         $this->addGlobalVars('navigation', $this->parseNavigation());
         $this->addGlobalVars('menu', $this->parseMenu());
         $this->addGlobalVars('content', $this->parseContent($file));
-        $this->addGlobalVars('rodape', current_url());
+        $this->addGlobalVars('rodape', img('images/logo_petcomp.jpg'));
         $this->addGlobalVars('js',  '<script language="javascript" src="'.  base_url('js/validation.js') .'"></script>' );
         $this->CI->parser->parse('TemplateCompleto', $this->GlobalVars);
     }
