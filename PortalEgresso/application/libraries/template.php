@@ -30,8 +30,8 @@ class Template {
         $this->GlobalVars = array();
         $this->MenuVars = array();
         $this->ContentFolder = 'TemplateContent';
-        $this->MenuFile = 'TemplateRightMenu';
-        $this->MenuLoggedFile = 'TemplateRightMenuLogged';
+        $this->MenuFile = 'TemplateMenu';
+        $this->MenuLoggedFile = 'TemplateMenuLogged';
         $this->title = 'Egressos Unioeste';
     }
 
@@ -93,7 +93,7 @@ class Template {
         $this->addGlobalVars('title', $this->getTitle());
         $this->addGlobalVars('header', img('images/logo.png').img('images/logocc.png'));
         $this->addGlobalVars('navigation', $this->parseNavigation());
-        $this->addGlobalVars('left_menu', $this->parseMenu());
+        $this->addGlobalVars('menu', $this->parseMenu());
         $this->addGlobalVars('content', $this->parseContent($file));
         $this->addGlobalVars('rodape', current_url());
         $this->addGlobalVars('js',  '<script language="javascript" src="'.  base_url('js/validation.js') .'"></script>' );
@@ -106,12 +106,10 @@ class Template {
             $html .=  '<li>' . anchor('', 'Home', '') . '</li>' .
                 '<li>' . anchor('Turma', 'Turma', '') . '</li>' .
                 '<li>' . anchor('Egressos', 'Egressos', '') . '</li>';
-                //'<div class="menu">' . anchor('Perfil', 'Perfil', '') . '</div>';
         }else{
             $html .=  '<li>' . anchor('', 'Home', '') . '</li>' .
                 '<li>' . anchor('Turma', 'Turma', '') . '</li>' .
                 '<li>' . anchor('Egressos', 'Egressos', '') . '</li>';
-                //'<div class="menu">' . anchor('Perfil', 'Perfil', '') . '</div>';
         }
 		
 		return $html.'</ul>';
@@ -139,7 +137,7 @@ class Template {
         } else {//nao ta logado
             $form_data=array('name'=>'form_validation','onsubmit'=>'return loginValidation(this)');
             
-            $this->addMenuVars('form_open', form_open('Usuario',$form_data));
+            $this->addMenuVars('form_open', form_open('Usuario/logar',$form_data));
             
             $this->addMenuVars('input_nome', form_input(array('name'=>'user','id'=>'user')));
             
@@ -147,9 +145,9 @@ class Template {
             
             //ver com o anibal la as coisa do form chamar func
             $this->addMenuVars('button_login', form_submit('login','Logar'));
-//            $this->addMenuVars('button_login', form_submit(array('name' => 'login','id' => 'logar','onclick' => 'loginValidation()','value' => 'Logar')));
-            $this->addMenuVars('button_registro', form_submit('registrar','Registrar'));
             $this->addMenuVars('form_close', form_close());
+            
+            $this->addMenuVars('button_registro', form_button(array('name' => 'registrar' , 'content' => 'Registrar','onClick' => "window.location.href='". site_url('Usuario/registrar')."'")));
             
             return $this->CI->parser->parse($this->getMenuFile(), $this->MenuVars, TRUE);
         }

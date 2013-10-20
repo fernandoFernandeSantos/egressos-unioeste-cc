@@ -12,7 +12,7 @@
   <div id="navigation">{navigation}</div>
   <div id="content">
     <div id="largura">
-      <div id="login"> {left_menu} <div style="clear:both"></div></div>
+      <div id="login"> {menu} <div style="clear:both"></div></div>
       
       <div id="conteudo"> {content} </div>
    
