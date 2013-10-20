@@ -61,14 +61,17 @@ class M_turma extends CI_Model {
     
     public function get_full_turma_table() {
         return $this->schema . '.' . $this->get_turma_table();
+		//return $this->get_turma_table();
     }
 
     public function get_full_pertence_table() {
         return $this->schema . '.' . $this->get_pertence_table();
+		//return $this->get_pertence_table();
     }
 
     public function get_full_egresso_table() {
         return $this->get_schema() . '.' . $this->get_egresso_table();
+		//return $this->get_egresso_table();
     }
 
     public function buscar_turma($ano) {

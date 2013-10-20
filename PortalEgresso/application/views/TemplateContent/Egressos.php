@@ -1,5 +1,5 @@
 
-<div>
+<div class="busca_interna">
     {form_open}
     Nome:
     {input_nome}
@@ -7,9 +7,9 @@
     {ano_ingresso_dropdown}
     Ano de Formação
     {ano_formacao_dropdown} 
-    {buscar_button}
+    {buscar_button}  {form_close}</div>
     <br>
     <br>
-    {table}
-  {form_close}
-</div>
+   <div class="tabela"> {table} </div>
+
+

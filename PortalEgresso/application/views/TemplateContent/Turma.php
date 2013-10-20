@@ -1,20 +1,12 @@
-<div>
-    
-    <center>
-        
-        <p>Busca por Turma<p>
-            
-            {form_open}
-            Ano : {dropdown} <br>
+   <div class="titulo">Busca por Turma</div>
+   
+  <div class="busca_interna"> {form_open}Selecione o ano: {dropdown} 
             {button}
             
-            {form_close}
+            {form_close}</div>          
+{titulo_ano}     
+           
             
-            {foto}{break}
-            {professor}{break}
-            {table}
-            
-        
-    </center>
-    
-</div>
+            <div class="foto">{foto}</div>
+           
+           <div class="tabela">{table}</div>

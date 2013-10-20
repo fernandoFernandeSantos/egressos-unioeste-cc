@@ -5,71 +5,120 @@
     Description:
         Purpose of the stylesheet follows.
 */
-
+/*** 
+PARA TODAS AS PÁGINAS ***/
+* {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
 body {
-    font-family:arial,helvetica,sans-serif;
-    background-color: #ffffff;
+	font-family: Tahoma, Verdana, Arial;
+	font-size: 11px;
+	background: url(../imagens/fundo.png) repeat;
+}
+#wrapper #header {
+	padding: 5px;
+	text-align: center;
+}
+#wrapper #header img {
+	margin: 6px;
+}
+#wrapper #navigation {
+	background: url(../images/fundo_menu.png) repeat-x;
+	height: 31px;
+	line-height: 31px;
+	text-align: center
+}
+#wrapper #navigation ul {
+	text-align: center;
+	margin: 0 auto;
+	list-style: none;
+}
+#wrapper #navigation ul li {
+	display: inline;
+	margin-left: 10px;
+}
+#wrapper #navigation ul li a {
+	color: #004A66;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+#wrapper #navigation ul li a:hover {
+	color: #B90000;
+}
+#largura {
+	width: 800px;
+	margin: 0 auto;
+	padding: 10px;
+}
+#login {
+	background: #fff;
+	border: 1px #5687b5 solid;
+}
+.logado {
+	padding: 5px;
+}
+.logado div {
+	padding: 5px;
+	
+	float: left;
+	line-height:25px;
 }
 
-p {
-    text-align: justify;
-    font-size: 15px;
+#conteudo {
+	padding:10px;
+	margin-top:10px;
+	background:#fff;
+	border:1px #c0c0c0 solid;
+	 }
+
+#footer 
+{
+	padding:10px;
+	margin-top:10px;
+	background:#fff;
+	border:1px #c0c0c0 solid;
+	text-align:center;
 }
 
+.titulo { font-size:16px; border-bottom:1px #666 dotted; padding:4px; margin:2px; font-weight:bold; }
+.busca_interna { background:#BFDFFF; padding:5px; border:1px #AEAEAE solid; }
 
-#wrapper {
-    padding-left: 11%;
-    padding-right: 11%;
-    width:79%;
-}
+/****
+FORMULARIOS
+***/
 
-#header {
-    height:126px;
+input[type=submit] {
+	border: 1px #D24F00 solid;
+	background: url(../images/fundo_botoes.png) repeat-x;
+	height: 27px;
+	color: #fff;
+	padding: 5px;
+	margin:0px;
+	font-weight: bold;
+	text-transform:uppercase;
 }
-#content {
-    margin-top:10px;
-    padding-bottom:10px;
-}
+input[type=text],input[type=password] { padding:5px; background:#F4F4F4; border:1px #666666 solid; }
+select { padding:3px; background:#F4F4F4; border:1px #666666 solid;  }
 
-#content-right {
-    border:1px solid #bbb;
-    width:31%;
-}
-#content-main {
-    border:1px solid #bbb;
-    width: 68%;
-}
-#footer {
-    float:left;
-    margin-top:10px;
-    margin-bottom:10px;
-    border:1px solid #bbb;
-    width:1020px;
-}
-#bottom {
-    clear:both;
-    text-align:right;
-}
-#navigation {
-    margin-top: 10px;
-    height: 50px;
-}
-
-.menu {
-    width: 100px;
-    background-color: #3399ff;
-    margin-right: 10px;
-    height: 30px;
-    float: left;
-    text-align: center;
-    padding-top: 20px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    font-size: 15px;
-}
+.foto { text-align:center; }
+.foto img { background:#fff; padding:5px; margin:1px; border:1px #999999 solid;}
 
 
-.menu:hover {
-    background-color: red;
-}
+.tabela table { margin:5px; padding:0px; width:100%;border:1px #666666 solid; }
 
+.tabela table tr:nth-child(odd)  { background-color:#E8F1FF; }
+.tabela table tr:nth-child(even) { background-color:#fcfcfc; }
+
+.tabela table th{
+	background-color:#222;
+	border:0px solid #6e776e;
+	text-align:center;
+	font-size:12px;
+	font-weight:bold;
+	color:#f2f2f2;
+	line-height:25px;
+}
+.tabela table td { height:23px; padding-left:4px; }

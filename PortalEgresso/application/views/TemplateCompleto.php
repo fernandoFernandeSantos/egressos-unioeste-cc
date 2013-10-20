@@ -1,34 +1,24 @@
 <?php echo doctype();?>
 <html>
-    <head>
-        {css}
+<head>
+{css}
         {meta}
-        <title>{title}</title>
-        {js}
-    </head>
-    <body>
-
-        <div id="wrapper">
-            <div id="header">{header}</div>
-            <div id="navigation">{navigation}</div>
-            <div id="content">
-
-
-                <div id="content-main" style="float: left">
-                    {content}
-                </div>
-
-                <div id="content-right" style="float: right">
-                    {left_menu}
-                </div>
-
-
-            </div>
-            <div id="footer">{rodape}</div>
-            <div id="bottom"></div>
-        </div>
-
-
-    </body>
+<title>{title}</title>
+{js}
+</head>
+<body>
+<div id="wrapper">
+  <div id="header">{header}</div>
+  <div id="navigation">{navigation}</div>
+  <div id="content">
+    <div id="largura">
+      <div id="login"> {left_menu} <div style="clear:both"></div></div>
+      
+      <div id="conteudo"> {content} </div>
+   
+    <div id="footer">{rodape}</div>
+    </div>
+  </div>
+</div>
+</body>
 </html>
-
