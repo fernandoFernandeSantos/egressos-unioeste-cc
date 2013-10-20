@@ -90,7 +90,7 @@ body {
 FORMULARIOS
 ***/
 
-input[type=submit] {
+input[type=submit],button {
 	border: 1px #D24F00 solid;
 	background: url(../images/fundo_botoes.png) repeat-x;
 	height: 27px;
