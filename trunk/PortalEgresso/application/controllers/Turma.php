@@ -63,6 +63,7 @@ class Turma extends CI_Controller {
             $data_img = array(
                 'src' => 'images/turma/' . $turma['foto_turma'],
                 'alt' => "foto",
+                'height'=>'400',
                 'width' => "500");
             $this->template->addContentVar('foto', img($data_img));
         } else {
