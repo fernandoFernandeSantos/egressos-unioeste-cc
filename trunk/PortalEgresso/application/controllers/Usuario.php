@@ -17,13 +17,14 @@ class Usuario extends CI_Controller {
         $this->load->library('template');
         $this->load->model('M_usuario', 'u');
         $this->load->model('M_egresso', 'e');
-        $this->load->model('M_perfil','p');
+        $this->load->model('M_perfil', 'p');
     }
 
     public function index() {
         if ($this->input->post('registrar')) {
             redirect(site_url('Usuario/Registrar'));
         } elseif ($this->input->post('login')) {
+            echo 'logar';
             $this->logar();
         } else {
             show_404();
@@ -57,10 +58,10 @@ class Usuario extends CI_Controller {
             $id_egresso = $result->row()->id_egresso;
 
             $this->u->criar($user, $password, $id_egresso, $email);
-            echo "id_egresso = $id_egresso";
-            $usuario=  $this->u->buscar(array('id_usuario'), "id_egresso = $id_egresso");
+//            echo "id_egresso = $id_egresso";
+            $usuario = $this->u->buscar(array('id_usuario'), "id_egresso = $id_egresso");
             $id_usuario = $usuario->row()->id_usuario;
-            $perfil_data = array('id_egresso'=>$id_egresso,'id_usuario'=>$id_usuario);
+            $perfil_data = array('id_egresso' => $id_egresso, 'id_usuario' => $id_usuario);
             $this->p->criar($perfil_data);
         }
         $this->gerarPagina();
@@ -81,26 +82,26 @@ class Usuario extends CI_Controller {
 
                 $user_nome = $this->e->buscar(array('nome'), array('id_egresso' => $row->id_egresso));
 
-                $this->session->set_userdata('logged',TRUE);
+                $this->session->set_userdata('logged', TRUE);
                 $this->session->set_userdata('nome', $user_nome->row()->nome);
                 $this->session->set_userdata('id_usuario', $id_user);
                 $this->session->set_userdata('id_egresso', $row->id_egresso);
-                
-                $this->session->set_userdata('email', $row->email);
-                
-                $this->session->set_userdata('usuario', $usuario);
 
+                $this->session->set_userdata('email', $row->email);
+
+                $this->session->set_userdata('usuario', $usuario);
+//                echo 'logado';
                 redirect($this->input->post('hidden_current_url'));
             } else {
-                
+
                 echo 'falho';
             }
         } else {
             echo 'non existe';
         }
     }
-    
-    public function sair(){
+
+    public function sair() {
         $this->session->unset_userdata('logged');
         $this->session->unset_userdata('nome');
         $this->session->unset_userdata('email');

@@ -18,7 +18,7 @@ class Home extends CI_Controller {
     }
     
     public function index(){
-        $this->template->parse('home');
+        $this->template->parse('Home');
     }
 }
 
