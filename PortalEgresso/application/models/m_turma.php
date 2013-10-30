@@ -90,6 +90,7 @@ class M_turma extends CI_Model {
         $query .= 'JOIN '.$this->get_full_pertence_table() . ' AS p ';
         $query .= 'ON e.id_egresso = p.id_egresso ';
         $query .= 'WHERE p.id_turma = '.$id;
+        $query .= 'ORDER BY nome';
 //        
 //        echo $query.'<br>';
         
