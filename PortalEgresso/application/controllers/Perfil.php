@@ -17,6 +17,7 @@ class Perfil extends CI_Controller {
         $this->load->model('m_perfil', 'perfil');
         $this->load->model('m_usuario', 'usuario');
         $this->load->model('m_egresso', 'egresso');
+        $this->load->model('m_especializacao','especializacao');
         $this->load->library('Template');
     }
 
@@ -32,14 +33,12 @@ class Perfil extends CI_Controller {
 
     public function ver($id = 1) {
 
-        //echo 'skldjflaksdjfklsadf';
         $select = array('*');
         $where = array('id_usuario' => $id);
 
         $result_perfil = $this->perfil->buscar($select, $where);
         $row_perfil = $result_perfil->row();
 
-        //echo ' id_egresso = ' . $result_perfil->row()->id_egresso;
         $result_egresso = $this->egresso->buscar($select, ' id_egresso = ' . $row_perfil->id_egresso);
         $row_egresso = $result_egresso->row();
 
@@ -50,15 +49,6 @@ class Perfil extends CI_Controller {
             $data_img = array('src' => $row_perfil->foto, 'alt' => 'foto', 'height' => '200', 'width' => '200');
             $this->template->addContentVar('foto', img($data_img));
         } else {
-            $image_properties = array(
-                'src' => 'images/picture.jpg',
-                'alt' => 'Me, demonstrating how to eat 4 slices of pizza at one time',
-                'class' => 'post_images',
-                'width' => '200',
-                'height' => '200',
-                'title' => 'That was quite a night',
-                'rel' => 'lightbox',
-            );
             $data_img = array('src' => 'images/egresso/' . $row_perfil->foto, 'alt' => 'foto', 'height' => '200', 'width' => '200');
             $this->template->addContentVar('foto', img($data_img));
         }
@@ -79,9 +69,6 @@ class Perfil extends CI_Controller {
         $this->template->addContentVar('ano_conclusao', $row_egresso->ano_conclusao);
         $this->template->addContentVar('area_atuacao', $row_perfil->area_atuacao);
         $this->template->addContentVar('email_publico', $row_perfil->email_publico);
-
-
-
 
 
         $this->template->parse('Perfil-ver');
@@ -122,11 +109,6 @@ class Perfil extends CI_Controller {
         if ($this->session->userdata('logged') !== TRUE) {
             $this->template->parse('AcessoNegado');
         } else {
-            if ($this->input->post('button_alterar')) {
-
-                echo $this->input->post('nome');
-                $edit_atributes = array($this->input->post('nome'));
-            } else {
                 $select = array('*');
                 $where = array('id_usuario' => $this->session->userdata('id_usuario'));
                 $result_perfil = $this->perfil->buscar($select, $where);
@@ -146,7 +128,6 @@ class Perfil extends CI_Controller {
                     $this->template->addContentVar('foto', img($data_img));
                 }
 
-//                $this->template->addContentVar('foto', $row_perfil->foto);
                 $this->template->addContentVar('upload_imagem', form_input(array('name' => 'upload_imagem', 'type' => 'file')));
                 $this->template->addContentVar('link_imagem', form_input('link_imagem'));
                 $this->template->addContentVar('button_alterar_foto', form_submit('button_alterar_foto', 'Alterar Foto'));
@@ -164,6 +145,21 @@ class Perfil extends CI_Controller {
                 $this->template->addContentVar('pagina_pessoal', form_input('pagina_pessoal', $row_perfil->pagina_pessoal));
                 $this->template->addContentVar('area_atuacao', form_input('area_atuacao', $row_perfil->area_atuacao));
                 $this->template->addContentVar('email_publico', form_input('email_publico', $row_perfil->email_publico));
+                
+                //especialização
+                $this->template->addContentVar('tipo_especializacao',  form_input('tipo_especializacao'));
+                $this->template->addContentVar('area_especializacao',  form_input('area_especializaca'));
+                $this->template->addContentVar('instituicao_especializacao',  form_input('instituicao_especializacao'));
+                
+                
+                $instituicoes = array();
+                
+                $this->template->addContentVar('instituicao_dropdown',  form_dropdown('instituicao_dropdown'));
+                $this->template->addContentVar('ano_inicio_especializacao',  form_input('ano_inicio_especializacao'));
+                $this->template->addContentVar('ano_conclusao_especializacao',  form_input('ano_conclusao_especializacao'));
+                
+                //trabalha
+                $this->template->addContentVar('email_publico', form_input('email_publico', $row_perfil->email_publico));
 
                 $this->template->addContentVar('form_open', form_open('Perfil/alterar'));
                 $this->template->addContentVar('form_close', form_close());
@@ -171,13 +167,11 @@ class Perfil extends CI_Controller {
                 $this->template->addContentVar('button_alterar', form_submit('button_alterar', 'Alterar'));
 
                 $this->template->parse('Perfil-alterar');
-            }
+//            }
         }
     }
 
     public function alterar() {
-
-        $atributes_alterar = array('nome', 'sexo', 'rua', 'cidade', 'estado', 'telefone', 'cep', 'ano_entrada', 'lattes', 'pagina_pessoal', 'descricao');
 
         $data_egresso = array(
             'nome' => $this->input->post('nome'),
@@ -194,16 +188,14 @@ class Perfil extends CI_Controller {
             'email_publico' => $this->input->post('email_publico'),
             'telefone' => $this->input->post('telefone'));
 
-        $where_perfil = "id_usuario = " . $this->template->getCI()->session->userdata('id_usuario');
-        //echo $where;
-        //$str = $this->db->update_string('table_name', $data, $where);
-        $where_egresso = "id_egresso = " . $this->template->getCI()->session->userdata('id_egresso');
+        $where_perfil = "id_usuario = " . $this->session->userdata('id_usuario');
+        $where_egresso = "id_egresso = " . $this->session->userdata('id_egresso');
 
 
         $this->perfil->alterar($data_perfil, $where_perfil);
         $this->egresso->alterar($data_egresso, $where_egresso);
 
-        redirect(site_url('Perfil/ver/' . $this->template->getCI()->session->userdata('id_usuario')));
+        redirect(site_url('Perfil/ver/' . $this->session->userdata('id_usuario')));
     }
 
 }

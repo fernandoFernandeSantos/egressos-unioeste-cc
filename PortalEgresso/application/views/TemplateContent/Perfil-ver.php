@@ -7,7 +7,7 @@
         {foto}<br>
     </div>
     <br>
-    
+
     <div class="tabela">
         <table width="100%" border="00">
             <tr>
@@ -51,16 +51,24 @@
                 <td>{email_publico}</td>
             </tr>
             <tr>
+                <td>Especializações: </td>
+                <td>{especializacoes}</td>
+            </tr>
+            <tr>
+                <td>Trabalha: </td>
+                <td>{trabalha}</td>
+            </tr>
+            <tr>
                 <td>Descrição: </td>
                 <td>{descricao}</td>
             </tr>
-                
-            
+
+
         </table>
-        
+
     </div>
-    
-    
+
+
 
 
 </div>
