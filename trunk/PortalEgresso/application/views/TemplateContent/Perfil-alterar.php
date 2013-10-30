@@ -62,12 +62,29 @@
                 <td>{email_publico}</td>
             </tr>
             <tr>
-                <td>Descrição: </td>
-                <td>{descricao}</td>
+                <td>Especializações: </td>
+                <td>{especializacoes}</td>
             </tr>
+            <tr>
+                <td>Trabalha: </td>
+                <td>{trabalha}</td>
+            </tr>
+            <tr><td>Descrição: </td><td>{descricao}</td></tr>
                 <td colspan="2" align="center">{button_alterar}</td>
-            
         </table>
         {form_close}
+        
+        <table width="100%" border="00">
+            <th colspan="2">Adicionar Especialização</th>
+            <tr><td>Tipo:</td><td>{tipo_especializacao}</td></tr>
+            <tr><td>Area:</td><td>{area_especializacao}</td></tr>
+            <tr><td>Instituição:</td><td>{instituicao_dropdown}  <br><font color="red">*Caso a instituição não esteja no menu, adicione manualmente na caixa de texto. </font><br> {instituicao_especializacao} </td></tr>
+            <tr><td>Ano de Inicio:</td><td>{ano_inicio_especializacao}</td></tr>
+            <tr><td>Ano de Conclusão</td><td>{ano_conclusao_especializacao}</td></tr>
+        </table>
+        <table width="100%" border="00">
+            <th>Remover Especialização</th>
+        </table>
+        
     </div>
 </div>
