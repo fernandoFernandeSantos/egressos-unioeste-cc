@@ -18,6 +18,7 @@ class Perfil extends CI_Controller {
         $this->load->model('m_usuario', 'usuario');
         $this->load->model('m_egresso', 'egresso');
         $this->load->model('m_especializacao', 'especializacao');
+        $this->load->model('m_trabalha', 'trabalha');
         $this->load->library('Template');
     }
 
@@ -69,6 +70,17 @@ class Perfil extends CI_Controller {
         $this->template->addContentVar('ano_conclusao', $row_egresso->ano_conclusao);
         $this->template->addContentVar('area_atuacao', $row_perfil->area_atuacao);
         $this->template->addContentVar('email_publico', $row_perfil->email_publico);
+
+        $this->table->set_heading('Tipo', 'Area', 'Inicio', 'Conclusao', 'Instituição');
+        $tmpl = array('table_open' => '<table width="100%" border="00">');
+        $this->table->set_template($tmpl);
+
+        $esp_table = array();
+        foreach ($this->especializacao->buscar_especializacoes($this->session->userdata('id_perfil')) as $row) {
+            $esp_table[] = array('Tipo' => $row['tipo'], 'Area' => $row['area'], 'Inicio' => $row['inicio'], 'Conclusao' => $row['conclusao'], 'Instituicao' => $row['nome_instituicao']);
+        }
+
+        $this->template->addContentVar('especializacoes', $this->table->generate($esp_table));
 
 
         $this->template->parse('Perfil-ver');
@@ -143,8 +155,30 @@ class Perfil extends CI_Controller {
             $this->template->addContentVar('area_atuacao', form_input('area_atuacao', $row_perfil->area_atuacao));
             $this->template->addContentVar('lattes', form_input('lattes', $row_perfil->link_lattes));
             $this->template->addContentVar('pagina_pessoal', form_input('pagina_pessoal', $row_perfil->pagina_pessoal));
-            $this->template->addContentVar('area_atuacao', form_input('area_atuacao', $row_perfil->area_atuacao));
+            
+            $empresas['Selecione'] = 'Selecione';
+            
+//            foreach($this->trabalha->buscar_instituicoes() as $row){
+//                $empresas[$row['id_instituicao']] = $row['nome_instituicao'];
+//            }
+            $this->template->addContentVar('trabalha_dropdown', form_dropdown('trabalha_dropdown', $empresas, 'Selecione'));
+            $this->template->addContentVar('trabalha_em_input', form_input('trabalha_input'));
+            
+            
             $this->template->addContentVar('email_publico', form_input('email_publico', $row_perfil->email_publico));
+
+
+            $this->table->set_heading('Tipo', 'Area', 'Inicio', 'Conclusao', 'Instituição');
+            $tmpl = array('table_open' => '<table width="100%" border="00">');
+            $this->table->set_template($tmpl);
+
+            $esp_table = array();
+            foreach ($this->especializacao->buscar_especializacoes($this->session->userdata('id_perfil')) as $row) {
+                $esp_table[] = array('Tipo' => $row['tipo'], 'Area' => $row['area'], 'Inicio' => $row['inicio'], 'Conclusao' => $row['conclusao'], 'Instituicao' => $row['nome_instituicao']);
+            }
+
+            $this->template->addContentVar('especializacoes', $this->table->generate($esp_table));
+
 
             //especialização
             $this->template->addContentVar('form_adicionar_especializacao_open', form_open('Perfil/adicionar_especializacao'));
@@ -153,7 +187,7 @@ class Perfil extends CI_Controller {
             $this->template->addContentVar('instituicao_especializacao', form_input('instituicao_especializacao'));
 
             $instituicoes['Selecione'] = 'Selecione';
-            foreach ($this->especializacao->buscar_instituicoes()->result_array() as $row) {
+            foreach ($this->especializacao->buscar_instituicoes('Universidade')->result_array() as $row) {
                 $instituicoes[$row['id_instituicao']] = $row['nome_instituicao'];
             }
             $this->template->addContentVar('instituicao_dropdown', form_dropdown('instituicao_dropdown', $instituicoes, 'Selecione'));
@@ -192,7 +226,7 @@ class Perfil extends CI_Controller {
         $insert_array['conclusao'] = $this->input->post('ano_conclusao_especializacao');
         $insert_array['id_perfil'] = $this->session->userdata('id_perfil');
         if ($this->input->post('instituicao_dropdown') === 'Selecione' && $this->input->post('instituicao_especializacao') !== '') {
-            $insert_array['id_instituicao'] = $this->especializacao->adicionar_instituicao($this->input->post('instituicao_especializacao'));
+            $insert_array['id_instituicao'] = $this->especializacao->adicionar_instituicao($this->input->post('instituicao_especializacao'),'Universidade');
         } else {
             $insert_array['id_instituicao'] = (int) $this->input->post('instituicao_dropdown');
         }
@@ -201,8 +235,8 @@ class Perfil extends CI_Controller {
     }
 
     public function remover_especializacao() {
-        if($this->input->post('remover_especializacao_dropdown') !== 'Selecione'){
-            $this->especializacao->deletar_especializacao(array('id_especializacao'=>(int)$this->input->post('remover_especializacao_dropdown')));
+        if ($this->input->post('remover_especializacao_dropdown') !== 'Selecione') {
+            $this->especializacao->deletar_especializacao(array('id_especializacao' => (int) $this->input->post('remover_especializacao_dropdown')));
         }
         redirect(site_url('Perfil/editar'));
     }

@@ -1,36 +1,36 @@
 <?php
 
-class M_especializacao extends CI_Model {
+class M_trabalha extends CI_Model {
 
     private $schema;
-    private $especializacao_table;
+    private $trabalha_table;
     private $instituicoes_table;
 
-    public function __construct($_schema = 'ptegresso', $_table = 'especializacao', $_instituicoes = 'instituicoes') {
+    public function __construct($_schema = 'ptegresso', $_table = 'trabalha', $_instituicoes = 'instituicoes') {
         parent::__construct();
         $this->schema = $_schema;
-        $this->especializacao_table = $_table;
+        $this->trabalha_table = $_table;
         $this->instituicoes_table = $_instituicoes;
     }
 
-    public function set_especializacao_table($_table) {
-        $this->especializacao_table = $_table;
+    public function set_trabalha_table($_table) {
+        $this->trabalha_table = $_table;
     }
 
     public function set_schema($_schema) {
         $this->schema = $_schema;
     }
 
-    public function get_especializacao_table() {
-        return $this->especializacao_table;
+    public function get_trabalha_table() {
+        return $this->trabalha_table;
     }
 
     public function get_schema() {
         return $this->schema;
     }
 
-    private function get_full_especializacao_table() {
-        return $this->schema . '.' . $this->especializacao_table;
+    private function get_full_trabalha_table() {
+        return $this->schema . '.' . $this->trabalha_table;
     }
 
     private function get_full_instituicao_table() {
@@ -43,33 +43,8 @@ class M_especializacao extends CI_Model {
         return $this->db->insert_id();
     }
 
-    public function criar_especializacao($data) {
-        $query = $this->db->insert_string($this->get_full_especializacao_table(), $data);
-        $this->db->query($query);
-    }
 
-    public function deletar_instituicao($where) {
-        //delete from table where
-
-        $query = 'DELETE FROM ' . $this->get_full_instituicao_table() . ' WHERE ';
-
-        if (is_array($where)) {
-            foreach (array_keys($where) as $key) {
-                if (is_string($where[$key])) {
-                    $condition[$key] = $key . ' = "' . $where[$key] . '"';
-                } else {
-                    $condition[$key] = $key . ' = ' . $where[$key];
-                }
-            }
-            $query .= implode(' AND ', $condition);
-        } else {
-            $query .= $where;
-        }
-
-        $this->db->query($query);
-    }
-
-    public function deletar_especializacao($where) {
+    public function deletar_trabalha($where) {
         //delete from table where
 
         $query = 'DELETE FROM ' . $this->get_full_especializacao_table() . ' WHERE ';
@@ -96,23 +71,17 @@ class M_especializacao extends CI_Model {
         } else {
             $query = 'SELECT * FROM ' . $this->get_full_instituicao_table() . ' ORDER BY nome_instituicao';
         }
-        return $this->db->query($query);
+        return $this->db->query($query)->ressult_array();;
     }
-
-    public function buscar_id_instituicao($nome) {
-        $query = 'SELECT id_instituicao FROM ' . $this->get_full_instituicao_table() . ' WHERE nome_instituicao = \'' . $nome . '\'';
-        $result_array = $this->db->query($query)->result_array();
-        return $result_array['id_instituicao'];
-    }
-
-    public function buscar_especializacoes($id_perfil) {
-        $query = 'SELECT id_especializacao, tipo, area, inicio,conclusao,nome_instituicao FROM ' . $this->get_full_especializacao_table() . ' AS e ';
-        $query .=' JOIN ' . $this->get_full_instituicao_table() . ' AS i ON i.id_instituicao=e.id_instituicao';
-        $query .=' WHERE id_perfil = \'' . $id_perfil . '\'';
+    
+    public function buscar_trabalha_em($id_perfil){
+        $query = 'SELECT i.id_instituicao,nome_instituicao FROM '.$this->get_full_trabalha_table() . ' AS t';
+        $query .=' JOIN '.$this->get_full_instituicao_table() . ' AS i ON t.id_instituicao=i.id_instituicao';
+        $query .= ' WHERE t.id_perfil = '.$id_perfil;
         return $this->db->query($query)->result_array();
     }
 
-    public function buscar_especializacao($colunas, $where = NULL, $order_by = '') {
+    public function buscar_trabalha($colunas, $where = NULL, $order_by = '') {
         $query = 'SELECT ' . implode(', ', $colunas) . ' FROM ' . $this->get_full_especializacao_table();
 
         if ($where !== NULL) {
@@ -142,7 +111,7 @@ class M_especializacao extends CI_Model {
         return $this->db->query($query);
     }
 
-    public function alterar_especializacao($values, $where) {
+    public function alterar_trabalha($values, $where) {
         if (is_array($where)) {
             foreach (array_keys($where) as $key) {
                 $conditions[$key] = $key . ' = ' . $where[$key];

@@ -51,11 +51,7 @@
                 <td>{email_publico}</td>
             </tr>
             <tr>
-                <td>Especializações: </td>
-                <td>{especializacoes}</td>
-            </tr>
-            <tr>
-                <td>Trabalha: </td>
+                <td>Trabalha em: </td>
                 <td>{trabalha}</td>
             </tr>
             <tr>
@@ -65,6 +61,12 @@
 
 
         </table>
+        
+        <table width="100%" border="00" >
+            <th>Especializações</tr>
+                
+        </table>
+        {especializacoes}
 
     </div>
 
