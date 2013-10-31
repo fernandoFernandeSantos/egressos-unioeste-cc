@@ -1,20 +1,22 @@
 <div>
 
-    <center>
+
+    <div class="tabela">
+
 
         <h2>Perfil</h2><br>
-            {form_multipart}
+        {form_multipart}
         <div style="text-align: center;">
             {foto}<br>
         </div>    
-        Upload : {upload_imagem}<br>
-        Link : {link_imagem}<br>
-        {button_alterar_foto}
+        <table>
+            <tr><td>Upload:</td><td colspan="2"> {upload_imagem}</td></tr>
+            <tr><td>Link : </td><td>{link_imagem}</td><td><font color="red">*Você pode alterar sua fóto fornecendo um link de uma foto externa, ou fazendo o upload de um imagem de seu computador</font></td></tr>
+            <td colspan="3" align="center">{button_alterar_foto}</td>
+        </table>
         {form_close}
-        <p>Você pode alterar sua fóto fornecendo um link de uma foto externa, ou fazendo o upload de um imagem de seu computador</p>
 
-    </center>
-    <div class="tabela">
+
         {form_open}
         <table width="100%" border="00">
             <tr>
@@ -62,18 +64,19 @@
                 <td>{email_publico}</td>
             </tr>
             <tr>
-                <td>Especializações: </td>
-                <td>{especializacoes}</td>
-            </tr>
-            <tr>
-                <td>Trabalha: </td>
-                <td>{trabalha}</td>
+                <td>Trabalha em: </td>
+                <td>{trabalha_dropdown} <font color="red">*Caso a instituição não esteja no menu, adicione-a manualmente na caixa de texto. </font><br>{trabalha_em_input}</td>
             </tr>
             <tr><td>Descrição: </td><td>{descricao}</td></tr>
-                <td colspan="2" align="center">{button_alterar}</td>
+            <td colspan="2" align="center">{button_alterar}</td>
         </table>
         {form_close}
-        
+
+        <table width="100%" border="00" >
+            <th>Especializações</tr>
+
+        </table>
+        {especializacoes}
         {form_adicionar_especializacao_open}
         <table width="100%" border="00">
             <th colspan="2">Adicionar Especialização</th>
@@ -85,7 +88,7 @@
             <tr><td colspan="2" align="center">{adicionar_especializacao}</td></tr>
         </table>
         {form_close}
-        
+
         {form_remover_especializacao_open}
         <table width="100%" border="00">
             <th colspan="2">Remover Especialização</th>
@@ -93,6 +96,6 @@
             <tr><td colspan="2" align="center">{remover_especializacao}</td></tr>
         </table>
         {form_close}
-        
+
     </div>
 </div>
