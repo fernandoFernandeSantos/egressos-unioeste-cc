@@ -22,12 +22,8 @@ class Teste extends CI_Controller {
     }
 
     public function index() {
-        $especializacoes['Selecione'] = 'Selecione';
-        foreach ($this->especializacao->buscar_especializacoes($this->session->userdata('id_perfil')) as $row) {
-            $string = $row['inicio'] . '-' . $row['conclusao'] . ' | ' . $row['tipo'] . ' - ' . $row['area'] . ' | ' . $row['nome_instituicao'];
-            $especializacoes[$row['id_especializacao']] = $string;
-        }
-        $this->template->addContentVar('teste', form_dropdown('remover_especializacao_dropdown', $especializacoes, 'Selecione'));
+        
+        $this->template->addContentVar('teste', form_radio('as','something').'Something');
         $this->template->parse('Teste');
     }
 

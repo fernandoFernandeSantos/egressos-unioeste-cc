@@ -157,12 +157,18 @@ class Perfil extends CI_Controller {
             $this->template->addContentVar('pagina_pessoal', form_input('pagina_pessoal', $row_perfil->pagina_pessoal));
             
             $empresas['Selecione'] = 'Selecione';
-            
-//            foreach($this->trabalha->buscar_instituicoes() as $row){
-//                $empresas[$row['id_instituicao']] = $row['nome_instituicao'];
-//            }
-            $this->template->addContentVar('trabalha_dropdown', form_dropdown('trabalha_dropdown', $empresas, 'Selecione'));
+            $selected = 'Selecione';
+            $trabalha_em = $this->trabalha->buscar_trabalha_em($this->session->userdata('id_perfil'));
+            var_dump($trabalha_em);
+            foreach($this->trabalha->buscar_instituicoes() as $row){
+                if(isset($trabalha_em['id_instiuicao']) && $row['id_instituicao'] === $trabalha_em['id_instituicao']){
+                    $selected = $row['id_instituicao'];
+                }
+                $empresas[$row['id_instituicao']] = $row['nome_instituicao'];
+            }
+            $this->template->addContentVar('trabalha_dropdown', form_dropdown('trabalha_dropdown', $empresas, '2'));
             $this->template->addContentVar('trabalha_em_input', form_input('trabalha_input'));
+            $this->template->addContentVar('radiobutton', "Tipo: ".form_radio('tipo_instituicao','Empresa',TRUE) . 'Empresa '.form_radio('tipo_instituicao','Universidade') . 'Universidade');
             
             
             $this->template->addContentVar('email_publico', form_input('email_publico', $row_perfil->email_publico));
@@ -260,10 +266,29 @@ class Perfil extends CI_Controller {
 
         $where_perfil = "id_usuario = " . $this->session->userdata('id_usuario');
         $where_egresso = "id_egresso = " . $this->session->userdata('id_egresso');
+        $where_trabalha = 'id_perfil = ' . $this->session->userdata('id_perfil');
+        
+        
+        
+        $id_instituicao = 0;
+        if($this->input->post('trabalha_dropdown') === 'Selecione' && $this->input->post('trabalha_input') !== ''){
+            $id_instituicao = $this->trabalha->adicionar_instituicao($this->input->post('trabalha_input'),$this->input->post('tipo_instituicao'));
+        }else{
+            $id_instituicao = (int)$this->input->post('trabalha_dropdown');
+        }
+        if(count($this->trabalha->buscar_trabalha_em($this->session->userdata('id_perfil'))) == 0){
+            $this->trabalha->criar(array('id_instituicao' => $id_instituicao,'id_perfil' => $this->session->userdata('id_perfil')));
+        }
+        
+        $data_trabalha = array(
+            'id_perfil' => $this->session->userdata('id_perfil'),
+            'id_instituicao' => $id_instituicao
+        );
 
 
         $this->perfil->alterar($data_perfil, $where_perfil);
         $this->egresso->alterar($data_egresso, $where_egresso);
+        $this->trabalha->alterar($data_trabalha,$where_trabalha);
 
         redirect(site_url('Perfil/ver/' . $this->session->userdata('id_usuario')));
     }

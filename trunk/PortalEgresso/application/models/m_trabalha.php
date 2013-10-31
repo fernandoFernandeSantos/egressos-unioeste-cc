@@ -43,6 +43,10 @@ class M_trabalha extends CI_Model {
         return $this->db->insert_id();
     }
 
+    public function criar($data) {
+        $query = $this->db->insert_string($this->get_full_trabalha_table(), $data);
+        $this->db->query($query);
+    }
 
     public function deletar_trabalha($where) {
         //delete from table where
@@ -71,7 +75,7 @@ class M_trabalha extends CI_Model {
         } else {
             $query = 'SELECT * FROM ' . $this->get_full_instituicao_table() . ' ORDER BY nome_instituicao';
         }
-        return $this->db->query($query)->ressult_array();;
+        return $this->db->query($query)->result_array();
     }
     
     public function buscar_trabalha_em($id_perfil){
@@ -111,14 +115,14 @@ class M_trabalha extends CI_Model {
         return $this->db->query($query);
     }
 
-    public function alterar_trabalha($values, $where) {
+    public function alterar($values, $where) {
         if (is_array($where)) {
             foreach (array_keys($where) as $key) {
                 $conditions[$key] = $key . ' = ' . $where[$key];
             }
             $where = implode(' and ', $conditions);
         }
-        $query = $this->db->update_string($this->get_full_especializacao_table(), $values, $where);
+        $query = $this->db->update_string($this->get_full_trabalha_table(), $values, $where);
         $this->db->query($query);
     }
 
