@@ -74,17 +74,25 @@
         </table>
         {form_close}
         
+        {form_adicionar_especializacao_open}
         <table width="100%" border="00">
             <th colspan="2">Adicionar Especialização</th>
             <tr><td>Tipo:</td><td>{tipo_especializacao}</td></tr>
             <tr><td>Area:</td><td>{area_especializacao}</td></tr>
-            <tr><td>Instituição:</td><td>{instituicao_dropdown}  <br><font color="red">*Caso a instituição não esteja no menu, adicione manualmente na caixa de texto. </font><br> {instituicao_especializacao} </td></tr>
+            <tr><td>Instituição:</td><td>{instituicao_dropdown}  <font color="red">*Caso a instituição não esteja no menu, adicione-a manualmente na caixa de texto. </font><br> {instituicao_especializacao} </td></tr>
             <tr><td>Ano de Inicio:</td><td>{ano_inicio_especializacao}</td></tr>
             <tr><td>Ano de Conclusão</td><td>{ano_conclusao_especializacao}</td></tr>
+            <tr><td colspan="2" align="center">{adicionar_especializacao}</td></tr>
         </table>
+        {form_close}
+        
+        {form_remover_especializacao_open}
         <table width="100%" border="00">
-            <th>Remover Especialização</th>
+            <th colspan="2">Remover Especialização</th>
+            <tr><td>Selecione a especializacao que quer remover:</td><td>{remover_especializacao_dropdown}</td></tr>
+            <tr><td colspan="2" align="center">{remover_especializacao}</td></tr>
         </table>
+        {form_close}
         
     </div>
 </div>

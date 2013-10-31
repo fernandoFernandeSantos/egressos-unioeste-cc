@@ -82,10 +82,13 @@ class Usuario extends CI_Controller {
 
                 $user_nome = $this->e->buscar(array('nome'), array('id_egresso' => $row->id_egresso));
 
+                $row_perfil = $this->p->buscar(array('id_perfil'),array('id_usuario' => $id_user))->row();
+                
                 $this->session->set_userdata('logged', TRUE);
                 $this->session->set_userdata('nome', $user_nome->row()->nome);
                 $this->session->set_userdata('id_usuario', $id_user);
                 $this->session->set_userdata('id_egresso', $row->id_egresso);
+                $this->session->set_userdata('id_perfil', $row_perfil->id_perfil);
 
                 $this->session->set_userdata('email', $row->email);
 
