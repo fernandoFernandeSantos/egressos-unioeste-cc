@@ -65,16 +65,23 @@
             </tr>
             <tr>
                 <td>Trabalha em: </td>
-                <td>{trabalha_dropdown} <font color="red">*Caso a instituição não esteja no menu, adicione-a manualmente na caixa de texto. </font><br>{trabalha_em_input} <br>{radiobutton}</td>
-            </tr>
+                <td>{trabalha}</tr>
             <tr><td>Descrição: </td><td>{descricao}</td></tr>
             <td colspan="2" align="center">{button_alterar}</td>
         </table>
         {form_close}
 
+        {form_trabalha_open}
+        <table width="100%" border="00" >
+            <th colspan="2">Alterar Empresa em que Trabalha</tr>
+            <tr><td>Selecione:</td><td>{trabalha_dropdown} <font color="red">*Caso a instituição não esteja no menu, adicione-a manualmente na caixa de texto. </font></td></tr>
+            <tr><td>Insira:</td><td>{trabalha_em_input} {radiobutton}</td><tr/>
+            <tr><td colspan="2" align="center">{button_alterar_trabalho}</td></tr>
+        </table>
+        {form_close}
+
         <table width="100%" border="00" >
             <th>Especializações</tr>
-
         </table>
         {especializacoes}
         {form_adicionar_especializacao_open}

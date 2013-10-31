@@ -23,7 +23,7 @@ class Teste extends CI_Controller {
 
     public function index() {
         
-        $this->template->addContentVar('teste', form_radio('as','something').'Something');
+        $this->template->addContentVar('teste', form_dropdown('something',array('1' => '1','2' => '2'),1));
         $this->template->parse('Teste');
     }
 
