@@ -53,8 +53,8 @@ class Perfil extends CI_Controller {
             $data_img = array('src' => 'images/egresso/' . $row_perfil->foto, 'alt' => 'foto', 'height' => '200', 'width' => '200');
             $this->template->addContentVar('foto', img($data_img));
         }
-        
-        $trabalha_em = $this->trabalha->buscar_trabalha_em($this->session->userdata('id_perfil'));
+
+        $trabalha_em = $this->trabalha->buscar_trabalha_em($id);
 
 //                
         $this->template->addContentVar('nome', $row_egresso->nome);
@@ -69,7 +69,12 @@ class Perfil extends CI_Controller {
         $this->template->addContentVar('lattes', $row_perfil->link_lattes);
         $this->template->addContentVar('pagina_pessoal', $row_perfil->pagina_pessoal);
         $this->template->addContentVar('area_atuacao', $row_perfil->area_atuacao);
-        $this->template->addContentVar('trabalha', $trabalha_em[0]['nome_instituicao']);
+        if (isset($trabalha_em[0]['nome_instituicao'])) {
+
+            $this->template->addContentVar('trabalha', $trabalha_em[0]['nome_instituicao']);
+        } else {
+            $this->template->addContentVar('trabalha', "");
+        }
         $this->template->addContentVar('email_publico', $row_perfil->email_publico);
 
         $this->table->set_heading('Tipo', 'Area', 'Inicio', 'Conclusao', 'Instituição');
@@ -159,7 +164,7 @@ class Perfil extends CI_Controller {
             $this->template->addContentVar('email_publico', form_input('email_publico', $row_perfil->email_publico));
 
 
-            $this->template->addContentVar('form_trabalha_open',  form_open('Perfil/alterar_trabalha'));
+            $this->template->addContentVar('form_trabalha_open', form_open('Perfil/alterar_trabalha'));
             $empresas['Selecione'] = 'Selecione';
             $selected = 'Selecione';
             $trabalha_em = $this->trabalha->buscar_trabalha_em($this->session->userdata('id_perfil'));
@@ -169,13 +174,17 @@ class Perfil extends CI_Controller {
                 }
                 $empresas[$row['id_instituicao']] = $row['nome_instituicao'];
             }
-            $this->template->addContentVar('trabalha', $trabalha_em[0]['nome_instituicao']);
+            if (isset($trabalha_em[0]['nome_instituicao'])) {
+                $this->template->addContentVar('trabalha', $trabalha_em[0]['nome_instituicao']);
+            } else {
+                $this->template->addContentVar('trabalha', "");
+            }
             $this->template->addContentVar('trabalha_dropdown', form_dropdown('trabalha_dropdown', $empresas, $selected));
             $this->template->addContentVar('trabalha_em_input', form_input('trabalha_input'));
             $this->template->addContentVar('radiobutton', "Tipo: " . form_radio('tipo_instituicao', 'Empresa', TRUE) . 'Empresa ' . form_radio('tipo_instituicao', 'Universidade') . 'Universidade');
             $this->template->addContentVar('button_alterar_trabalho', form_submit('button_alterar_trabalho', 'Adicionar'));
 
-            
+
             $this->table->set_heading('Tipo', 'Area', 'Inicio', 'Conclusao', 'Instituição');
             $tmpl = array('table_open' => '<table width="100%" border="00">');
             $this->table->set_template($tmpl);
@@ -248,8 +257,8 @@ class Perfil extends CI_Controller {
         }
         redirect(site_url('Perfil/editar'));
     }
-    
-    public function alterar_trabalha(){
+
+    public function alterar_trabalha() {
         $where_trabalha = 'id_perfil = ' . $this->session->userdata('id_perfil');
 
         $id_instituicao = 0;
