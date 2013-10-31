@@ -6,7 +6,7 @@ class M_especializacao extends CI_Model {
     private $especializacao_table;
     private $instituicoes_table;
 
-    public function __construct($_schema = 'ptegresso', $_table = 'especializacao',$_instituicoes = 'instituicoes') {
+    public function __construct($_schema = 'ptegresso', $_table = 'especializacao', $_instituicoes = 'instituicoes') {
         parent::__construct();
         $this->schema = $_schema;
         $this->especializacao_table = $_table;
@@ -32,21 +32,22 @@ class M_especializacao extends CI_Model {
     private function get_full_especializacao_table() {
         return $this->schema . '.' . $this->especializacao_table;
     }
-    
-    private function get_full_instituicao_table(){
+
+    private function get_full_instituicao_table() {
         return $this->schema . '.' . $this->instituicoes_table;
     }
-    
-    public function adicionar_instituicao($nome){
-        $query = $this->db->insert_string($this->get_full_especializacao_table(), array('nome_instituicao' => $nome));
+
+    public function adicionar_instituicao($nome) {
+        $query = $this->db->insert_string($this->get_full_instituicao_table(), array('nome_instituicao' => $nome));
         $this->db->query($query);
+        return $this->db->insert_id();
     }
 
     public function criar_especializacao($data) {
         $query = $this->db->insert_string($this->get_full_especializacao_table(), $data);
         $this->db->query($query);
     }
-    
+
     public function deletar_instituicao($where) {
         //delete from table where
 
@@ -89,11 +90,24 @@ class M_especializacao extends CI_Model {
         $this->db->query($query);
     }
 
-    public function buscar_instituicoes(){
+    public function buscar_instituicoes() {
         $query = 'SELECT * FROM ' . $this->get_full_instituicao_table() . ' ORDER BY nome_instituicao';
         return $this->db->query($query);
     }
+
+    public function buscar_id_instituicao($nome) {
+        $query = 'SELECT id_instituicao FROM ' . $this->get_full_instituicao_table() . ' WHERE nome_instituicao = \'' . $nome . '\'';
+        $result_array = $this->db->query($query)->result_array();
+        return $result_array['id_instituicao'];
+    }
     
+    public function buscar_especializacoes($id_perfil){
+        $query = 'SELECT id_especializacao, tipo, area, inicio,conclusao,nome_instituicao FROM ' .$this->get_full_especializacao_table() . ' AS e ';
+        $query .=' JOIN '.$this->get_full_instituicao_table().' AS i ON i.id_instituicao=e.id_instituicao';
+        $query .=' WHERE id_perfil = \''.$id_perfil.'\'';
+        return $this->db->query($query)->result_array();
+    }
+
     public function buscar_especializacao($colunas, $where = NULL, $order_by = '') {
         $query = 'SELECT ' . implode(', ', $colunas) . ' FROM ' . $this->get_full_especializacao_table();
 
@@ -136,4 +150,5 @@ class M_especializacao extends CI_Model {
     }
 
 }
+
 ?>
