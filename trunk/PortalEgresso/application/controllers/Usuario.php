@@ -73,6 +73,7 @@ class Usuario extends CI_Controller {
         $senha = $this->input->post('senha');
 
         $id_user = $this->u->existe($usuario);
+        echo $id_user;
         if ($id_user !== FALSE) {
             $check = $this->u->password_check($id_user, $senha);
             if ($check === TRUE) {
@@ -82,8 +83,8 @@ class Usuario extends CI_Controller {
 
                 $user_nome = $this->e->buscar(array('nome'), array('id_egresso' => $row->id_egresso));
 
-                $row_perfil = $this->p->buscar(array('id_perfil'),array('id_usuario' => $id_user))->row();
-                
+                $row_perfil = $this->p->buscar(array('id_perfil'), array('id_usuario' => $id_user))->row();
+
                 $this->session->set_userdata('logged', TRUE);
                 $this->session->set_userdata('nome', $user_nome->row()->nome);
                 $this->session->set_userdata('id_usuario', $id_user);
@@ -94,13 +95,17 @@ class Usuario extends CI_Controller {
 
                 $this->session->set_userdata('usuario', $usuario);
 //                echo 'logado';
+                //$this->template->addMenuVars("p", "");
                 redirect($this->input->post('hidden_current_url'));
             } else {
-
-                echo 'falho';
+                $error = '<p style="color:red;">Senha ou Usuário Incorreto</p>';
+                $this->template->addMenuVars("p", $error);
+                $this->template->parse("home");
             }
         } else {
-            echo 'non existe';
+            $error = '<p style="color:red;">Senha ou Usuário Incorreto</p>';
+                $this->template->addMenuVars("p", $error);
+                $this->template->parse("home");
         }
     }
 

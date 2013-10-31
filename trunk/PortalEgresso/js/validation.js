@@ -15,7 +15,12 @@ function loginValidation(session){
                     alert("Usuario não Inserido!");
                     return false;
                 }
+                else{
+                    alert("Nome ou usuário Inválido!");
+                }
                 
-    
 }
 
+function loginValidation2(check){
+    alert(check);
+}

@@ -87,6 +87,7 @@ class Template {
         return $this->CI;
     }
     public function parse($file) {
+        $this->addMenuVars("hidden_conteudo", form_hidden("hidden_conteudo",$file));
         $this->addGlobalVars('css', link_tag("css/StandartStyles.css"));
         $this->addGlobalVars('meta', '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta charset="utf-8" />');
@@ -122,7 +123,7 @@ class Template {
             $this->addMenuVars('form_open', form_open('Perfil/editar'));
             $this->addMenuVars('button_editar', form_submit('editar','Editar'));
             $this->addMenuVars('form_close', form_close());
-			
+	    		
             $this->addMenuVars('nome', $this->CI->session->userdata('nome'));
             $this->addMenuVars('usuario', $this->CI->session->userdata('usuario'));
             $this->addMenuVars('email', $this->CI->session->userdata('email'));
