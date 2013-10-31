@@ -4,5 +4,5 @@
   <div>{button_login}</div>
   {hidden_current_url}
   <div>{button_registro}</div>
-  <div>{p}</div>
+  <div>{erro_menu}</div>
   {form_close} </div>
