@@ -65,7 +65,7 @@
             </tr>
             <tr>
                 <td>Trabalha em: </td>
-                <td>{trabalha_dropdown} <font color="red">*Caso a instituição não esteja no menu, adicione-a manualmente na caixa de texto. </font><br>{trabalha_em_input}</td>
+                <td>{trabalha_dropdown} <font color="red">*Caso a instituição não esteja no menu, adicione-a manualmente na caixa de texto. </font><br>{trabalha_em_input} <br>{radiobutton}</td>
             </tr>
             <tr><td>Descrição: </td><td>{descricao}</td></tr>
             <td colspan="2" align="center">{button_alterar}</td>
