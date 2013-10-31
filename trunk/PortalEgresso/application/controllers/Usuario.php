@@ -69,6 +69,8 @@ class Usuario extends CI_Controller {
 
     public function logar() {
 
+        var_dump($this->input->post());
+        var_dump($this->session->all_userdata());
         $usuario = $this->input->post('user');
         $senha = $this->input->post('senha');
 
@@ -100,12 +102,16 @@ class Usuario extends CI_Controller {
             } else {
                 $error = '<p style="color:red;">Senha ou Usuário Incorreto</p>';
                 $this->template->addMenuVars("p", $error);
-                $this->template->parse("home");
+                $this->session->set_flashdata('erro_menu','cago geral');
+//                $this->template->parse("home");
+                redirect($this->input->post('hidden_current_url'));
             }
         } else {
             $error = '<p style="color:red;">Senha ou Usuário Incorreto</p>';
-                $this->template->addMenuVars("p", $error);
-                $this->template->parse("home");
+            $this->template->addMenuVars("p", $error);
+            $this->session->set_flashdata('erro_menu','cago geral');
+//            $this->template->parse("home");
+            redirect($this->input->post('hidden_current_url'));
         }
     }
 
@@ -114,6 +120,9 @@ class Usuario extends CI_Controller {
         $this->session->unset_userdata('nome');
         $this->session->unset_userdata('email');
         $this->session->unset_userdata('usuario');
+        $this->session->unset_userdata('id_usuario');
+        $this->session->unset_userdata('id_egresso');
+        $this->session->unset_userdata('id_perfil');
         redirect($this->input->post('hidden_current_url'));
     }
 
