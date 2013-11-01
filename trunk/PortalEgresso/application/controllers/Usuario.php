@@ -100,16 +100,16 @@ class Usuario extends CI_Controller {
                 //$this->template->addMenuVars("p", "");
                 redirect($this->input->post('hidden_current_url'));
             } else {
-                $error = '<p style="color:red;">Senha ou Usuário Incorreto</p>';
-                $this->template->addMenuVars("p", $error);
-                $this->session->set_flashdata('erro_menu','cago geral');
+                //$error = '<p style="color:red;">Senha ou Usuário Incorreto</p>';
+                //$this->template->addMenuVars("p", $error);
+                $this->session->set_flashdata('erro_menu','Usuario ou Senha Incorreta');
 //                $this->template->parse("home");
                 redirect($this->input->post('hidden_current_url'));
             }
         } else {
-            $error = '<p style="color:red;">Senha ou Usuário Incorreto</p>';
-            $this->template->addMenuVars("p", $error);
-            $this->session->set_flashdata('erro_menu','cago geral');
+            ///$error = '<p style="color:red;">Senha ou Usuário Incorreto</p>';
+           // $this->template->addMenuVars("p", $error);
+            $this->session->set_flashdata('erro_menu','Usuario ou Senha Incorreta');
 //            $this->template->parse("home");
             redirect($this->input->post('hidden_current_url'));
         }

@@ -108,6 +108,7 @@ class M_perfil extends CI_Model {
 //        }
         $query = $this->db->update_string($this->get_full_table(), $values,
                 $where);
+        echo $query;
         $this->db->query($query);
     }
 
