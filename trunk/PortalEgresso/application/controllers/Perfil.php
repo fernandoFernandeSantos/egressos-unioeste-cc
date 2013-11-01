@@ -12,6 +12,8 @@
  */
 class Perfil extends CI_Controller {
 
+    private $tmpl;
+
     public function __construct() {
         parent::__construct();
         $this->load->model('m_perfil', 'perfil');
@@ -20,6 +22,9 @@ class Perfil extends CI_Controller {
         $this->load->model('m_especializacao', 'especializacao');
         $this->load->model('m_trabalha', 'trabalha');
         $this->load->library('Template');
+        $this->tmpl = array('table_open' => '<table width="100%" border="00">');
+        $this->load->model('m_redes_sociais', 'rede_social');
+        $this->load->helper('text');
     }
 
     public function index() {
@@ -128,8 +133,6 @@ class Perfil extends CI_Controller {
             $this->template->parse('AcessoNegado');
         } else {
 
-            //$this->template->addContentVar('error_alterar', $this->session->flashdata('error_alterar'));
-
             $select = array('*');
             $where = array('id_usuario' => $this->session->userdata('id_usuario'));
             $result_perfil = $this->perfil->buscar($select, $where);
@@ -168,6 +171,46 @@ class Perfil extends CI_Controller {
 
             $data = array("name" => "form_alterar_trabalha", "onsubmit" => "return trabalhoValidation(this)");
 
+
+            //redes sociais mostrar
+
+            $this->table->set_heading('Nome', 'Link');
+            $this->table->set_template($this->tmpl);
+            $redes = array();
+            foreach ($this->rede_social->buscar_redes_perfil($this->session->userdata('id_perfil')) as $row) {
+                $redes[$row['id_link_rede_social']]['1'] = $row['nome_rede_social'];
+                $redes[$row['id_link_rede_social']]['2'] = anchor(prep_url($row['link_rede_social']));
+            }
+            $this->template->addContentVar('tabela_redes_sociais', $this->table->generate($redes));
+            $this->table->clear();
+
+            //redes sociais adicionar
+
+            $this->template->addContentVar('form_adicionar_rede_social', form_open('Perfil/adicionar_rede_social'));
+
+            $redes_existentes['Selecione'] = 'Selecione';
+            foreach ($this->rede_social->buscar_redes_existentes() as $row) {
+                $redes_existentes[$row['id_rede_social']] = $row['nome_rede_social'];
+            }
+            $this->template->addContentVar('rede_social_dropdown', form_dropdown('rede_social_dropdown', $redes_existentes, 'Selecione'));
+            $this->template->addContentVar('rede_social_input', form_input('rede_social_input'));
+            $this->template->addContentVar('link_rede_social', form_input('link_rede_social'));
+            $this->template->addContentVar('button_adicionar_rede_social', form_submit('button_adicionar_rede_social', 'Adicionar'));
+
+
+            //redes sociais remover
+
+            $this->template->addContentVar('form_remover_rede_social', form_open('Perfil/remover_rede_social'));
+
+            $redes_perfil['Selecione'] = 'Selecione';
+            foreach ($this->rede_social->buscar_redes_perfil($this->session->userdata('id_perfil')) as $row) {
+                $redes_perfil[$row['id_link_rede_social']] = $row['nome_rede_social'] . ' - ' . character_limiter($row['link_rede_social'], 20);
+            }
+            $this->template->addContentVar('perfil_rede_social_dropdown', form_dropdown('perfil_rede_social_dropdown', $redes_perfil, 'Selecione'));
+            $this->template->addContentVar('button_remover_rede_social', form_submit('button_remover_rede_social', 'Remover'));
+
+
+            //trabalha
             $this->template->addContentVar('form_trabalha_open', form_open('Perfil/alterar_trabalha', $data));
             $empresas['Selecione'] = 'Selecione';
             $selected = 'Selecione';
@@ -190,8 +233,7 @@ class Perfil extends CI_Controller {
 
 
             $this->table->set_heading('Tipo', 'Area', 'Inicio', 'Conclusao', 'Instituição');
-            $tmpl = array('table_open' => '<table width="100%" border="00">');
-            $this->table->set_template($tmpl);
+            $this->table->set_template($this->tmpl);
 
             $esp_table = array();
             foreach ($this->especializacao->buscar_especializacoes($this->session->userdata('id_perfil')) as $row) {
@@ -199,6 +241,7 @@ class Perfil extends CI_Controller {
             }
 
             $this->template->addContentVar('especializacoes', $this->table->generate($esp_table));
+            $this->table->clear();
 
 
             //especialização
@@ -243,6 +286,31 @@ class Perfil extends CI_Controller {
         }
     }
 
+    public function adicionar_rede_social() {
+
+        $id_rede = 0;
+        if ($this->input->post('rede_social_dropdown') === 'Selecione' && $this->input->post('rede_social_input') != "") {
+            $id_rede = (int) $this->rede_social->criar_rede($this->input->post('rede_social_input'));
+        } elseif ($this->input->post('rede_social_dropdown') !== 'Selecione') {
+            $id_rede = (int) $this->input->post('rede_social_dropdown');
+        }
+
+        if ($id_rede != 0) {
+            $this->rede_social->adicionar_rede_perfil($this->session->userdata('id_perfil'), $id_rede, $this->input->post('link_rede_social'));
+        }
+
+        redirect(site_url('Perfil/editar'));
+    }
+
+    public function remover_rede_social() {
+
+        if ($this->input->post('perfil_rede_social_dropdown') !== 'Selecione') {
+            $this->rede_social->remover_rede_perfil($this->input->post('perfil_rede_social_dropdown'));
+        }
+
+        redirect(site_url('Perfil/editar'));
+    }
+
     public function adicionar_especializacao() {
         $insert_array['tipo'] = $this->input->post('tipo_especializacao');
         $insert_array['area'] = $this->input->post('area_especializacao');
@@ -255,7 +323,7 @@ class Perfil extends CI_Controller {
                 $insert_array['id_instituicao'] = $this->especializacao->adicionar_instituicao($this->input->post('instituicao_especializacao'), 'Universidade');
                 $this->especializacao->criar_especializacao($insert_array);
             } else {
-                if ($this->input->post('instituicao_dropdown') === 'Selecione' && $this->input->post('instituicao_especializacao') === "" ) {
+                if ($this->input->post('instituicao_dropdown') === 'Selecione' && $this->input->post('instituicao_especializacao') === "") {
                     //do nothing
                 } else {
                     $insert_array['id_instituicao'] = (int) $this->input->post('instituicao_dropdown');
@@ -317,19 +385,9 @@ class Perfil extends CI_Controller {
         $where_perfil = "id_usuario = " . $this->session->userdata('id_usuario');
         $where_egresso = "id_egresso = " . $this->session->userdata('id_egresso');
         echo $data_egresso['nome'];
-        //if (strlen($data_egresso['nome']) > 0 && strlen($data_egresso['sexo']==1)) {
-            $this->perfil->alterar($data_perfil, $where_perfil);
-            $this->egresso->alterar($data_egresso, $where_egresso);
-        //} else {
-//            if(strlen($data_egresso['estado'])>2)
-//            {
-//                
-//            }
-            //echo 'sldkfjlkasjfdlkajsfd';
-            //$error_message = "<script> alert('Preencha os campos obrigatórios') </script>";
-            //$this->template->addContentVar('error_alterar', $error_message);
-            // $this->session->set_flashdata('error_alterar',$error_message);
-        //}
+        $this->perfil->alterar($data_perfil, $where_perfil);
+        $this->egresso->alterar($data_egresso, $where_egresso);
+
         redirect(site_url('Perfil/ver/' . $this->session->userdata('id_usuario')));
     }
 
