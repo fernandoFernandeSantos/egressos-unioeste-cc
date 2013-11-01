@@ -29,9 +29,13 @@ function perfilValidation(v) {
 
     if (x.elements[0].value == "" || x.elements[0].value == null) {
         alert("Nome Invalido");
+        return false;
     }else{
-      if(x.elements[1].value.lenght>1){
+        var y = new String(x.elements[1].value);
+        var z = new String(x.elements[4].value);
+      if(y.length>1 || z.length>2){
             alert("Erro tamanho da palavra");
+            return false;
         }
     }
 }
@@ -47,6 +51,7 @@ function trabalhoValidation(v) {
 //    }
     if ((x.elements[1].value == "" || x.elements[1].value == null) && x.elements[1].value === "Selecione") {
         alert("Preencha o campo corretamente");
+        return false;
     }
 }
 
@@ -66,11 +71,12 @@ function especializacaoValidation(v) {
 
 
         alert("Nome Invalido");
-
+        return false;
     } else {
         if (x.elements[2] === "Selecione" && x.elements[3] === "")
         {
-            alert("selecione um instituicao");
+            alert("selecione uma instituicao");
+            return false;
         }
     }
 }
@@ -87,6 +93,7 @@ function registerValidation() {
     if (x.elements[0].value === "" || x.elements[1].value === "" || x.elements[2].value === ""
             || x.elements[3].value === "") {
         alert("Preencha todos os campos");
+        return false;
     }
 
 }
@@ -104,6 +111,7 @@ function removerEspecializacao() {
 
     if (x.elements[0].value === "Selecione") {
         alert("Selecione Alguma coisa para remover");
+        return false;
     }
 
 }

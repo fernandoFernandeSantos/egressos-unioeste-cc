@@ -82,7 +82,7 @@ class Perfil extends CI_Controller {
         $this->table->set_template($tmpl);
 
         $esp_table = array();
-        foreach ($this->especializacao->buscar_especializacoes($this->session->userdata('id_perfil')) as $row) {
+        foreach ($this->especializacao->buscar_especializacoes($id) as $row) {
             $esp_table[] = array('Tipo' => $row['tipo'], 'Area' => $row['area'], 'Inicio' => $row['inicio'], 'Conclusao' => $row['conclusao'], 'Instituicao' => $row['nome_instituicao']);
         }
 
@@ -166,7 +166,7 @@ class Perfil extends CI_Controller {
             $this->template->addContentVar('pagina_pessoal', form_input('pagina_pessoal', $row_perfil->pagina_pessoal));
             $this->template->addContentVar('email_publico', form_input('email_publico', $row_perfil->email_publico));
 
-            $data = array("name" => "form_alterar_trabalha", "onsubmit" => "trabalhoValidation(this)");
+            $data = array("name" => "form_alterar_trabalha", "onsubmit" => "return trabalhoValidation(this)");
 
             $this->template->addContentVar('form_trabalha_open', form_open('Perfil/alterar_trabalha', $data));
             $empresas['Selecione'] = 'Selecione';
@@ -202,7 +202,7 @@ class Perfil extends CI_Controller {
 
 
             //especialização
-            $data = array("name" => "form_adicionar_especializacao_open", "onsubmit" => "especializacaoValidation(this)");
+            $data = array("name" => "form_adicionar_especializacao_open", "onsubmit" => " return especializacaoValidation(this)");
             $this->template->addContentVar('form_adicionar_especializacao_open', form_open('Perfil/adicionar_especializacao', $data));
             $this->template->addContentVar('tipo_especializacao', form_input('tipo_especializacao'));
             $this->template->addContentVar('area_especializacao', form_input('area_especializacao'));
@@ -218,7 +218,7 @@ class Perfil extends CI_Controller {
             $this->template->addContentVar('adicionar_especializacao', form_submit('adicionar_especializacao', 'Adicionar'));
 
             //remove especializacao
-            $data = array("name" => "form_remover_especializacao_open", "onsubmit" => "removerEspecializacao(this)");
+            $data = array("name" => "form_remover_especializacao_open", "onsubmit" => " return removerEspecializacao(this)");
             $this->template->addContentVar('form_remover_especializacao_open', form_open('Perfil/remover_especializacao', $data));
 
             $especializacoes['Selecione'] = 'Selecione';
@@ -233,7 +233,7 @@ class Perfil extends CI_Controller {
             //trabalha
             $this->template->addContentVar('email_publico', form_input('email_publico', $row_perfil->email_publico));
 
-            $data = array("name" => "form_open_alterar", "onsubmit" => "perfilValidation(this)");
+            $data = array("name" => "form_open_alterar", "onsubmit" => "return perfilValidation()");
             $this->template->addContentVar('form_open', form_open('Perfil/alterar', $data));
             $this->template->addContentVar('form_close', form_close());
 
@@ -317,15 +317,19 @@ class Perfil extends CI_Controller {
         $where_perfil = "id_usuario = " . $this->session->userdata('id_usuario');
         $where_egresso = "id_egresso = " . $this->session->userdata('id_egresso');
         echo $data_egresso['nome'];
-        if (strlen($data_egresso['nome']) > 0) {
+        //if (strlen($data_egresso['nome']) > 0 && strlen($data_egresso['sexo']==1)) {
             $this->perfil->alterar($data_perfil, $where_perfil);
             $this->egresso->alterar($data_egresso, $where_egresso);
-        } else {
+        //} else {
+//            if(strlen($data_egresso['estado'])>2)
+//            {
+//                
+//            }
             //echo 'sldkfjlkasjfdlkajsfd';
             //$error_message = "<script> alert('Preencha os campos obrigatórios') </script>";
             //$this->template->addContentVar('error_alterar', $error_message);
             // $this->session->set_flashdata('error_alterar',$error_message);
-        }
+        //}
         redirect(site_url('Perfil/ver/' . $this->session->userdata('id_usuario')));
     }
 

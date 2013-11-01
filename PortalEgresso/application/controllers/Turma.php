@@ -15,6 +15,7 @@ class Turma extends CI_Controller {
     }
 
     public function index() {
+        $this->template->addContentVar("titulo_ano","");
         $this->gerarPagina();
     }
 

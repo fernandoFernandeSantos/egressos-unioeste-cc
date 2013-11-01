@@ -105,5 +105,5 @@
         {form_close}
 
     </div>
-    {error_alterar}
+    
 </div>
