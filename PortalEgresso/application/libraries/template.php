@@ -147,6 +147,7 @@ class Template {
             $this->addMenuVars('button_registro', form_button(array('name' => 'registrar', 'content' => 'Registrar', 'onClick' => "window.location.href='" . site_url('Usuario/registrar') . "'")));
 
             $this->addMenuVars('erro_menu', $this->CI->session->flashdata('erro_menu'));
+           // $this->addMenuVars('error_alterar', $this->CI->session->flashdata('error_alterar'));
             return $this->CI->parser->parse($this->getMenuFile(), $this->MenuVars, TRUE);
         }
     }

@@ -127,6 +127,9 @@ class Perfil extends CI_Controller {
         if ($this->session->userdata('logged') !== TRUE) {
             $this->template->parse('AcessoNegado');
         } else {
+            
+            $this->template->addContentVar('error_alterar', $this->session->flashdata('error_alterar'));
+            
             $select = array('*');
             $where = array('id_usuario' => $this->session->userdata('id_usuario'));
             $result_perfil = $this->perfil->buscar($select, $where);
@@ -227,7 +230,7 @@ class Perfil extends CI_Controller {
             //trabalha
             $this->template->addContentVar('email_publico', form_input('email_publico', $row_perfil->email_publico));
 
-            $this->template->addContentVar('form_open', form_open('Perfil/alterar'));
+            $this->template->addContentVar('form_open', form_open('Perfil/alterar', "nome='form_open_alterar'"));
             $this->template->addContentVar('form_close', form_close());
 
             $this->template->addContentVar('button_alterar', form_submit('button_alterar', 'Alterar'));
@@ -300,11 +303,18 @@ class Perfil extends CI_Controller {
 
         $where_perfil = "id_usuario = " . $this->session->userdata('id_usuario');
         $where_egresso = "id_egresso = " . $this->session->userdata('id_egresso');
-
-        $this->perfil->alterar($data_perfil, $where_perfil);
-        $this->egresso->alterar($data_egresso, $where_egresso);
-
-        redirect(site_url('Perfil/ver/' . $this->session->userdata('id_usuario')));
+        echo $data_egresso['nome'];
+        if (strlen($data_egresso['nome'])>0) {
+            $this->perfil->alterar($data_perfil, $where_perfil);
+            $this->egresso->alterar($data_egresso, $where_egresso);
+        } else {
+            echo 'sldkfjlkasjfdlkajsfd';
+            $error_message = "<script> alert('Preencha os campos obrigatórios') </script>";
+            $this->template->addContentVar('error_alterar', $error_message);
+            $this->session->set_flashdata('error_alterar',$error_message);
+            
+        }
+            redirect(site_url('Perfil/ver/' . $this->session->userdata('id_usuario')));
     }
 
 }
