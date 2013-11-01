@@ -22,6 +22,7 @@
   </tr>
 </table>
 {form_close}
+{erro_registrar}
 </div>
 
     

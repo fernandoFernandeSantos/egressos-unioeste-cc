@@ -127,9 +127,9 @@ class Perfil extends CI_Controller {
         if ($this->session->userdata('logged') !== TRUE) {
             $this->template->parse('AcessoNegado');
         } else {
-            
-            $this->template->addContentVar('error_alterar', $this->session->flashdata('error_alterar'));
-            
+
+            //$this->template->addContentVar('error_alterar', $this->session->flashdata('error_alterar'));
+
             $select = array('*');
             $where = array('id_usuario' => $this->session->userdata('id_usuario'));
             $result_perfil = $this->perfil->buscar($select, $where);
@@ -166,8 +166,9 @@ class Perfil extends CI_Controller {
             $this->template->addContentVar('pagina_pessoal', form_input('pagina_pessoal', $row_perfil->pagina_pessoal));
             $this->template->addContentVar('email_publico', form_input('email_publico', $row_perfil->email_publico));
 
+            $data = array("name" => "form_alterar_trabalha", "onsubmit" => "trabalhoValidation(this)");
 
-            $this->template->addContentVar('form_trabalha_open', form_open('Perfil/alterar_trabalha'));
+            $this->template->addContentVar('form_trabalha_open', form_open('Perfil/alterar_trabalha', $data));
             $empresas['Selecione'] = 'Selecione';
             $selected = 'Selecione';
             $trabalha_em = $this->trabalha->buscar_trabalha_em($this->session->userdata('id_perfil'));
@@ -201,7 +202,8 @@ class Perfil extends CI_Controller {
 
 
             //especialização
-            $this->template->addContentVar('form_adicionar_especializacao_open', form_open('Perfil/adicionar_especializacao'));
+            $data = array("name" => "form_adicionar_especializacao_open", "onsubmit" => "especializacaoValidation(this)");
+            $this->template->addContentVar('form_adicionar_especializacao_open', form_open('Perfil/adicionar_especializacao', $data));
             $this->template->addContentVar('tipo_especializacao', form_input('tipo_especializacao'));
             $this->template->addContentVar('area_especializacao', form_input('area_especializacao'));
             $this->template->addContentVar('instituicao_especializacao', form_input('instituicao_especializacao'));
@@ -216,7 +218,8 @@ class Perfil extends CI_Controller {
             $this->template->addContentVar('adicionar_especializacao', form_submit('adicionar_especializacao', 'Adicionar'));
 
             //remove especializacao
-            $this->template->addContentVar('form_remover_especializacao_open', form_open('Perfil/remover_especializacao'));
+            $data = array("name" => "form_remover_especializacao_open", "onsubmit" => "removerEspecializacao(this)");
+            $this->template->addContentVar('form_remover_especializacao_open', form_open('Perfil/remover_especializacao', $data));
 
             $especializacoes['Selecione'] = 'Selecione';
             foreach ($this->especializacao->buscar_especializacoes($this->session->userdata('id_perfil')) as $row) {
@@ -230,7 +233,8 @@ class Perfil extends CI_Controller {
             //trabalha
             $this->template->addContentVar('email_publico', form_input('email_publico', $row_perfil->email_publico));
 
-            $this->template->addContentVar('form_open', form_open('Perfil/alterar', "nome='form_open_alterar'"));
+            $data = array("name" => "form_open_alterar", "onsubmit" => "perfilValidation(this)");
+            $this->template->addContentVar('form_open', form_open('Perfil/alterar', $data));
             $this->template->addContentVar('form_close', form_close());
 
             $this->template->addContentVar('button_alterar', form_submit('button_alterar', 'Alterar'));
@@ -245,12 +249,20 @@ class Perfil extends CI_Controller {
         $insert_array['inicio'] = $this->input->post('ano_inicio_especializacao');
         $insert_array['conclusao'] = $this->input->post('ano_conclusao_especializacao');
         $insert_array['id_perfil'] = $this->session->userdata('id_perfil');
-        if ($this->input->post('instituicao_dropdown') === 'Selecione' && $this->input->post('instituicao_especializacao') !== '') {
-            $insert_array['id_instituicao'] = $this->especializacao->adicionar_instituicao($this->input->post('instituicao_especializacao'), 'Universidade');
-        } else {
-            $insert_array['id_instituicao'] = (int) $this->input->post('instituicao_dropdown');
+        if ($this->input->post('tipo_especializacao') != "" || $this->input->post('area_especializacao') != "" ||
+                $this->input->post('ano_inicio_especilizacao') != "" || $this->input->post('ano_conclusao_especializacao') != "") {
+            if ($this->input->post('instituicao_dropdown') === 'Selecione' && $this->input->post('instituicao_especializacao') !== "") {
+                $insert_array['id_instituicao'] = $this->especializacao->adicionar_instituicao($this->input->post('instituicao_especializacao'), 'Universidade');
+                $this->especializacao->criar_especializacao($insert_array);
+            } else {
+                if ($this->input->post('instituicao_dropdown') === 'Selecione' && $this->input->post('instituicao_especializacao') === "" ) {
+                    //do nothing
+                } else {
+                    $insert_array['id_instituicao'] = (int) $this->input->post('instituicao_dropdown');
+                    $this->especializacao->criar_especializacao($insert_array);
+                }
+            }
         }
-        $this->especializacao->criar_especializacao($insert_array);
         redirect(site_url('Perfil/editar'));
     }
 
@@ -258,6 +270,7 @@ class Perfil extends CI_Controller {
         if ($this->input->post('remover_especializacao_dropdown') !== 'Selecione') {
             $this->especializacao->deletar_especializacao(array('id_especializacao' => (int) $this->input->post('remover_especializacao_dropdown')));
         }
+
         redirect(site_url('Perfil/editar'));
     }
 
@@ -304,17 +317,16 @@ class Perfil extends CI_Controller {
         $where_perfil = "id_usuario = " . $this->session->userdata('id_usuario');
         $where_egresso = "id_egresso = " . $this->session->userdata('id_egresso');
         echo $data_egresso['nome'];
-        if (strlen($data_egresso['nome'])>0) {
+        if (strlen($data_egresso['nome']) > 0) {
             $this->perfil->alterar($data_perfil, $where_perfil);
             $this->egresso->alterar($data_egresso, $where_egresso);
         } else {
-            echo 'sldkfjlkasjfdlkajsfd';
-            $error_message = "<script> alert('Preencha os campos obrigatórios') </script>";
-            $this->template->addContentVar('error_alterar', $error_message);
-            $this->session->set_flashdata('error_alterar',$error_message);
-            
+            //echo 'sldkfjlkasjfdlkajsfd';
+            //$error_message = "<script> alert('Preencha os campos obrigatórios') </script>";
+            //$this->template->addContentVar('error_alterar', $error_message);
+            // $this->session->set_flashdata('error_alterar',$error_message);
         }
-            redirect(site_url('Perfil/ver/' . $this->session->userdata('id_usuario')));
+        redirect(site_url('Perfil/ver/' . $this->session->userdata('id_usuario')));
     }
 
 }
