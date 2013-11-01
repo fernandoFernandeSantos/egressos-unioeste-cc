@@ -38,7 +38,8 @@ class Usuario extends CI_Controller {
         $this->template->addContentVar('email', form_input('email'));
         $this->template->addContentVar('senha', form_password('senha'));
 
-        $this->template->addContentVar('form_open', form_open('Usuario/Registrar'));
+        $data = array("name" => "form_open_registrar", "onsubmit" => "return registerValidation()");
+        $this->template->addContentVar('form_open', form_open('Usuario/Registrar', $data));
         $this->template->addContentVar('form_close', form_close());
         $this->template->addContentVar('button_criar', form_submit('button_cadastrar', 'Cadastrar'));
 
@@ -46,6 +47,9 @@ class Usuario extends CI_Controller {
     }
 
     public function registrar() {
+
+        //$this->gerarPagina();
+
         if ($this->input->post('button_cadastrar')) {
 
             $user = $this->input->post('usuario');
@@ -53,16 +57,27 @@ class Usuario extends CI_Controller {
             $email = $this->input->post('email');
             $cpf = $this->input->post('cpf');
 
-            $result = $this->e->buscar(array('id_egresso'), "cpf = '" . $cpf . "'");
+            if ($user !== "" && $password !== "" && $email !== "" && $cpf !== "") {
 
-            $id_egresso = $result->row()->id_egresso;
+                $result = $this->e->buscar(array('id_egresso'), "cpf = '" . $cpf . "'");
+                
+                if (!is_null($result)) {
+                    $id_egresso = $result->row()->id_egresso;
 
-            $this->u->criar($user, $password, $id_egresso, $email);
+                    $this->u->criar($user, $password, $id_egresso, $email);
 //            echo "id_egresso = $id_egresso";
-            $usuario = $this->u->buscar(array('id_usuario'), "id_egresso = $id_egresso");
-            $id_usuario = $usuario->row()->id_usuario;
-            $perfil_data = array('id_egresso' => $id_egresso, 'id_usuario' => $id_usuario);
-            $this->p->criar($perfil_data);
+                    $usuario = $this->u->buscar(array('id_usuario'), "id_egresso = $id_egresso");
+                    $id_usuario = $usuario->row()->id_usuario;
+                    $perfil_data = array('id_egresso' => $id_egresso, 'id_usuario' => $id_usuario);
+                    $this->p->criar($perfil_data);
+                }
+//                else{
+//                    $this->template->addContentVars('erro_registrar',"<script>alert('dkfjskdjf')</script>");
+//                    echo 'erro cpf';
+//                }
+            } else {
+                // echo 'erro campos';
+            }
         }
         $this->gerarPagina();
     }
@@ -102,14 +117,14 @@ class Usuario extends CI_Controller {
             } else {
                 //$error = '<p style="color:red;">Senha ou Usuário Incorreto</p>';
                 //$this->template->addMenuVars("p", $error);
-                $this->session->set_flashdata('erro_menu','Usuario ou Senha Incorreta');
+                $this->session->set_flashdata('erro_menu', 'Usuario ou Senha Incorreta');
 //                $this->template->parse("home");
                 redirect($this->input->post('hidden_current_url'));
             }
         } else {
             ///$error = '<p style="color:red;">Senha ou Usuário Incorreto</p>';
-           // $this->template->addMenuVars("p", $error);
-            $this->session->set_flashdata('erro_menu','Usuario ou Senha Incorreta');
+            // $this->template->addMenuVars("p", $error);
+            $this->session->set_flashdata('erro_menu', 'Usuario ou Senha Incorreta');
 //            $this->template->parse("home");
             redirect($this->input->post('hidden_current_url'));
         }
