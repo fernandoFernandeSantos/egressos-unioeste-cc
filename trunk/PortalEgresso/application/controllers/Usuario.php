@@ -73,11 +73,7 @@ class Usuario extends CI_Controller {
                 }
                 else{
                     $this->template->addContentVar('erro_registrar',"<script>alert('Erro CPF Invalido')</script>");
-                    
-                    //echo 'erro cpf';
                 }
-            } else {
-                // echo 'erro campos';
             }
         }
         $this->gerarPagina();
