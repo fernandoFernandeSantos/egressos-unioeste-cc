@@ -70,6 +70,29 @@
             <td colspan="2" align="center">{button_alterar}</td>
         </table>
         {form_close}
+        
+        <table width="100%" border="00">
+            <th>Redes Sociais do Egresso</th>
+        </table>
+        {tabela_redes_sociais}
+        
+        {form_adicionar_rede_social}
+        <table width="100%" border="00" >
+            <th colspan="3">Adicionar Rede Social</th>
+            <tr><td>Selecione o nome da rede:</td><td>{rede_social_dropdown}</td><td> <font color="red">*Caso a rede social não esteja no menu, adicione-a manualmente na caixa de texto. </font></td></tr>
+            <tr><td>Insira o nome da rede:</td><td colspan="2">{rede_social_input}</td></tr>
+            <tr><td>Insira o link da rede:</td><td colspan="2">{link_rede_social}</td></tr>
+            <tr><td colspan="3" align="center">{button_adicionar_rede_social}</td></tr>
+        </table>
+        {form_close}
+        
+        {form_remover_rede_social}
+        <table width="100%" border="00" >
+            <th colspan="2">Remover Rede Social</th>
+            <tr><td width="50%">Selecione a rede a ser removida:</td><td>{perfil_rede_social_dropdown}</td></tr>
+            <tr><td colspan="2" align="center">{button_remover_rede_social}</td></tr>
+        </table>
+        {form_close}
 
         {form_trabalha_open}
         <table width="100%" border="00" >
