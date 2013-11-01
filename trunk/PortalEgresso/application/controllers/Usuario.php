@@ -61,7 +61,7 @@ class Usuario extends CI_Controller {
 
                 $result = $this->e->buscar(array('id_egresso'), "cpf = '" . $cpf . "'");
                 
-                if (!is_null($result)) {
+                if ($result->num_rows()>0) {
                     $id_egresso = $result->row()->id_egresso;
 
                     $this->u->criar($user, $password, $id_egresso, $email);
@@ -71,10 +71,11 @@ class Usuario extends CI_Controller {
                     $perfil_data = array('id_egresso' => $id_egresso, 'id_usuario' => $id_usuario);
                     $this->p->criar($perfil_data);
                 }
-//                else{
-//                    $this->template->addContentVars('erro_registrar',"<script>alert('dkfjskdjf')</script>");
-//                    echo 'erro cpf';
-//                }
+                else{
+                    $this->template->addContentVar('erro_registrar',"<script>alert('Erro CPF Invalido')</script>");
+                    
+                    //echo 'erro cpf';
+                }
             } else {
                 // echo 'erro campos';
             }
