@@ -62,6 +62,11 @@
 
         </table>
         
+        <table width="100%" border="00">
+            <th>Redes Sociais do Egresso</th>
+        </table>
+        {tabela_redes_sociais}
+        
         <table width="100%" border="00" >
             <th>Especializações</tr>
                 

@@ -109,6 +109,14 @@ class M_especializacao extends CI_Model {
         $query = 'SELECT id_especializacao, tipo, area, inicio,conclusao,nome_instituicao FROM ' . $this->get_full_especializacao_table() . ' AS e ';
         $query .=' JOIN ' . $this->get_full_instituicao_table() . ' AS i ON i.id_instituicao=e.id_instituicao';
         $query .=' WHERE id_perfil = \'' . $id_perfil . '\'';
+        //select otimizado
+        //SELECT id_especializacao, tipo, area, inicio, conclusao, nome_instituicao 
+        //FROM ( SELECT id_especializacao, tipo, area, inicio, conclusao , id_instituicao 
+        //FROM ptegresso.especializacao 
+        //WHERE id_perfil = '1' ) AS e 
+        //JOIN (SELECT id_instituicao , nome_instituicao 
+        //FROM ptegresso.instituicoes ) AS i ON i.id_instituicao=e.id_instituicao;
+//        return $query;
         return $this->db->query($query)->result_array();
     }
 
