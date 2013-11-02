@@ -37,12 +37,11 @@ class M_turma extends CI_Model {
     public function get_pertence_table() {
         return $this->pertence_table;
     }
-    
+
     public function get_egresso_table() {
         return $this->egresso_table;
     }
 
-    
     public function set_schema($schema) {
         $this->schema = $schema;
     }
@@ -58,20 +57,20 @@ class M_turma extends CI_Model {
     public function set_egresso_table($egresso_table) {
         $this->egresso_table = $egresso_table;
     }
-    
+
     public function get_full_turma_table() {
         return $this->schema . '.' . $this->get_turma_table();
-		//return $this->get_turma_table();
+        //return $this->get_turma_table();
     }
 
     public function get_full_pertence_table() {
         return $this->schema . '.' . $this->get_pertence_table();
-		//return $this->get_pertence_table();
+        //return $this->get_pertence_table();
     }
 
     public function get_full_egresso_table() {
         return $this->get_schema() . '.' . $this->get_egresso_table();
-		//return $this->get_egresso_table();
+        //return $this->get_egresso_table();
     }
 
     public function buscar_turma($ano) {
@@ -84,22 +83,31 @@ class M_turma extends CI_Model {
         return $result_array[0];
     }
 
+    public function contar_alunos($id) {
+        $query = ' SELECT COUNT(nome) as numero FROM ( SELECT nome,id_egresso ';
+        $query .= 'FROM ' . $this->get_full_egresso_table() . ' ) AS e';
+        $query .=' JOIN ( SELECT id_egresso ';
+        $query .= "FROM " . $this->get_full_pertence_table() . "  WHERE id_turma = '$id') ";
+        $query .= 'AS p ON e.id_egresso = p.id_egresso';
+        $result = $this->db->query($query)->result_array();
+        return $result[0]['numero'];
+    }
+
     public function buscar_egressos($id) {
-        
-        $query = 'SELECT nome FROM '.$this->get_full_egresso_table() . ' AS e ';
-        $query .= 'JOIN '.$this->get_full_pertence_table() . ' AS p ';
-        $query .= 'ON e.id_egresso = p.id_egresso ';
-        $query .= 'WHERE p.id_turma = '.$id;
-        $query .= ' ORDER BY nome';
-//        SELECT nome FROM ( SELECT nome,id_egresso 
-//        FROM ptegresso.egresso ) AS e 
-//        JOIN ( SELECT id_egresso 
-//        FROM ptegresso.pertence WHERE id_turma = 1) 
-//        AS p ON e.id_egresso = p.id_egresso ORDER BY nome 
+
+//        $query = 'SELECT nome FROM '.$this->get_full_egresso_table() . ' AS e ';
+//        $query .= 'JOIN '.$this->get_full_pertence_table() . ' AS p ';
+//        $query .= 'ON e.id_egresso = p.id_egresso ';
+//        $query .= 'WHERE p.id_turma = '.$id;
+//        $query .= ' ORDER BY nome';
+        $query = ' SELECT nome FROM ( SELECT nome,id_egresso ';
+        $query .= 'FROM ' . $this->get_full_egresso_table() . ' ) AS e';
+        $query .=' JOIN ( SELECT id_egresso ';
+        $query .= "FROM " . $this->get_full_pertence_table() . "  WHERE id_turma = '$id') ";
+        $query .= 'AS p ON e.id_egresso = p.id_egresso ORDER BY nome ';
 //        echo $query.'<br>';
 //        return $query;
         $result = $this->db->query($query);
-//        $result_array = $result->result_array();
         return $result;
 //        return 1;
     }

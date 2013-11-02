@@ -3,14 +3,32 @@
 class M_especializacao extends CI_Model {
 
     private $schema;
+//    private $tem_especialziacao_table;
     private $especializacao_table;
     private $instituicoes_table;
 
-    public function __construct($_schema = 'ptegresso', $_table = 'especializacao', $_instituicoes = 'instituicoes') {
+    public function __construct($_schema = 'ptegresso', $_table = 'especializacao',$_instituicoes = 'instituicoes') {
         parent::__construct();
         $this->schema = $_schema;
         $this->especializacao_table = $_table;
         $this->instituicoes_table = $_instituicoes;
+//        $this->tem_especialziacao_table = $_tem_especializacao;
+    }
+    
+//    public function get_tem_especialziacao_table() {
+//        return $this->tem_especialziacao_table;
+//    }
+
+    public function get_instituicoes_table() {
+        return $this->instituicoes_table;
+    }
+
+//    public function set_tem_especialziacao_table($tem_especialziacao_table) {
+//        $this->tem_especialziacao_table = $tem_especialziacao_table;
+//    }
+
+    public function set_instituicoes_table($instituicoes_table) {
+        $this->instituicoes_table = $instituicoes_table;
     }
 
     public function set_especializacao_table($_table) {
@@ -31,6 +49,10 @@ class M_especializacao extends CI_Model {
 
     private function get_full_especializacao_table() {
         return $this->schema . '.' . $this->especializacao_table;
+    }
+    
+    private function get_full_tem_especializacao_table() {
+        return $this->schema . '.' . $this->tem_especialziacao_table;
     }
 
     private function get_full_instituicao_table() {
@@ -106,17 +128,16 @@ class M_especializacao extends CI_Model {
     }
 
     public function buscar_especializacoes($id_perfil) {
-        $query = 'SELECT id_especializacao, tipo, area, inicio,conclusao,nome_instituicao FROM ' . $this->get_full_especializacao_table() . ' AS e ';
-        $query .=' JOIN ' . $this->get_full_instituicao_table() . ' AS i ON i.id_instituicao=e.id_instituicao';
-        $query .=' WHERE id_perfil = \'' . $id_perfil . '\'';
-        //select otimizado
-        //SELECT id_especializacao, tipo, area, inicio, conclusao, nome_instituicao 
-        //FROM ( SELECT id_especializacao, tipo, area, inicio, conclusao , id_instituicao 
-        //FROM ptegresso.especializacao 
-        //WHERE id_perfil = '1' ) AS e 
-        //JOIN (SELECT id_instituicao , nome_instituicao 
-        //FROM ptegresso.instituicoes ) AS i ON i.id_instituicao=e.id_instituicao;
-//        return $query;
+        $query = 'SELECT id_especializacao, tipo, area, inicio, conclusao, nome_instituicao FROM ';
+        $query .= '(SELECT id_especializacao, tipo, area, inicio, conclusao , id_instituicao FROM ' . $this->get_full_especializacao_table() ;
+        $query .=  " WHERE id_perfil = '$id_perfil' ) AS e JOIN ";
+        $query .='  (SELECT id_instituicao , nome_instituicao FROM  ' . $this->get_full_instituicao_table() . ' ) AS i ';
+        $query .= ' ON i.id_instituicao=e.id_instituicao';
+//        $query =  ' SELECT id_especializacao, tipo, area, inicio, conclusao, nome_instituicao FROM ';
+//        $query .=' (SELECT te.id_especializacao,tipo,area,id_instituicao,inicio,conclusao FROM  ';
+//        $query .=' (SELECT * FROM ' . get_full_tem_especializacao_table() . " WHERE id_perfil = '$id_perfil') AS te ";
+//        $query .=' JOIN ' . $this->get_full_especializacao_table() . ' AS e ON te.id_especializacao=e.id_especializacao) AS r JOIN ';
+//        $query .=' (SELECT nome_instituicao, id_instituicao FROM ' . $this->get_full_instituicao_table() . '  ) AS i ON r.id_instituicao = i.id_instituicao';
         return $this->db->query($query)->result_array();
     }
 

@@ -52,7 +52,7 @@ class Egressos extends CI_Controller {
         $coluns[] = 'ano_conclusao';
         $array = array();
         if ($nome !== '-') {
-            $array[] = "UPPER(nome) LIKE '%" . mb_strtoupper(urldecode($nome), 'UTF-8') . "%'";
+            $array[] = "UPPER(ptegresso.remove_acentos(nome)) LIKE '%" . mb_strtoupper($string = convert_accented_characters(urldecode($nome)), 'UTF-8') . "%'";
         }
         if ($ano_ingresso !== '-') {
             $array[] = "ano_entrada = " . $ano_ingresso;
