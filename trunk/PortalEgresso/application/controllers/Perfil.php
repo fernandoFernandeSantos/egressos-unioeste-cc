@@ -82,6 +82,17 @@ class Perfil extends CI_Controller {
         }
         $this->template->addContentVar('email_publico', $row_perfil->email_publico);
 
+        
+        $this->table->set_heading('Nome', 'Link');
+        $this->table->set_template($this->tmpl);
+        $redes = array();
+        foreach ($this->rede_social->buscar_redes_perfil($id) as $row) {
+            $redes[$row['id_link_rede_social']]['1'] = $row['nome_rede_social'];
+            $redes[$row['id_link_rede_social']]['2'] = anchor(prep_url($row['link_rede_social']));
+        }
+        $this->template->addContentVar('tabela_redes_sociais', $this->table->generate($redes));
+        $this->table->clear();
+        
         $this->table->set_heading('Tipo', 'Area', 'Inicio', 'Conclusao', 'Instituição');
         $tmpl = array('table_open' => '<table width="100%" border="00">');
         $this->table->set_template($tmpl);

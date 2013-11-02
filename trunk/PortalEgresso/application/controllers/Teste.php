@@ -17,13 +17,13 @@ class Teste extends CI_Controller {
 
         $this->load->library('Template');
         $this->load->model('m_turma', 'turma');
-        $this->load->model('m_especializacao', 'especializacao');
+        $this->load->model('m_turma', 'r');
         $this->load->library('table');
     }
 
     public function index() {
-        
-        $this->template->addContentVar('teste', form_dropdown('something',array('1' => '1','2' => '2'),1));
+        $id= 1;
+        $this->template->addContentVar('teste', $this->r->buscar_egressos($id));
         $this->template->parse('Teste');
     }
 

@@ -82,6 +82,11 @@ class M_trabalha extends CI_Model {
         $query = 'SELECT i.id_instituicao,nome_instituicao FROM '.$this->get_full_trabalha_table() . ' AS t';
         $query .=' JOIN '.$this->get_full_instituicao_table() . ' AS i ON t.id_instituicao=i.id_instituicao';
         $query .= ' WHERE t.id_perfil = '.$id_perfil;
+//        return $query;
+//        SELECT i.id_instituicao, nome_instituicao FROM (SELECT id_instituicao,id_perfil 
+//        FROM ptegresso.trabalha WHERE id_perfil=1) AS t 
+//        JOIN (SELECT id_instituicao, nome_instituicao FROM ptegresso.instituicoes) AS i
+//ON t.id_instituicao=i.id_instituicao
         return $this->db->query($query)->result_array();
     }
 

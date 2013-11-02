@@ -110,7 +110,7 @@ function removerEspecializacao() {
 //    }
 
     if (x.elements[0].value === "Selecione") {
-        alert("Selecione Alguma coisa para remover");
+        alert("Selecione uma especialização para remover");
         return false;
     }
 
