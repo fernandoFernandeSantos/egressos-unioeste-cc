@@ -51,9 +51,9 @@ class M_especializacao extends CI_Model {
         return $this->schema . '.' . $this->especializacao_table;
     }
     
-    private function get_full_tem_especializacao_table() {
-        return $this->schema . '.' . $this->tem_especialziacao_table;
-    }
+//    private function get_full_tem_especializacao_table() {
+//        return $this->schema . '.' . $this->tem_especialziacao_table;
+//    }
 
     private function get_full_instituicao_table() {
         return $this->schema . '.' . $this->instituicoes_table;
