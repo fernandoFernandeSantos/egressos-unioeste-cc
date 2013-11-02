@@ -16,6 +16,7 @@ class Turma extends CI_Controller {
 
     public function index() {
         $this->template->addContentVar("titulo_ano","");
+        $this->template->addContentvar('numero_de_alunos',"");
         $this->gerarPagina();
     }
 
@@ -37,12 +38,13 @@ class Turma extends CI_Controller {
             $this->table->set_heading("Alunos");
             $res = $this->table->generate($result->result_array());
         }
+        $this->template->addContentvar('numero_de_alunos','<h3>Alunos formados:'.$this->turma->contar_alunos($turma['id_turma']).'</h3>' );
         $this->gerarPagina($res, $turma);
     }
 
     public function gerarPagina($table = '', $turma = array('ano' => '', 'foto_turma' => '', 'professor_homenageado' => '')) {
 
-        for ($i = 1998; $i <= date("Y"); $i++) {
+        for ($i = 1998; $i <= date("Y") -1; $i++) {
             $options[$i] = $i;
         }
 

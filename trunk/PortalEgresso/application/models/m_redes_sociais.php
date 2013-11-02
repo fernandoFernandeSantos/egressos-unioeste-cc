@@ -80,14 +80,15 @@ class M_redes_sociais extends CI_Model{
     }
     
     public function buscar_redes_perfil($id_perfil){
-        $query = 'SELECT id_link_rede_social,nome_rede_social, link_rede_social FROM '.$this->get_full_links_rede_social_table(). ' AS l';
-        $query .= ' JOIN '.$this->get_full_rede_social_table().' AS r ';
-        $query .= ' ON l.id_rede_social=r.id_rede_social';
-        $query .= " WHERE id_perfil='$id_perfil'";
-//      SELECT id_link_rede_social,nome_rede_social,link_rede_social FROM (
-//      SELECT id_link_rede_social, id_rede_social, link_rede_social FROM ptegresso.link_rede_social  WHERE id_perfil = '1') AS l
-//      JOIN (SELECT id_rede_social, nome_rede_social FROM ptegresso.rede_social  
-//      ) AS r ON l.id_rede_social=r.id_rede_social;
+//        $query = 'SELECT id_link_rede_social,nome_rede_social, link_rede_social FROM '.$this->get_full_links_rede_social_table(). ' AS l';
+//        $query .= ' JOIN '.$this->get_full_rede_social_table().' AS r ';
+//        $query .= ' ON l.id_rede_social=r.id_rede_social';
+//        $query .= " WHERE id_perfil='$id_perfil'";
+      $query = 'SELECT id_link_rede_social,nome_rede_social,link_rede_social FROM (';
+     $query .= "SELECT id_link_rede_social, id_rede_social, link_rede_social FROM ".$this->get_full_links_rede_social_table()."   WHERE id_perfil = '$id_perfil') AS l ";
+     $query .= 'JOIN (SELECT id_rede_social, nome_rede_social FROM ' .$this->get_full_rede_social_table();
+     $query .= ') AS r ON l.id_rede_social=r.id_rede_social';
+//     return $query;
         return $this->db->query($query)->result_array();
     }
     

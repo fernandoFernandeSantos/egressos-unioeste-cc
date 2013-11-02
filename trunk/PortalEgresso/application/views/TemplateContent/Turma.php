@@ -8,5 +8,5 @@
            
             
             <div class="foto">{foto}</div>
-           
+           <div>{numero_de_alunos}</div>
            <div class="tabela">{table}</div>

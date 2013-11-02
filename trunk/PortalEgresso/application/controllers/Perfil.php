@@ -239,10 +239,10 @@ class Perfil extends CI_Controller {
             }
             $this->template->addContentVar('trabalha_dropdown', form_dropdown('trabalha_dropdown', $empresas, $selected));
             $this->template->addContentVar('trabalha_em_input', form_input('trabalha_input'));
-            $this->template->addContentVar('radiobutton', "Tipo: " . form_radio('tipo_instituicao', 'Empresa', TRUE) . 'Empresa ' . form_radio('tipo_instituicao', 'Universidade') . 'Universidade');
+            $this->template->addContentVar('radiobutton', "Tipo: " . form_radio('tipo_instituicao', 'E', TRUE) . 'Empresa ' . form_radio('tipo_instituicao', 'U') . 'Universidade');
             $this->template->addContentVar('button_alterar_trabalho', form_submit('button_alterar_trabalho', 'Adicionar'));
 
-
+            //especialziacao
             $this->table->set_heading('Tipo', 'Area', 'Inicio', 'Conclusao', 'Instituição');
             $this->table->set_template($this->tmpl);
 
@@ -263,7 +263,7 @@ class Perfil extends CI_Controller {
             $this->template->addContentVar('instituicao_especializacao', form_input('instituicao_especializacao'));
 
             $instituicoes['Selecione'] = 'Selecione';
-            foreach ($this->especializacao->buscar_instituicoes('Universidade')->result_array() as $row) {
+            foreach ($this->especializacao->buscar_instituicoes('U')->result_array() as $row) {
                 $instituicoes[$row['id_instituicao']] = $row['nome_instituicao'];
             }
             $this->template->addContentVar('instituicao_dropdown', form_dropdown('instituicao_dropdown', $instituicoes, 'Selecione'));
@@ -331,7 +331,7 @@ class Perfil extends CI_Controller {
         if ($this->input->post('tipo_especializacao') != "" || $this->input->post('area_especializacao') != "" ||
                 $this->input->post('ano_inicio_especilizacao') != "" || $this->input->post('ano_conclusao_especializacao') != "") {
             if ($this->input->post('instituicao_dropdown') === 'Selecione' && $this->input->post('instituicao_especializacao') !== "") {
-                $insert_array['id_instituicao'] = $this->especializacao->adicionar_instituicao($this->input->post('instituicao_especializacao'), 'Universidade');
+                $insert_array['id_instituicao'] = $this->especializacao->adicionar_instituicao($this->input->post('instituicao_especializacao'), 'U');
                 $this->especializacao->criar_especializacao($insert_array);
             } else {
                 if ($this->input->post('instituicao_dropdown') === 'Selecione' && $this->input->post('instituicao_especializacao') === "") {

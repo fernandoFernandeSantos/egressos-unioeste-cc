@@ -16,14 +16,13 @@ class Teste extends CI_Controller {
         parent::__construct();
 
         $this->load->library('Template');
-        $this->load->model('m_turma', 'turma');
         $this->load->model('m_turma', 'r');
         $this->load->library('table');
     }
 
     public function index() {
         $id= 1;
-        $this->template->addContentVar('teste', $this->r->buscar_egressos($id));
+        $this->template->addContentVar('teste', $this->r->contar_alunos(2));
         $this->template->parse('Teste');
     }
 
