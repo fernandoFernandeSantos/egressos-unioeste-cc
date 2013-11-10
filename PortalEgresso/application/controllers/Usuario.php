@@ -59,7 +59,7 @@ class Usuario extends CI_Controller {
 
             if ($user !== "" && $password !== "" && $email !== "" && $cpf !== "") {
 
-                $result = $this->e->buscar(array('id_egresso'), "cpf = '" . $cpf . "'");
+                $result = $this->e->buscar(array('e.id_egresso'), "cpf = '" . $cpf . "'");
                 
                 if ($result->num_rows()>0) {
                     $id_egresso = $result->row()->id_egresso;
@@ -95,7 +95,7 @@ class Usuario extends CI_Controller {
 
                 $row = $result->row();
 
-                $user_nome = $this->e->buscar(array('nome'), array('id_egresso' => $row->id_egresso));
+                $user_nome = $this->e->buscar(array('nome'), array('e.id_egresso' => $row->id_egresso));
 
                 $row_perfil = $this->p->buscar(array('id_perfil'), array('id_usuario' => $id_user))->row();
 

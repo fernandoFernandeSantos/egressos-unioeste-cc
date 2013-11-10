@@ -29,15 +29,22 @@ class Turma extends CI_Controller {
 
         $turma = $this->turma->buscar_turma($ano);
 
-        $result = $this->turma->buscar_egressos($turma['id_turma']);
+        $result_array = $this->turma->buscar_egressos($turma['id_turma']);
+        foreach($result_array as $row){
+            if($row['id_perfil'] != null){
+                $result[] = array('nome'=>anchor('Perfil/ver/'.$row['id_perfil'],$row['nome']));
+            }else{
+                $result[] = array('nome'=>$row['nome']);
+            }
+        }
 //        $this->template->addContentVar('titulo_ano', $ano);
         $this->template->addContentVar('titulo_ano', '<div class="titulo">  Turma de ' . $ano . ': Prof. ' . $turma['professor_homenageado'] . '</div>');
-        if ($result->num_rows() != 0) {
+//        if ($result->num_rows() != 0) {
             $tmpl = array('table_open' => '<table border="1" cellpadding="2" cellspacing="1" class="mytable" align="center">');
             $this->table->set_template($tmpl);
             $this->table->set_heading("Alunos");
-            $res = $this->table->generate($result->result_array());
-        }
+            $res = $this->table->generate($result);
+//        }
         $this->template->addContentvar('numero_de_alunos','<h3>Alunos formados:'.$this->turma->contar_alunos($turma['id_turma']).'</h3>' );
         $this->gerarPagina($res, $turma);
     }
