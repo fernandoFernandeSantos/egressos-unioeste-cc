@@ -100,15 +100,21 @@ class M_turma extends CI_Model {
 //        $query .= 'ON e.id_egresso = p.id_egresso ';
 //        $query .= 'WHERE p.id_turma = '.$id;
 //        $query .= ' ORDER BY nome';
-        $query = ' SELECT nome FROM ( SELECT nome,id_egresso ';
+        
+        $query = 'SELECT nome,id_perfil FROM (';
+        
+        $query .= ' SELECT nome,e.id_egresso FROM ( SELECT nome,id_egresso ';
         $query .= 'FROM ' . $this->get_full_egresso_table() . ' ) AS e';
         $query .=' JOIN ( SELECT id_egresso ';
         $query .= "FROM " . $this->get_full_pertence_table() . "  WHERE id_turma = '$id') ";
-        $query .= 'AS p ON e.id_egresso = p.id_egresso ORDER BY nome ';
+//        $query .= " ptegresso.perfil AS p ON e.id_egresso=p.id_egresso ";
+        $query .= 'AS p ON e.id_egresso = p.id_egresso  ) AS ee';
+        $query .= ' LEFT OUTER JOIN ptegresso.perfil AS pp ON ee.id_egresso=pp.id_egresso ORDER BY nome';
 //        echo $query.'<br>';
 //        return $query;
-        $result = $this->db->query($query);
-        return $result;
+        $result_array = $this->db->query($query)->result_array();
+        
+        return $result_array;
 //        return 1;
     }
 

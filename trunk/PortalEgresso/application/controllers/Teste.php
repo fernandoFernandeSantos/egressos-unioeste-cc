@@ -22,7 +22,7 @@ class Teste extends CI_Controller {
 
     public function index() {
         $id= 1;
-        $this->template->addContentVar('teste', $this->r->contar_alunos(2));
+        $this->template->addContentVar('teste', $this->session->userdata('id_egresso'));
         $this->template->parse('Teste');
     }
 

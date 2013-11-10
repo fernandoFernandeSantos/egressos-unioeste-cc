@@ -50,6 +50,7 @@ class Egressos extends CI_Controller {
         $coluns[] = 'nome';
         $coluns[] = 'ano_entrada';
         $coluns[] = 'ano_conclusao';
+        $coluns[] = 'id_perfil';
         $array = array();
         if ($nome !== '-') {
             $array[] = "UPPER(ptegresso.remove_acentos(nome)) LIKE '%" . mb_strtoupper($string = convert_accented_characters(urldecode($nome)), 'UTF-8') . "%'";
@@ -64,8 +65,19 @@ class Egressos extends CI_Controller {
         $where = implode(' AND ', $array);
 
         $table = $this->egresso->buscar($coluns, $where, 'nome');
+        $result_array = $table->result_array();
+        
+        $result = null;
+        foreach($result_array as $row){
+            if($row['id_perfil'] != null){
+                $result[] = array('nome'=>anchor('Perfil/ver/'.$row['id_perfil'],$row['nome']),
+                    'Ano_entrada'=>$row['ano_entrada'],'Ano_conclusao'=>$row['ano_conclusao']);
+            }else{
+                $result[] = array('nome'=>$row['nome'],'Ano_entrada'=>$row['ano_entrada'],'Ano_conclusao'=>$row['ano_conclusao']);
+            }
+        }
 
-        $this->gerarPagina($table);
+        $this->gerarPagina($result);
     }
 
     private function gerarPagina($table = NULL) {
@@ -102,14 +114,14 @@ class Egressos extends CI_Controller {
         } elseif ($table == NULL) {
             $this->template->addContentVar('table', '');
         } else {
-            if ($table->num_rows() != 0) {
+//            if ($table->num_rows() != 0) {
                 $tmpl = array('table_open' => '<table border="1" cellpadding="2" cellspacing="1" class="mytable" align="center">');
                 $this->table->set_template($tmpl);
                 $this->table->set_heading("Nome","Ano Entrada","Ano Conclusao");
-                $table = $this->table->generate($table->result_array());
-            } else {
-                $table = '';
-            }
+                $table = $this->table->generate($table);
+//            } else {
+//                $table = '';
+//            }
 
             $this->template->addContentVar('table', $table);
         }

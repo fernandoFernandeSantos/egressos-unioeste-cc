@@ -69,7 +69,8 @@ class M_egresso extends CI_Model {
     }
 
     public function buscar($colunas, $where = NULL, $order_by = '') {
-        $query = 'SELECT ' . implode(', ', $colunas) . ' FROM ' . $this->get_full_table();
+        $query = 'SELECT ' . implode(', ', $colunas) . ' FROM ' . $this->get_full_table(). ' AS e';
+        $query .= ' LEFT JOIN ptegresso.perfil AS p ON e.id_egresso=p.id_egresso';
 
         if ($where !== NULL) {
             if (is_array($where)) {

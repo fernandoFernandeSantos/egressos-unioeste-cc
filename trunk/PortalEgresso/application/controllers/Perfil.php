@@ -45,7 +45,7 @@ class Perfil extends CI_Controller {
         $result_perfil = $this->perfil->buscar($select, $where);
         $row_perfil = $result_perfil->row();
 
-        $result_egresso = $this->egresso->buscar($select, ' id_egresso = ' . $row_perfil->id_egresso);
+        $result_egresso = $this->egresso->buscar($select, ' e.id_egresso = ' . $row_perfil->id_egresso);
         $row_egresso = $result_egresso->row();
 
         //foto
@@ -149,7 +149,7 @@ class Perfil extends CI_Controller {
             $result_perfil = $this->perfil->buscar($select, $where);
             $row_perfil = $result_perfil->row();
 
-            $result_egresso = $this->egresso->buscar(array('*'), 'id_egresso = ' . $row_perfil->id_egresso);
+            $result_egresso = $this->egresso->buscar(array('*'), 'e.id_egresso = ' . $row_perfil->id_egresso);
             $row_egresso = $result_egresso->row();
 
             //foto
