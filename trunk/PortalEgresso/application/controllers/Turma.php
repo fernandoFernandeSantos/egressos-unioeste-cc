@@ -37,7 +37,7 @@ class Turma extends CI_Controller {
                 $result[] = array('nome'=>$row['nome']);
             }
         }
-//        $this->template->addContentVar('titulo_ano', $ano);
+
         $this->template->addContentVar('titulo_ano', '<div class="titulo">  Turma de ' . $ano . ': Prof. ' . $turma['professor_homenageado'] . '</div>');
 //        if ($result->num_rows() != 0) {
             $tmpl = array('table_open' => '<table border="1" cellpadding="2" cellspacing="1" class="mytable" align="center">');
