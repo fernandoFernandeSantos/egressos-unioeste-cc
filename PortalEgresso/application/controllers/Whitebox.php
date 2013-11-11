@@ -16,10 +16,11 @@ class Whitebox extends CI_Controller{
     
     public function index(){
         
-        $test = 1+1;
-        $expected_result = 2;
-        $test_name = 'Test';
-        echo $this->unit->run($test,$expected_result,$test_name);
+        $this->unit->run(array(1=>2,'algo'=>'algo'),array('algo'=>'algo', 1=>2),'hahaha fuking shit i hate this crap');
+        $this->unit->run(array(1=>2,'algo'=>'algo'),array('algo'=>'algo', 1=>3),'hahaha fuking shit i hate this crap even more');
+        $this->unit->run(array(1=>2,'algo'=>'algo'),array('algo'=>'algo', 1=>4),'hahaha fuking shit i hate this crap even more and more');
+        
+        echo $this->unit->report();
         
         
     }
