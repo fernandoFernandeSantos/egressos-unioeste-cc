@@ -6,13 +6,12 @@ class M_especializacao extends CI_Model {
     private $especializacao_table;
     private $instituicoes_table;
 
-    public function __construct($_schema = 'ptegresso', $_table = 'especializacao',$_instituicoes = 'instituicoes') {
+    public function __construct($_schema = 'ptegresso', $_table = 'especializacao', $_instituicoes = 'instituicoes') {
         parent::__construct();
         $this->schema = $_schema;
         $this->especializacao_table = $_table;
         $this->instituicoes_table = $_instituicoes;
     }
-    
 
     public function get_instituicoes_table() {
         return $this->instituicoes_table;
@@ -48,13 +47,16 @@ class M_especializacao extends CI_Model {
 
     public function adicionar_instituicao($nome, $tipo) {
         $query = $this->db->insert_string($this->get_full_instituicao_table(), array('nome_instituicao' => $nome, 'tipo_instituicao' => $tipo));
-        $this->db->query($query);
-        return $this->db->insert_id();
+        $result = $this->db->query($query);
+        if (!$result)
+            return $result;
+        else
+            return $this->db->insert_id();
     }
 
     public function criar_especializacao($data) {
         $query = $this->db->insert_string($this->get_full_especializacao_table(), $data);
-        $this->db->query($query);
+        return $this->db->simple_query($query);
     }
 
     public function deletar_instituicao($where) {
@@ -115,8 +117,8 @@ class M_especializacao extends CI_Model {
 
     public function buscar_especializacoes($id_perfil) {
         $query = 'SELECT id_especializacao, tipo, area, inicio, conclusao, nome_instituicao FROM ';
-        $query .= '(SELECT id_especializacao, tipo, area, inicio, conclusao , id_instituicao FROM ' . $this->get_full_especializacao_table() ;
-        $query .=  " WHERE id_perfil = '$id_perfil' ) AS e JOIN ";
+        $query .= '(SELECT id_especializacao, tipo, area, inicio, conclusao , id_instituicao FROM ' . $this->get_full_especializacao_table();
+        $query .= " WHERE id_perfil = '$id_perfil' ) AS e JOIN ";
         $query .='  (SELECT id_instituicao , nome_instituicao FROM  ' . $this->get_full_instituicao_table() . ' ) AS i ';
         $query .= ' ON i.id_instituicao=e.id_instituicao';
 //        $query =  ' SELECT id_especializacao, tipo, area, inicio, conclusao, nome_instituicao FROM ';

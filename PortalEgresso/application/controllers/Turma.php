@@ -29,7 +29,7 @@ class Turma extends CI_Controller {
 
         $turma = $this->turma->buscar_turma($ano);
 
-        $result_array = $this->turma->buscar_egressos($turma['id_turma']);
+        $result_array = $this->turma->buscar_egressos($turma['id_turma'] == ''? 1:$turma['id_turma']);
         foreach($result_array as $row){
             if($row['id_perfil'] != null){
                 $result[] = array('nome'=>anchor('Perfil/ver/'.$row['id_perfil'],$row['nome']));

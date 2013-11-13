@@ -60,27 +60,26 @@ class M_turma extends CI_Model {
 
     public function get_full_turma_table() {
         return $this->schema . '.' . $this->get_turma_table();
-        //return $this->get_turma_table();
     }
 
     public function get_full_pertence_table() {
         return $this->schema . '.' . $this->get_pertence_table();
-        //return $this->get_pertence_table();
     }
 
     public function get_full_egresso_table() {
         return $this->get_schema() . '.' . $this->get_egresso_table();
-        //return $this->get_egresso_table();
     }
 
     public function buscar_turma($ano) {
 
         $query = 'SELECT * FROM  ' . $this->get_full_turma_table() . ' WHERE ano = ' . $ano;
-//        echo $query .'<br>';
         $result = $this->db->query($query);
 
         $result_array = $result->result_array();
-        return $result_array[0];
+        if (isset($result_array[0]))
+            return $result_array[0];
+        else
+            return '';
     }
 
     public function contar_alunos($id) {
@@ -90,32 +89,25 @@ class M_turma extends CI_Model {
         $query .= "FROM " . $this->get_full_pertence_table() . "  WHERE id_turma = '$id') ";
         $query .= 'AS p ON e.id_egresso = p.id_egresso';
         $result = $this->db->query($query)->result_array();
-        return $result[0]['numero'];
+        if (isset($result[0]['numero']))
+            return $result[0]['numero'];
+        else
+            return '';
     }
 
     public function buscar_egressos($id) {
 
-//        $query = 'SELECT nome FROM '.$this->get_full_egresso_table() . ' AS e ';
-//        $query .= 'JOIN '.$this->get_full_pertence_table() . ' AS p ';
-//        $query .= 'ON e.id_egresso = p.id_egresso ';
-//        $query .= 'WHERE p.id_turma = '.$id;
-//        $query .= ' ORDER BY nome';
-        
         $query = 'SELECT nome,id_perfil FROM (';
-        
+
         $query .= ' SELECT nome,e.id_egresso FROM ( SELECT nome,id_egresso ';
         $query .= 'FROM ' . $this->get_full_egresso_table() . ' ) AS e';
         $query .=' JOIN ( SELECT id_egresso ';
         $query .= "FROM " . $this->get_full_pertence_table() . "  WHERE id_turma = '$id') ";
-//        $query .= " ptegresso.perfil AS p ON e.id_egresso=p.id_egresso ";
         $query .= 'AS p ON e.id_egresso = p.id_egresso  ) AS ee';
         $query .= ' LEFT OUTER JOIN ptegresso.perfil AS pp ON ee.id_egresso=pp.id_egresso ORDER BY nome';
-//        echo $query.'<br>';
-//        return $query;
         $result_array = $this->db->query($query)->result_array();
-        
+
         return $result_array;
-//        return 1;
     }
 
 }
