@@ -24,7 +24,6 @@ class Whitebox extends CI_Controller {
             if (!is_array($arq)) {
                 require($diretorio . $arq);
                 $nome = substr($arq, 0, (strlen($arq) - 4));
-                echo "Test File: " . $arq;
                 $CT = new $nome();
                 $CT->initialize();
                 $CT->run();
