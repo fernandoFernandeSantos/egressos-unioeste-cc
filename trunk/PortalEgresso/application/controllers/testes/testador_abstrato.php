@@ -21,6 +21,8 @@ abstract class testador_abstrato {
     public function __construct() {
         $this->ci = &get_instance();
         $this->ci->load->library('unit_test');
+        $this->ci->unit->set_test_items(array('test_name', 'result')); 
+
     }
 
     public abstract function initialize();

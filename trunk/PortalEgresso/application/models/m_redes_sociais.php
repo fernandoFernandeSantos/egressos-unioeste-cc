@@ -42,7 +42,7 @@ class M_redes_sociais extends CI_Model{
 
     public function adicionar_rede_perfil($id_perfil,$id_rede_social,$link_rede_social){
         $query = $this->db->insert_string($this->get_full_links_rede_social_table(),array('id_perfil' => $id_perfil, 'id_rede_social' => $id_rede_social,'link_rede_social'=>$link_rede_social));
-        $this->db->query($query);
+        return $this->db->query($query);
     }
     
     public function remover_rede_perfil($id_link_rede_social){
@@ -76,7 +76,7 @@ class M_redes_sociais extends CI_Model{
             $query .= $where;
         }
 
-        $this->db->query($query);
+        return $this->db->query($query);
     }
     
     public function buscar_redes_perfil($id_perfil){
@@ -138,7 +138,7 @@ class M_redes_sociais extends CI_Model{
         }
         $query = $this->db->update_string($this->get_full_table(), $values,
                 $where);
-        $this->db->query($query);
+        return $this->db->query($query);
     }
 }
 

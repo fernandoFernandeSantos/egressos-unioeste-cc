@@ -3,7 +3,6 @@
 class M_especializacao extends CI_Model {
 
     private $schema;
-//    private $tem_especialziacao_table;
     private $especializacao_table;
     private $instituicoes_table;
 
@@ -12,20 +11,12 @@ class M_especializacao extends CI_Model {
         $this->schema = $_schema;
         $this->especializacao_table = $_table;
         $this->instituicoes_table = $_instituicoes;
-//        $this->tem_especialziacao_table = $_tem_especializacao;
     }
     
-//    public function get_tem_especialziacao_table() {
-//        return $this->tem_especialziacao_table;
-//    }
 
     public function get_instituicoes_table() {
         return $this->instituicoes_table;
     }
-
-//    public function set_tem_especialziacao_table($tem_especialziacao_table) {
-//        $this->tem_especialziacao_table = $tem_especialziacao_table;
-//    }
 
     public function set_instituicoes_table($instituicoes_table) {
         $this->instituicoes_table = $instituicoes_table;
@@ -50,10 +41,6 @@ class M_especializacao extends CI_Model {
     private function get_full_especializacao_table() {
         return $this->schema . '.' . $this->especializacao_table;
     }
-    
-//    private function get_full_tem_especializacao_table() {
-//        return $this->schema . '.' . $this->tem_especialziacao_table;
-//    }
 
     private function get_full_instituicao_table() {
         return $this->schema . '.' . $this->instituicoes_table;
@@ -71,7 +58,6 @@ class M_especializacao extends CI_Model {
     }
 
     public function deletar_instituicao($where) {
-        //delete from table where
 
         $query = 'DELETE FROM ' . $this->get_full_instituicao_table() . ' WHERE ';
 
@@ -88,7 +74,7 @@ class M_especializacao extends CI_Model {
             $query .= $where;
         }
 
-        $this->db->query($query);
+        return $this->db->query($query);
     }
 
     public function deletar_especializacao($where) {
@@ -109,7 +95,7 @@ class M_especializacao extends CI_Model {
             $query .= $where;
         }
 
-        $this->db->query($query);
+        return $this->db->query($query);
     }
 
     public function buscar_instituicoes($tipo = null) {
@@ -179,7 +165,7 @@ class M_especializacao extends CI_Model {
             $where = implode(' and ', $conditions);
         }
         $query = $this->db->update_string($this->get_full_especializacao_table(), $values, $where);
-        $this->db->query($query);
+        return $this->db->query($query);
     }
 
 }

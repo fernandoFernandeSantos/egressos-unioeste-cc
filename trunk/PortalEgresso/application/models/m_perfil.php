@@ -44,7 +44,7 @@ class M_perfil extends CI_Model {
 
     public function criar($data) {
         $query = $this->db->insert_string($this->get_full_table(), $data);
-        $this->db->query($query);
+        return $this->db->query($query);
     }
 
     public function deletar($where) {
@@ -65,7 +65,7 @@ class M_perfil extends CI_Model {
             $query .= $where;
         }
 
-        $this->db->query($query);
+        return $this->db->query($query);
     }
 
     public function buscar($colunas, $where = 'NULL', $order_by = '') {
@@ -109,7 +109,7 @@ class M_perfil extends CI_Model {
         $query = $this->db->update_string($this->get_full_table(), $values,
                 $where);
         echo $query;
-        $this->db->query($query);
+        return $this->db->query($query);
     }
 
 }

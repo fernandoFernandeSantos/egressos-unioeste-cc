@@ -45,7 +45,7 @@ class M_trabalha extends CI_Model {
 
     public function criar($data) {
         $query = $this->db->insert_string($this->get_full_trabalha_table(), $data);
-        $this->db->query($query);
+        return $this->db->query($query);
     }
 
     public function deletar_trabalha($where) {
@@ -66,7 +66,7 @@ class M_trabalha extends CI_Model {
             $query .= $where;
         }
 
-        $this->db->query($query);
+        return $this->db->query($query);
     }
 
     public function buscar_instituicoes($tipo = null) {
@@ -128,7 +128,7 @@ class M_trabalha extends CI_Model {
             $where = implode(' and ', $conditions);
         }
         $query = $this->db->update_string($this->get_full_trabalha_table(), $values, $where);
-        $this->db->query($query);
+        return $this->db->query($query);
     }
 
 }
