@@ -76,10 +76,11 @@ class M_turma extends CI_Model {
         $result = $this->db->query($query);
 
         $result_array = $result->result_array();
-        if (isset($result_array[0]))
+        if (isset($result_array[0])) {
             return $result_array[0];
-        else
-            return '';
+        } else {
+            return null;
+        }
     }
 
     public function contar_alunos($id) {
@@ -89,10 +90,11 @@ class M_turma extends CI_Model {
         $query .= "FROM " . $this->get_full_pertence_table() . "  WHERE id_turma = '$id') ";
         $query .= 'AS p ON e.id_egresso = p.id_egresso';
         $result = $this->db->query($query)->result_array();
-        if (isset($result[0]['numero']))
+        if (isset($result[0]['numero'])) {
             return $result[0]['numero'];
-        else
-            return '';
+        } else {
+            return null;
+        }
     }
 
     public function buscar_egressos($id) {

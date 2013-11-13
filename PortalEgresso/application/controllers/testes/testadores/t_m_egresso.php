@@ -39,7 +39,7 @@ class t_m_egresso extends testador_abstrato {
         unset($result);
         foreach($this->id_egressos as $param){
             $result = $this->ci->e->deletar("id_egresso = $param");//testa a deleção de um egresso
-            $this->ci->unit->run($result,TRUE,"Teste de deleção de egresso, parametro = $param");
+            $this->ci->unit->run($result,'is_bool',"Teste de deleção de egresso, parametro = $param");
         }
         
         unset($result);
