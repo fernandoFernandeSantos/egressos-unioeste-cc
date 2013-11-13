@@ -64,7 +64,7 @@ class M_egresso extends CI_Model {
         } else {
             $query .= $where;
         }
-
+        
         return $this->db->query($query);
     }
 

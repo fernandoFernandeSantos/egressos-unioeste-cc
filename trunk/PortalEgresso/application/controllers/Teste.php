@@ -25,13 +25,13 @@ class Teste extends CI_Controller {
         
         
         
-        $this->db->trans_begin();
+//        $this->db->trans_begin();
 //        $result = $this->db->query("insert into ptegresso.egresso (nome, rg,cpf) VALUES ('algo','123123','123123')");
-        $result = $this->e->criar(array('nome'=>'Codofredo','rg'=>'123456','cpf'=>'13213213','cidade'=>'cascavel'));//roda a criação de um egresso no banco
+        $result = $this->e->deletar("id_egresso = 3");
+        var_dump($result);
 //        $this->db->trans_complete();
-        $this->db->trans_rollback();
+//        $this->db->trans_rollback();
         $this->unit->run($result,true,'Teste');
-                echo $result;
         $this->template->addContentVar('teste', $this->unit->report());
         $this->template->parse('Teste');
     }

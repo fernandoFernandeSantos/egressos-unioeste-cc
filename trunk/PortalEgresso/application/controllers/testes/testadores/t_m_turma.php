@@ -42,19 +42,21 @@ class t_m_turma extends testador_abstrato {
         unset($result);
         foreach ($this->id_turmas as $param) {
             $result = $this->ci->t->contar_alunos($param); //testa a contagem de alunos de uma turma
-            if($param > 0)
+            if ($param > 0) {
                 $this->ci->unit->run($result, 'is_numeric', "Testa a contagem de alunos de uma turma, parametro = $param");
-            else
-                $this->ci->unit->run($result, '', "Testa a contagem de alunos de uma turma, parametro = $param");
+            } else {
+                $this->ci->unit->run($result, null, "Testa a contagem de alunos de uma turma, parametro = $param");
+            }
         }
 
         unset($result);
         foreach ($this->id_turmas as $param) {
             $result = $this->ci->t->buscar_egressos($param); //testa a bsuca de egressos de uma turma
-            if ($param > 0)
-                $this->ci->unit->run($result, 'is_string', "Testa a bsuca de egressos de uma turma, parametro = $param");
-            else
-                $this->ci->unit->run($result, '', "Testa a contagem de alunos de uma turma, parametro = $param");
+            if ($param > 0) {
+                $this->ci->unit->run($result, 'is_array', "Testa a busca de egressos de uma turma, parametro = $param");
+            } else {
+                $this->ci->unit->run($result, null, "Testa a busca de egressos de uma turma, parametro = $param");
+            }
         }
     }
 

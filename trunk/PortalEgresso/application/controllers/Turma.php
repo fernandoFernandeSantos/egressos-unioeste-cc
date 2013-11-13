@@ -29,7 +29,8 @@ class Turma extends CI_Controller {
 
         $turma = $this->turma->buscar_turma($ano);
 
-        $result_array = $this->turma->buscar_egressos($turma['id_turma'] == ''? 1:$turma['id_turma']);
+        if($turma != null){
+        $result_array = $this->turma->buscar_egressos($turma['id_turma']);
         foreach($result_array as $row){
             if($row['id_perfil'] != null){
                 $result[] = array('nome'=>anchor('Perfil/ver/'.$row['id_perfil'],$row['nome']));
@@ -47,6 +48,9 @@ class Turma extends CI_Controller {
 //        }
         $this->template->addContentvar('numero_de_alunos','<h3>Alunos formados:'.$this->turma->contar_alunos($turma['id_turma']).'</h3>' );
         $this->gerarPagina($res, $turma);
+        }else{
+            $this->template->parse('paginaInexistente');
+        }
     }
 
     public function gerarPagina($table = '', $turma = array('ano' => '', 'foto_turma' => '', 'professor_homenageado' => '')) {
